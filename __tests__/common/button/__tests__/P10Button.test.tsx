@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-testing-library';
-import P10Button from './P10Button';
 import { matchers } from 'jest-emotion';
+import P10Button from '../../../../pages/common/button/P10Button';
 
 expect.extend(matchers);
 

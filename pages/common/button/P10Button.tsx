@@ -79,7 +79,6 @@ function P10Button<T extends {}>(props: Props<T>) {
     ...otherProps
   } = props;
 
-  console.log(minimal);
   const dynamicStyle = css`
     &.btn-1 {
       flex-direction: ${iconRight ? "row-reverse" : "row"};

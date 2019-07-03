@@ -21,6 +21,9 @@
     "jsxFactory": "jsx"
   },
   "include": [
-    "pages"
+    "pages", "__tests__/main/__tests__/App.test.tsx"
+  ],
+  "exclude": [
+    "__tests__"
   ]
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import App from './App';
+import App from '../../../pages/main/App';
 import { render } from 'react-testing-library';
 
 it('renders without crashing', () => {

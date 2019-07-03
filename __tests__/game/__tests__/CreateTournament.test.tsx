@@ -1,8 +1,11 @@
 import React from 'react';
-import { cleanup, fireEvent, render, wait } from 'react-testing-library';
-import { PlayerMap, PlayersProvider } from '../../context/PlayersContext';
-import { TournamentProvider } from '../../context/TournamentContext';
-import CreateTournament from '../CreateTournament';
+import { cleanup, fireEvent, wait } from 'react-testing-library';
+import { PlayerMap, PlayersProvider } from '../../../pages/context/PlayersContext';
+import { render } from 'react-dom';
+import { TournamentProvider } from '../../../pages/context/TournamentContext';
+import CreateTournament from '../../../pages/game/CreateTournament';
+
+
 
 afterEach(cleanup);
 

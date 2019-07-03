@@ -1,10 +1,7 @@
-import {
-  PlayersProvider,
-  usePlayersState,
-  usePlayersDispatch,
-} from '../PlayersContext';
+
 import * as React from 'react';
 import { render } from 'react-testing-library';
+import { usePlayersState, usePlayersDispatch, PlayersProvider } from '../../../pages/context/PlayersContext';
 
 const Sample: React.FC = () => {
   const players = usePlayersState();

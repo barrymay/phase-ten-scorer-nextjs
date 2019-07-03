@@ -1,11 +1,10 @@
 import faker from 'faker';
 import { cleanup, render, fireEvent } from 'react-testing-library';
 import uuid from 'uuid';
-import ProviderWrapper from '../ProviderWrapper';
-import ScoringWizard from '../ScoringWizard';
 import React from 'react';
-import { TournamentCurrentProvider } from '../../context/TournamentCurrentContext';
-
+import ProviderWrapper from '../../../pages/game/ProviderWrapper';
+import { TournamentCurrentProvider } from '../../../pages/context/TournamentCurrentContext';
+import ScoringWizard from '../../../pages/game/ScoringWizard';
 afterEach(cleanup);
 
 const fakePlayerName1 = faker.name.firstName();

@@ -6,9 +6,8 @@ import {
 } from '@reach/router';
 import React from 'react';
 import { render, RenderResult } from 'react-testing-library';
-import ProviderWrapper, {
-  IProviderWrapperState,
-} from '../game/ProviderWrapper';
+import ProviderWrapper, { IProviderWrapperState } from '../../../pages/game/ProviderWrapper';
+
 
 export function resetLocalStorage() {
   localStorage.setItem('player_storage_2', JSON.stringify({}));
@@ -18,7 +17,7 @@ export function resetLocalStorage() {
   }
 }
 
-export interface IRenderResult extends RenderResult {
+interface IRenderResult extends RenderResult {
   history: History;
 }
 

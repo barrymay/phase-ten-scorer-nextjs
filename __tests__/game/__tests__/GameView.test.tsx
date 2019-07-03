@@ -1,11 +1,9 @@
 import React from 'react';
 import { cleanup, render } from 'react-testing-library';
-import {
-  ITournament,
-  TournamentProvider,
-} from '../../context/TournamentContext';
-import GameView from '../GameView';
-import { PlayersProvider } from '../../context/PlayersContext';
+import { ITournament, TournamentProvider } from '../../../pages/context/TournamentContext';
+import { PlayersProvider } from '../../../pages/context/PlayersContext';
+import GameView from '../../../pages/game/GameView';
+
 
 afterEach(cleanup);
 

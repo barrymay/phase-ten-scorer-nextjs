@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render } from 'react-testing-library';
-import { PlayerMap, PlayersProvider } from '../../context/PlayersContext';
-import PlayerSelector from '../PlayerSelector';
 import React from 'react';
+import { PlayersProvider, PlayerMap } from '../../../pages/context/PlayersContext';
+import PlayerSelector from '../../../pages/game/PlayerSelector';
 
 afterEach(cleanup);
 

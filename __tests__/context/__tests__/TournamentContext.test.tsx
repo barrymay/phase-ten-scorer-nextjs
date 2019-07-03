@@ -2,11 +2,8 @@ import faker from 'faker';
 import React from 'react';
 import { cleanup, fireEvent, getByTitle, wait } from 'react-testing-library';
 import uuid from 'uuid';
-import {
-  renderWithRouterAndRedux,
-  resetLocalStorage,
-} from '../../common/router.utils';
-import { AppBase } from '../../main/App';
+import { resetLocalStorage, renderWithRouterAndRedux } from '../../common/__tests__/router.utils';
+import { AppBase } from '../../../pages/main/App';
 
 const fakePlayerName1 = faker.name.firstName();
 const fakePlayerId1 = uuid();
