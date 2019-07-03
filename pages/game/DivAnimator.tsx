@@ -24,7 +24,7 @@ function getProcessFunc(
   width: number = 200,
   fromBoundsRef: React.MutableRefObject<Array<{ x: number }>>,
   curSelection: number = 0,
-  isSpringAtRest?: boolean
+  isSpringAtRest?: boolean,
 ) {
   return function processPosition(index: number) {
     const nextValue = index * width - curSelection * width;
@@ -58,7 +58,7 @@ const DivAnimator: React.FC<{
   // Initital state doesn't matter, just a placeholder
   const [springs, setSprings] = useSprings<CarouselSpringProps>(
     childArr.length,
-    () => ({ x: 0 })
+    () => ({ x: 0 }),
   );
 
   useEffect(() => {
@@ -69,8 +69,8 @@ const DivAnimator: React.FC<{
         boundsWidth,
         fromBoundsRef,
         currentSelectionRef.current,
-        pastSelectionRef.current === currentSelectionRef.current
-      )
+        pastSelectionRef.current === currentSelectionRef.current,
+      ),
     );
   }, [boundsWidth, setSprings, currentIndex]);
 

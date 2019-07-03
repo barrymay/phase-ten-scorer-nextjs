@@ -8,10 +8,10 @@ import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
 
-type FormData = {
+interface IFormData {
   tourneyName: string;
   players: string[];
-};
+}
 
 interface IErrorProps {
   errors: ErrorMessages<DataType>;
@@ -26,7 +26,7 @@ const CreateTournament: React.FC = () => {
     getValues,
     setValue,
     triggerValidation,
-  } = useForm<FormData>({
+  } = useForm<IFormData>({
     mode: 'onSubmit',
     defaultValues: {
       players: [],
@@ -50,7 +50,7 @@ const CreateTournament: React.FC = () => {
           }
           return '';
         },
-      }
+      },
     );
   }, [register]);
 

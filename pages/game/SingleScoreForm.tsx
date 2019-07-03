@@ -71,7 +71,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
       enableTabIndex(enabled: boolean) {
         setTabIndex(enabled ? 0 : -1);
       },
-    })
+    }),
   );
 
   const onSubmit = () => {

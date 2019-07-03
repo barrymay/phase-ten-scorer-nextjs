@@ -34,7 +34,7 @@ export const AppBase: React.FC = ({ children }) => {
           component={<PageComponent />}
         />
       );
-    })
+    }),
   );
   return (
     <AppBody>

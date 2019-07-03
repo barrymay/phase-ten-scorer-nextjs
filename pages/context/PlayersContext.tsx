@@ -1,7 +1,9 @@
 import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
 import uuid from 'uuid';
 
-export type PlayerMap = { [key: string]: IPlayer };
+export interface IPlayerMap {
+  [key: string]: IPlayer;
+}
 
 export interface IPlayer {
   id: string;
@@ -32,50 +34,53 @@ interface IPlayerRemoveAction {
 
 interface IPlayerSetAction {
   type: 'SET';
-  players: PlayerMap;
+  players: IPlayerMap;
 }
 type PlayerAction = IPlayerAddAction | IPlayerRemoveAction | IPlayerSetAction;
 export type InternalPlayersState = 'loading' | { [key: string]: IPlayer };
 export type PlayersState = Exclude<InternalPlayersState, 'loading'>;
 
 export const PlayersContext = React.createContext<PlayersContextState | null>(
-  null
+  null,
 );
 const INIT_STATE: InternalPlayersState = 'loading';
 const PLAYER_STORAGE_KEY = 'player_storage_2';
 
-export function isPlayerNameValid(map: PlayerMap, playerName: string): boolean {
+export function isPlayerNameValid(
+  map: IPlayerMap,
+  playerName: string,
+): boolean {
   return (
     !!playerName.length &&
     !Object.values(map).some(
       item =>
         !item.name.localeCompare(playerName, undefined, {
           sensitivity: 'base',
-        })
+        }),
     )
   );
 }
 
 function playerReducer(
   state: InternalPlayersState,
-  action: PlayerAction
+  action: PlayerAction,
 ): InternalPlayersState {
   let resultState = typeof state === 'string' ? {} : state;
+  let newState = { ...resultState };
   switch (action.type) {
     case 'ADD':
       if (isPlayerNameValid(resultState, action.playerName)) {
         let newKey = uuid();
         return {
-          ...resultState,
+          ...newState,
           [newKey]: { id: newKey, name: action.playerName, losses: 0, wins: 0 },
         };
       } else {
         return state;
       }
     case 'REMOVE':
-      let copy = { ...resultState };
-      delete copy[action.playerId];
-      return copy;
+      delete newState[action.playerId];
+      return newState;
     case 'SET':
       return { ...action.players };
     default:
@@ -87,9 +92,9 @@ interface IOwnProps {
   testValue?: InternalPlayersState;
 }
 
-const getPlayerStorage = (): PlayerMap => {
+const getPlayerStorage = (): IPlayerMap => {
   const latestStoredValue = window.localStorage.getItem(PLAYER_STORAGE_KEY);
-  return latestStoredValue ? (JSON.parse(latestStoredValue) as PlayerMap) : {};
+  return latestStoredValue ? (JSON.parse(latestStoredValue) as IPlayerMap) : {};
 };
 export const PlayersProvider: React.FC<IOwnProps> = ({
   children,
@@ -97,7 +102,7 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
 }) => {
   const usePlayerWithUpdate = (): [
     InternalPlayersState,
-    Dispatch<PlayerAction>
+    Dispatch<PlayerAction>,
   ] => {
     const [internalPlayers, playerDispatch] = useReducer(
       playerReducer,
@@ -109,13 +114,13 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
         } catch (e) {
           return {};
         }
-      }
+      },
     );
 
     useEffect((): VoidFunction => {
       window.localStorage.setItem(
         PLAYER_STORAGE_KEY,
-        JSON.stringify(internalPlayers)
+        JSON.stringify(internalPlayers),
       );
       return () => undefined;
     }, [internalPlayers]);
@@ -151,7 +156,7 @@ export function usePlayersDispatch(): React.Dispatch<PlayerAction> {
   const players = useContext(PlayersContext);
   if (players === undefined || players === null) {
     throw new Error(
-      usePlayersDispatch.name + ' must be used in PlayerProvider'
+      usePlayersDispatch.name + ' must be used in PlayerProvider',
     );
   }
   return players.dispatchPlayers;

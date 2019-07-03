@@ -1,7 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useState, useCallback } from 'react';
-import { usePlayersState, PlayerMap, IPlayer } from '../context/PlayersContext';
+import {
+  usePlayersState,
+  IPlayerMap,
+  IPlayer,
+} from '../context/PlayersContext';
 const PlayerSelector: React.FC<{
   onChange: (newValue: string[]) => void;
 }> = ({ onChange }) => {
@@ -23,7 +27,7 @@ const PlayerSelector: React.FC<{
     onChange(newValue);
   };
 
-  const getSortedPlayers = useCallback((playerMap: PlayerMap): IPlayer[] => {
+  const getSortedPlayers = useCallback((playerMap: IPlayerMap): IPlayer[] => {
     return Object.values(playerMap).sort((a, b) => {
       return a.name.localeCompare(b.name);
     });

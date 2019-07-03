@@ -113,7 +113,7 @@ const InnerGameView: React.FC = () => {
         }
       `),
 
-    [players.length]
+    [players.length],
   );
 
   const hideModal = () => {

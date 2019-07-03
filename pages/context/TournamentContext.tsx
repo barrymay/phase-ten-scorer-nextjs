@@ -6,12 +6,12 @@ export interface IRoundPlayerData {
   phaseCompleted: number;
 }
 
-type PlayerData = {
+interface IPlayerData {
   [playerId: string]: {
     phasesLeft: number[];
     score: number;
   };
-};
+}
 
 export interface IRound {
   [playerId: string]: IRoundPlayerData;
@@ -21,7 +21,7 @@ export interface ITournament {
   id: string;
   name: string;
   playerIds: string[];
-  playerData?: PlayerData;
+  playerData?: IPlayerData;
   rounds: IRound[];
 }
 
@@ -46,7 +46,7 @@ interface TournamentContextState extends InternalTournamentContextState {
 }
 
 export const TournamentContext = React.createContext<InternalTournamentContextState | null>(
-  null
+  null,
 );
 const INIT_STATE: InternalTournamentState = 'loading';
 const TOURNAMENT_STORAGE_KEY = 'tournament_storage_1';
@@ -56,10 +56,10 @@ interface IOwnProps {
 
 const initPhasesList = [...Array(10).keys()].map(item => item + 1);
 
-const getRemainingPhases = (tournament: ITournament): PlayerData => {
+const getRemainingPhases = (tournament: ITournament): IPlayerData => {
   const playersIds = tournament.playerIds;
 
-  const resultPlayerData = playersIds.reduce<PlayerData>(
+  const resultPlayerData = playersIds.reduce<IPlayerData>(
     (result, nextPlayer) => {
       const playerDetails = tournament.rounds.reduce<{
         phasesLeft: number[];
@@ -68,12 +68,12 @@ const getRemainingPhases = (tournament: ITournament): PlayerData => {
         (result, nextRound) => {
           const phase = nextRound[nextPlayer];
           result.phasesLeft = result.phasesLeft.filter(
-            item => item !== phase.phaseCompleted
+            item => item !== phase.phaseCompleted,
           );
           result.score += phase.score;
           return result;
         },
-        { phasesLeft: initPhasesList, score: 0 }
+        { phasesLeft: initPhasesList, score: 0 },
       );
       result[nextPlayer] = {
         phasesLeft: playerDetails.phasesLeft,
@@ -81,7 +81,7 @@ const getRemainingPhases = (tournament: ITournament): PlayerData => {
       };
       return result;
     },
-    {}
+    {},
   );
 
   return resultPlayerData;
@@ -92,7 +92,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   testValue,
 }) => {
   const [tournaments, setTournaments] = useState<InternalTournamentState>(
-    INIT_STATE
+    INIT_STATE,
   );
   const resolveTournament = useCallback(
     (tournamentData: ITournament): ITournament => {
@@ -101,14 +101,14 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
         playerData: getRemainingPhases(tournamentData),
       };
     },
-    []
+    [],
   );
 
   const updateTournaments = useCallback(
     (tournaments: ITournament[]) => {
       setTournaments(tournaments.map(item => resolveTournament(item)));
     },
-    [resolveTournament]
+    [resolveTournament],
   );
 
   const updateTournament = useCallback(
@@ -120,7 +120,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
         tournament,
       ]);
     },
-    [tournaments, updateTournaments]
+    [tournaments, updateTournaments],
   );
 
   useEffect(() => {
@@ -134,7 +134,9 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
       let storedValue =
         window.localStorage.getItem(TOURNAMENT_STORAGE_KEY) || '[]';
       firstValue = (JSON.parse(storedValue) || []) as ITournament[];
-    } catch (e) {}
+    } catch (e) {
+      console.warn('Could not react tournament data from storage', e);
+    }
     updateTournaments(firstValue);
     return () => undefined;
   }, [testValue, updateTournaments]);
@@ -143,7 +145,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
     if (Array.isArray(tournaments)) {
       window.localStorage.setItem(
         TOURNAMENT_STORAGE_KEY,
-        JSON.stringify(tournaments)
+        JSON.stringify(tournaments),
       );
     }
     return () => undefined;
@@ -191,7 +193,7 @@ export function useTournamentContext(): TournamentContextState {
   const context = useContext(TournamentContext);
   if (context === undefined || context === null) {
     throw new Error(
-      useTournamentContext.name + ' must be used in TournamentProvider'
+      useTournamentContext.name + ' must be used in TournamentProvider',
     );
   }
   if (context.tournaments === 'loading') {

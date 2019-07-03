@@ -1,10 +1,9 @@
 /** @jsx jsx */
-import React from "react";
-import { jsx, css } from "@emotion/core";
-import { Link } from "@reach/router";
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import React from 'react';
+import { jsx, css } from '@emotion/core';
+import { Link } from '@reach/router';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface ExtraP10ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,8 +12,8 @@ export interface ExtraP10ButtonProps
   faIconDef?: IconDefinition;
 }
 
-const buttonColor = "#0e83cd";
-const transitionSpeed = "0.3s";
+const buttonColor = '#0e83cd';
+const transitionSpeed = '0.3s';
 
 const topLevelStyle = css`
   text-decoration: none;
@@ -39,7 +38,7 @@ const topLevelStyle = css`
   -moz-transition: all ${transitionSpeed};
   transition: all ${transitionSpeed};
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     z-index: -1;
     -webkit-transition: all ${transitionSpeed};
@@ -81,30 +80,30 @@ function P10Button<T extends {}>(props: Props<T>) {
 
   const dynamicStyle = css`
     &.btn-1 {
-      flex-direction: ${iconRight ? "row-reverse" : "row"};
+      flex-direction: ${iconRight ? 'row-reverse' : 'row'};
       align-items: center;
       justify-content: center;
-      margin: ${minimal ? "0px" : "2px 0px"};
-      border-width: ${minimal ? "0px" : ""};
-      padding: ${minimal ? "2px" : ""};
-      height: ${minimal ? "100%" : ""};
+      margin: ${minimal ? '0px' : '2px 0px'};
+      border-width: ${minimal ? '0px' : ''};
+      padding: ${minimal ? '2px' : ''};
+      height: ${minimal ? '100%' : ''};
     }
   `;
 
-  let CustomTag = renderAs === "Link" ? Link : "button";
+  const CustomTag = renderAs === 'Link' ? Link : 'button';
   return (
     <CustomTag
       css={[topLevelStyle, dynamicStyle]}
-      className={`${className || ""} btn-1 btn-1a`}
+      className={`${className || ''} btn-1 btn-1a`}
       {...otherProps}
     >
       {faIconDef ? (
         <FontAwesomeIcon
           icon={faIconDef}
           css={{
-            fontSize: children ? "0.8em" : undefined,
+            fontSize: children ? '0.8em' : undefined,
             paddingRight: !iconRight && children ? 4 : 0,
-            paddingLeft: iconRight && children ? 4 : 0
+            paddingLeft: iconRight && children ? 4 : 0,
           }}
         />
       ) : null}

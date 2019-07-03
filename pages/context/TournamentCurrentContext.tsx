@@ -7,7 +7,7 @@ interface ITournamentCurrentContext {
   scoreRound: (roundScore: IRound) => void;
 }
 export const TournamentCurrentContext = React.createContext<ITournamentCurrentContext | null>(
-  null
+  null,
 );
 
 interface IOwnProps {
@@ -52,7 +52,7 @@ export function useTournamentCurrentContext(): ITournamentCurrentContext {
   if (context === undefined || context === null) {
     throw new Error(
       useTournamentCurrentContext.name +
-        ' must be used in TournamentCurrentProvider'
+        ' must be used in TournamentCurrentProvider',
     );
   }
   return context;

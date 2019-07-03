@@ -46,23 +46,6 @@ const ScoringWizard: React.FC<{
     height: 0,
   });
 
-  const keyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
-      moveNext();
-    } else if (event.ctrlKey && event.key === 'Backspace') {
-      moveBack();
-    }
-  };
-
-  useEffect(() => {
-    setMaxBounds({
-      top: maxTop,
-      left: maxLeft,
-      height: boundsHeight.height ? boundsHeight.height : maxHeight,
-      width: boundsWidth.width || maxWidth,
-    });
-  }, [boundsHeight, boundsWidth.width, maxHeight, maxLeft, maxTop, maxWidth]);
-
   const getOrCreateRef = useCallback((playerIndex: number): React.RefObject<
     ISingleScoreFormFuncs
   > => {
@@ -81,17 +64,8 @@ const ScoringWizard: React.FC<{
         item.current && item.current.enableTabIndex(i === nextPlayer);
       });
     },
-    [getOrCreateRef]
+    [getOrCreateRef],
   );
-
-  // initialize focus on first element
-  useEffect(() => {
-    const formRef = getOrCreateRef(0);
-    formRef.current && formRef.current.setFocus();
-    formRefMap.current.forEach((item, i) => {
-      item.current && item.current.enableTabIndex(i === 0);
-    });
-  }, [getOrCreateRef]);
 
   const moveNext = useCallback(() => {
     const formRef = getOrCreateRef(playerIndex);
@@ -104,6 +78,32 @@ const ScoringWizard: React.FC<{
       updatePlayerIndex(nextPageIndex);
     }
   };
+
+  const keyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      moveNext();
+    } else if (event.ctrlKey && event.key === 'Backspace') {
+      moveBack();
+    }
+  };
+
+  useEffect(() => {
+    setMaxBounds({
+      top: maxTop,
+      left: maxLeft,
+      height: boundsHeight.height ? boundsHeight.height : maxHeight,
+      width: boundsWidth.width || maxWidth,
+    });
+  }, [boundsHeight, boundsWidth.width, maxHeight, maxLeft, maxTop, maxWidth]);
+
+  // initialize focus on first element
+  useEffect(() => {
+    const formRef = getOrCreateRef(0);
+    formRef.current && formRef.current.setFocus();
+    formRefMap.current.forEach((item, i) => {
+      item.current && item.current.enableTabIndex(i === 0);
+    });
+  }, [getOrCreateRef]);
 
   const completeScore = useCallback(
     (playerId: string, score: IRoundPlayerData) => {
@@ -126,7 +126,7 @@ const ScoringWizard: React.FC<{
       roundScore,
       tournament.playerIds.length,
       updatePlayerIndex,
-    ]
+    ],
   );
 
   const childWrap: React.ReactNode[] = useMemo<React.ReactNode[]>(() => {
