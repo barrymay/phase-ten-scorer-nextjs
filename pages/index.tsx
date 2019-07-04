@@ -3,11 +3,12 @@ import Meta from './Meta';
 import App from './main/App';
 
 function Start() {
-  return (<div>
-    <Meta></Meta>
-    <App/>
-    <div id='modal-root'></div>
-  </div>)
+  return (
+    <div>
+      <App />
+      <div id="modal-root"></div>
+    </div>
+  );
 }
 
-export default Start
+export default Start;
