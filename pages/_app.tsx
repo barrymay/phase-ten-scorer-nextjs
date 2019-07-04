@@ -1,4 +1,3 @@
-import noramlize from '@csstools/normalize.css';
 import React from 'react';
 import App, { Container, NextAppContext } from 'next/app';
 import Meta from './Meta';
