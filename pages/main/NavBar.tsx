@@ -24,35 +24,35 @@ const Header = styled.header({
   borderBottom: '1px solid black',
 });
 
-const HeaderLinkStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  textDecoration: 'none',
-  userSelect: 'none',
-  '&:hover': {
-    color: lighten(0.1, linkTextColor),
-  },
-  '&:active': {
-    color: lighten(0.2, linkTextColor),
-  },
-});
+const HeaderLinkStyle = css`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  user-select: none;
+  &:hover {
+    color: ${lighten(0.1, linkTextColor)};
+  }
+  &:active {
+    color: ${lighten(0.2, linkTextColor)};
+  }
+`;
 
 const NavBar: React.FC = ({ children }) => {
   const LinkStyle = React.useCallback(
     isMinimal =>
-      css({
-        fontSize: isMinimal ? '.8em' : '1em',
-        padding: isMinimal ? '0px 10px' : '0px 10px',
-        color: linkTextColor,
-        '&:hover': {
-          color: lighten(0.5, linkTextColor),
-          background: 'rgba(0,0,0,.2)',
-        },
-        '&:active': {
-          color: lighten(0.6, linkTextColor),
-          background: 'rgba(0,0,0,.3)',
-        },
-      }),
+      css`
+        font-size: ${isMinimal ? '.8em' : '1em'};
+        padding: ${isMinimal ? '0px 10px' : '0px 10px'};
+        color: ${linkTextColor};
+        &:hover {
+          color: ${lighten(0.5, linkTextColor)};
+          background: rgba(0, 0, 0, 0.2);
+        }
+        &:active {
+          color: ${lighten(0.6, linkTextColor)};
+          background: rgba(0, 0, 0, 0.3);
+        }
+      `,
     [],
   );
 
@@ -66,7 +66,7 @@ const NavBar: React.FC = ({ children }) => {
               fontSize: '.8em',
             }}
             iconDef={faScroll}
-          />
+          ></FontAwesomeServerIcon>
           Phase 10 Scorer
         </P10Button>
       </Link>

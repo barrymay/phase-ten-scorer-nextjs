@@ -20,19 +20,18 @@ const buttonColor = '#0e83cd';
 const transitionSpeed = '0.3s';
 
 const topLevelStyle = css`
-  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
 
+  text-decoration: none;
+  border: none;
   font-family: inherit;
   font-size: inherit;
   color: inherit;
   background: none;
   cursor: pointer;
   padding: 5px;
-  display: inline-block;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;

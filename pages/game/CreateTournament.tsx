@@ -68,10 +68,10 @@ const CreateTournament: React.FC = () => {
     });
   };
 
-  const styledLabel = css({
-    paddingTop: 4,
-    paddingRight: 4,
-  });
+  const styledLabel = css`
+    padding-top: 4;
+    padding-right: 4;
+  `;
 
   return (
     <div

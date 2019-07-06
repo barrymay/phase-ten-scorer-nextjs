@@ -4,19 +4,19 @@ import React from 'react';
 import TournamentManager from '../game/TournamentManager';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 
-const menuStyle = css({
-  padding: '2px 0px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  '.buttonList': {
-    display: 'flex',
-    flexDirection: 'column',
-    button: {
-      margin: '2px',
-    },
-  },
-});
+const menuStyle = css`
+  padding: 2px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .buttonList {
+    display: flex;
+    flex-direction: column;
+    button {
+      margin: 2px;
+    }
+  }
+`;
 
 export const MainMenu: React.FC = () => {
   return (
