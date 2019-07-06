@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import React from 'react';
 import TournamentManager from '../game/TournamentManager';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
-import { RouteComponentProps } from '@reach/router';
 
 const menuStyle = css({
   padding: '2px 0px',
@@ -19,7 +18,7 @@ const menuStyle = css({
   },
 });
 
-export const MainMenu: React.FC<RouteComponentProps> = ({ navigate }) => {
+export const MainMenu: React.FC = () => {
   return (
     <div className="page" css={menuStyle}>
       <div className="buttonList">
@@ -30,7 +29,6 @@ export const MainMenu: React.FC<RouteComponentProps> = ({ navigate }) => {
           ))}
       </div>
       <TournamentManager
-        navigate={navigate}
         css={{
           minWidth: 250,
         }}

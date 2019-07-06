@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { DataType, ErrorMessages } from 'react-hook-form/dist/types';
+import FontAwesomeServerIcon from '../font-awesome/FontAwesomeServerIcon';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 
 interface OwnProps
   extends React.DetailedHTMLProps<
@@ -47,9 +47,9 @@ const ValidatedInput: React.FC<OwnProps> = ({
     >
       <input {...inputProps} name={name} ref={inputRef} type="text" />
       {error && (
-        <FontAwesomeIcon
+        <FontAwesomeServerIcon
           title={error.message}
-          icon={faTimes}
+          iconDef={faTimes}
           css={css`
             color: red;
           `}

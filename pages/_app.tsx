@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import App, { Container, NextAppContext } from 'next/app';
-import Meta from './Meta';
-import { Global, css } from '@emotion/core';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }: NextAppContext) {

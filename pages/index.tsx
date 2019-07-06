@@ -1,5 +1,4 @@
-import React from 'react';
-import Meta from './Meta';
+import { NextContext } from 'next';
 import App from './main/App';
 
 function Start() {
@@ -10,5 +9,10 @@ function Start() {
     </div>
   );
 }
+Start.getInitialProps = async ({ req }: NextContext) => {
+  let pageProps = {};
+
+  return { pageProps };
+};
 
 export default Start;

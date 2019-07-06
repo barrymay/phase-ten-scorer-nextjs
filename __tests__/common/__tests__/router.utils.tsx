@@ -6,8 +6,9 @@ import {
 } from '@reach/router';
 import React from 'react';
 import { render, RenderResult } from 'react-testing-library';
-import ProviderWrapper, { IProviderWrapperState } from '../../../pages/game/ProviderWrapper';
-
+import ProviderWrapper, {
+  IProviderWrapperState,
+} from '../../../pages/game/ProviderWrapper';
 
 export function resetLocalStorage() {
   localStorage.setItem('player_storage_2', JSON.stringify({}));
@@ -33,7 +34,7 @@ export function renderWithRouterAndRedux(
   ui: React.ReactNode,
   { route = '/', history = createHistory(createMemorySource(route)) } = {},
   testState?: IProviderWrapperState,
-  containerDivs: string[] = ['app-root', 'modal-root']
+  containerDivs: string[] = ['app-root', 'modal-root'],
 ): IRenderResult {
   const base = containerDivs.reduce<HTMLElement>((result, next) => {
     result.appendChild(createElementWithId(next));
@@ -47,7 +48,7 @@ export function renderWithRouterAndRedux(
       {
         container: base.querySelector('#app-root') as HTMLElement,
         baseElement: base,
-      }
+      },
     ),
     // adding `history` to the returned utilities to allow us
     // to reference it in our tests (just try to avoid using

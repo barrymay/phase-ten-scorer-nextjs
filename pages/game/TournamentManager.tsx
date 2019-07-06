@@ -4,16 +4,14 @@ import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
 import React from 'react';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
-import { NavigateFn } from '@reach/router';
 
 const TournamentManager: React.FC<{
   className?: string;
-  navigate?: NavigateFn;
-}> = ({ className, navigate }) => {
+}> = ({ className }) => {
   const { tournaments, removeTournament } = useTournamentContext();
 
   function openGame(gameId: string): void {
-    navigate && navigate(`/gameView/${gameId}`);
+    //navigate && navigate(`/gameView/${gameId}`);
   }
 
   return (

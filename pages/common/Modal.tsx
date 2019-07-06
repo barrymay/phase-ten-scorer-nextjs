@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { animated, useTransition } from 'react-spring';
@@ -59,7 +58,7 @@ const Modal: React.FC<{
   });
 
   const modalRootRef = useRef<HTMLElement | null>(
-    document.getElementById('modal-root')
+    document.getElementById('modal-root'),
   );
 
   const mainDivRef = useRef<HTMLDivElement>(document.createElement('div'));
@@ -127,13 +126,13 @@ const Modal: React.FC<{
             <div className="modalHeader">
               <div className="title">{title}</div>
               <div className="controls">
-                <P10Button minimal faIconDef={faTimes} onClick={onClick} />
+                <P10Button minimal faIconName={'times'} onClick={onClick} />
               </div>
             </div>
             <div className="modalBody">{children}</div>
           </div>
         </animated.div>
-      )
+      ),
   );
 
   return createPortal(modalBody, mainDivRef.current);

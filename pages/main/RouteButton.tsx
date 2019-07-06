@@ -1,14 +1,14 @@
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import {
-  faTrophyAlt,
-  faUserFriends,
-  faFlask,
-} from '@fortawesome/pro-regular-svg-icons';
+import { IconName, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
-import PlayerSetup from '../playerSetup/PlayerSetup';
 import CreateTournament from '../game/CreateTournament';
 import GameView from '../game/GameView';
+import PlayerSetup from '../playerSetup/PlayerSetup';
+import {
+  faTrophyAlt,
+  faFlask,
+  faUserFriends,
+} from '@fortawesome/pro-regular-svg-icons';
 
 export type RouteKeys = 'playerSetup' | 'createTournament' | 'testGame';
 
@@ -55,7 +55,7 @@ const RouteButton: React.FC<OwnProps> = props => {
   const { minimal } = props;
   return (
     <LinkButton
-      to={route}
+      href={route}
       faIconDef={icon}
       title={minimal ? text : undefined}
       {...passedProps}

@@ -1,9 +1,13 @@
 /** @jsx jsx */
 import React from 'react';
 import { jsx, css } from '@emotion/core';
-import { Link } from '@reach/router';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  IconName,
+  IconDefinition,
+} from '@fortawesome/fontawesome-common-types';
+import FontAwesomeServerIcon from '../font-awesome/FontAwesomeServerIcon';
+import Link from 'next/link';
+import { ILinkButtonProps } from './LinkButton';
 
 export interface ExtraP10ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -65,16 +69,18 @@ type Props<T extends {}> = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > &
-  ExtraP10ButtonProps & { renderAs?: string } & T;
+  ExtraP10ButtonProps &
+  Partial<ILinkButtonProps> & { renderAs?: string } & T;
 
 function P10Button<T extends {}>(props: Props<T>) {
   let {
     children,
     className,
     renderAs,
-    faIconDef,
+    faIconDef: faIcon,
     minimal,
     iconRight,
+    href,
     ...otherProps
   } = props;
 
@@ -90,16 +96,15 @@ function P10Button<T extends {}>(props: Props<T>) {
     }
   `;
 
-  const CustomTag = renderAs === 'Link' ? Link : 'button';
-  return (
-    <CustomTag
+  const buttonContext = (
+    <button
       css={[topLevelStyle, dynamicStyle]}
       className={`${className || ''} btn-1 btn-1a`}
       {...otherProps}
     >
-      {faIconDef ? (
-        <FontAwesomeIcon
-          icon={faIconDef}
+      {faIcon ? (
+        <FontAwesomeServerIcon
+          iconDef={faIcon}
           css={{
             fontSize: children ? '0.8em' : undefined,
             paddingRight: !iconRight && children ? 4 : 0,
@@ -108,7 +113,13 @@ function P10Button<T extends {}>(props: Props<T>) {
         />
       ) : null}
       {children}
-    </CustomTag>
+    </button>
+  );
+
+  return renderAs === 'Link' ? (
+    <Link href={href}>{buttonContext}</Link>
+  ) : (
+    buttonContext
   );
 }
 

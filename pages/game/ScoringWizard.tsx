@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { faArrowLeft, faArrowRight } from '@fortawesome/pro-regular-svg-icons';
 import React, {
   createRef,
   RefObject,
@@ -17,6 +16,7 @@ import { IRound, IRoundPlayerData } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import SingleScoreForm from './SingleScoreForm';
 import DivAnimator from './DivAnimator';
+import { faArrowRight, faArrowLeft } from '@fortawesome/pro-regular-svg-icons';
 
 export interface ISingleScoreFormFuncs {
   performSubmit: () => void;

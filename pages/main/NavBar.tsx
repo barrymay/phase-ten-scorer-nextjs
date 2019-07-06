@@ -2,11 +2,12 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { faScroll } from '@fortawesome/pro-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from '@reach/router';
 import { darken, lighten } from 'polished';
 import React from 'react';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
+import FontAwesomeServerIcon from '../common/font-awesome/FontAwesomeServerIcon';
+import P10Button from '../common/button/P10Button';
+import Link from 'next/link';
 
 const linkTextColor = darken(0.1, '#006699');
 
@@ -18,7 +19,7 @@ const Header = styled.header({
   fontSize: '2em',
   backgroundImage: `linear-gradient(to right, ${lighten(
     '0.5',
-    '#006699'
+    '#006699',
   )}, #006699)`,
   borderBottom: '1px solid black',
 });
@@ -52,20 +53,22 @@ const NavBar: React.FC = ({ children }) => {
           background: 'rgba(0,0,0,.3)',
         },
       }),
-    []
+    [],
   );
 
   return (
     <Header>
-      <Link css={[HeaderLinkStyle, LinkStyle(false)]} to="/">
-        <FontAwesomeIcon
-          css={{
-            paddingRight: 4,
-            fontSize: '.8em',
-          }}
-          icon={faScroll}
-        />
-        Phase 10 Scorer
+      <Link href="/">
+        <P10Button css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
+          <FontAwesomeServerIcon
+            css={{
+              paddingRight: 4,
+              fontSize: '.8em',
+            }}
+            iconDef={faScroll}
+          />
+          Phase 10 Scorer
+        </P10Button>
       </Link>
       {Object.entries(RouteDefinitions)
         .filter(([, value]) => !value.hideFromNavBar)
