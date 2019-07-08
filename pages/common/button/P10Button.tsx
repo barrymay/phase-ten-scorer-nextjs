@@ -64,10 +64,17 @@ const topLevelStyle = css`
   }
 `;
 
-type Props<T extends {}> = React.DetailedHTMLProps<
+type LinkProps = React.DetailedHTMLProps<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  HTMLAnchorElement
+>;
+
+type ButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> &
+>;
+
+type Props<T extends ButtonProps | LinkProps> = T &
   ExtraP10ButtonProps &
   Partial<ILinkButtonProps> & { renderAs?: string } & T;
 
@@ -76,7 +83,7 @@ function P10Button<T extends {}>(props: Props<T>) {
     children,
     className,
     renderAs,
-    faIconDef: faIcon,
+    faIconDef,
     minimal,
     iconRight,
     href,
@@ -95,30 +102,33 @@ function P10Button<T extends {}>(props: Props<T>) {
     }
   `;
 
-  const buttonContext = (
-    <button
-      css={[topLevelStyle, dynamicStyle]}
-      className={`${className || ''} btn-1 btn-1a`}
-      {...otherProps}
-    >
-      {faIcon ? (
-        <FontAwesomeServerIcon
-          iconDef={faIcon}
-          css={{
-            fontSize: children ? '0.8em' : undefined,
-            paddingRight: !iconRight && children ? 4 : 0,
-            paddingLeft: iconRight && children ? 4 : 0,
-          }}
-        />
-      ) : null}
-      {children}
-    </button>
-  );
+  const content = (Tag: 'button' | 'a') => {
+    return (
+      <Tag
+        css={[topLevelStyle, dynamicStyle]}
+        className={`${className || ''} btn-1 btn-1a`}
+      >
+        {faIconDef ? (
+          <FontAwesomeServerIcon
+            iconDef={faIconDef}
+            css={{
+              fontSize: children ? '0.8em' : undefined,
+              paddingRight: !iconRight && children ? 4 : 0,
+              paddingLeft: iconRight && children ? 4 : 0,
+            }}
+          />
+        ) : null}
+        {children}
+      </Tag>
+    );
+  };
 
   return renderAs === 'Link' ? (
-    <Link href={href}>{buttonContext}</Link>
+    <Link href={href} passHref>
+      {content('a')}
+    </Link>
   ) : (
-    buttonContext
+    content('button')
   );
 }
 

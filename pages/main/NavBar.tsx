@@ -8,6 +8,7 @@ import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 import FontAwesomeServerIcon from '../common/font-awesome/FontAwesomeServerIcon';
 import P10Button from '../common/button/P10Button';
 import Link from 'next/link';
+import LinkButton from '../common/button/LinkButton';
 
 const linkTextColor = darken(0.1, '#006699');
 
@@ -58,18 +59,16 @@ const NavBar: React.FC = ({ children }) => {
 
   return (
     <Header>
-      <Link href="/">
-        <P10Button css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
-          <FontAwesomeServerIcon
-            css={{
-              paddingRight: 4,
-              fontSize: '.8em',
-            }}
-            iconDef={faScroll}
-          ></FontAwesomeServerIcon>
-          Phase 10 Scorer
-        </P10Button>
-      </Link>
+      <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
+        <FontAwesomeServerIcon
+          css={{
+            paddingRight: 4,
+            fontSize: '.8em',
+          }}
+          iconDef={faScroll}
+        ></FontAwesomeServerIcon>
+        Phase 10 Scorer
+      </LinkButton>
       {Object.entries(RouteDefinitions)
         .filter(([, value]) => !value.hideFromNavBar)
         .map(([key, value]) => (
