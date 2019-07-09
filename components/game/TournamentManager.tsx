@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
+import Router from 'next/router';
 import React from 'react';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
@@ -11,7 +12,7 @@ const TournamentManager: React.FC<{
   const { tournaments, removeTournament } = useTournamentContext();
 
   function openGame(gameId: string): void {
-    //navigate && navigate(`/gameView/${gameId}`);
+    Router.push(`/GameView/${gameId}`);
   }
 
   return (

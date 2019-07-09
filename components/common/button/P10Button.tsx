@@ -42,6 +42,7 @@ function P10Button<T extends {}>(props: Props<T>) {
     iconRight,
     href,
     color = buttonColor,
+    ...otherButtonProps
   } = props;
 
   const topLevelStyle = useMemo(
@@ -102,7 +103,11 @@ function P10Button<T extends {}>(props: Props<T>) {
 
   const content = (Tag: 'button' | 'a') => {
     return (
-      <Tag css={[topLevelStyle]} className={`btn-1 btn-1a ${className || ''}`}>
+      <Tag
+        css={[topLevelStyle]}
+        className={`btn-1 btn-1a ${className || ''}`}
+        {...otherButtonProps}
+      >
         {faIconDef ? (
           <FontAwesomeIcon
             icon={faIconDef}

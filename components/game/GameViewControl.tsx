@@ -1,15 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';
 import Modal from '../common/Modal';
-import { usePlayerInfo, IPlayer } from '../context/PlayersContext';
+import { IPlayer, usePlayerInfo } from '../context/PlayersContext';
 import { IRound } from '../context/TournamentContext';
-import {
-  TournamentCurrentProvider,
-  useTournamentCurrentContext,
-} from '../context/TournamentCurrentContext';
+import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import PhaseScorer from './PhaseScorer';
 import ScoringWizard from './ScoringWizard';
 import Totaler from './Totaler';
@@ -18,15 +15,7 @@ interface IOwnProps {
   gameId: string;
 }
 
-const GameView: React.FC<IOwnProps> = ({ gameId }) => {
-  return (
-    <TournamentCurrentProvider tournamentId={gameId}>
-      <InnerGameView />
-    </TournamentCurrentProvider>
-  );
-};
-
-const InnerGameView: React.FC = () => {
+const GameViewControl: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(true);
   const [winnerMessage, setWinnerMessage] = useState('');
@@ -208,4 +197,4 @@ const InnerGameView: React.FC = () => {
   );
 };
 
-export default GameView;
+export default GameViewControl;
