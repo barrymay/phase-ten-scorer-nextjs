@@ -8,6 +8,7 @@ function PlayerSetup() {
       <Head>
         <title>Phase 10 Scorer</title>
       </Head>
+
       <ProviderWrapper>
         <PlayerSetupControl />
       </ProviderWrapper>
