@@ -1,5 +1,5 @@
+import { css, Global } from '@emotion/core';
 import Head from 'next/head';
-import { Global, css } from '@emotion/core';
 const Meta = () => (
   <div>
     <Head>
@@ -26,6 +26,11 @@ const Meta = () => (
         #modal-root {
           position: relative;
           z-index: 999;
+        }
+
+        // No browser focus shadows
+        div:focus {
+          outline: none;
         }
       `}
     ></Global>

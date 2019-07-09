@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { animated, useTransition } from 'react-spring';
@@ -126,7 +127,7 @@ const Modal: React.FC<{
             <div className="modalHeader">
               <div className="title">{title}</div>
               <div className="controls">
-                <P10Button minimal faIconName={'times'} onClick={onClick} />
+                <P10Button minimal faIconDef={faTimes} onClick={onClick} />
               </div>
             </div>
             <div className="modalBody">{children}</div>
