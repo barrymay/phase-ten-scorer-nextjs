@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/pro-regular-svg-icons';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
+import { ExtraP10ButtonProps } from '../common/button/P10Button';
 
 export type RouteKeys = 'playerSetup' | 'createTournament' | 'testGame';
 
@@ -37,9 +38,8 @@ export const RouteDefinitions: RouteDefinitions = {
   },
 };
 
-interface OwnProps {
+interface OwnProps extends ExtraP10ButtonProps {
   routeKey: RouteKeys;
-  minimal?: boolean;
 }
 
 const RouteButton: React.FC<OwnProps> = props => {

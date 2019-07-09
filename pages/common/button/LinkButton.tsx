@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import React from 'react';
 import { jsx } from '@emotion/core';
+import React from 'react';
 import P10Button, { ExtraP10ButtonProps } from './P10Button';
 
 export interface ILinkButtonProps extends ExtraP10ButtonProps {
