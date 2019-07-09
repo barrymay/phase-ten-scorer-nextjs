@@ -1,5 +1,5 @@
-import React, { createContext } from 'react';
 import App, { Container, NextAppContext } from 'next/app';
+import NavBar from './main/NavBar';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }: NextAppContext) {
@@ -17,7 +17,9 @@ class MyApp extends App {
 
     return (
       <Container>
+        <NavBar />
         <Component {...pageProps} />
+        <div id="modal-root"></div>
       </Container>
     );
   }

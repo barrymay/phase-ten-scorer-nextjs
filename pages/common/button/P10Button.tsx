@@ -1,12 +1,9 @@
 /** @jsx jsx */
-import React from 'react';
-import { jsx, css } from '@emotion/core';
-import {
-  IconName,
-  IconDefinition,
-} from '@fortawesome/fontawesome-common-types';
-import FontAwesomeServerIcon from '../font-awesome/FontAwesomeServerIcon';
+import { css, jsx } from '@emotion/core';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import React from 'react';
 import { ILinkButtonProps } from './LinkButton';
 
 export interface ExtraP10ButtonProps
@@ -109,8 +106,8 @@ function P10Button<T extends {}>(props: Props<T>) {
         className={`${className || ''} btn-1 btn-1a`}
       >
         {faIconDef ? (
-          <FontAwesomeServerIcon
-            iconDef={faIconDef}
+          <FontAwesomeIcon
+            icon={faIconDef}
             css={{
               fontSize: children ? '0.8em' : undefined,
               paddingRight: !iconRight && children ? 4 : 0,

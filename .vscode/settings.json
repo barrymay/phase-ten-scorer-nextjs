@@ -7,9 +7,17 @@
     { "language": "typescriptreact", "autoFix": true }
   ],
   "prettier.eslintIntegration": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": false
-  },
+
   "eslint.enable": true,
-  "jest.autoEnable": false
+  "jest.autoEnable": false,
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  }
 }

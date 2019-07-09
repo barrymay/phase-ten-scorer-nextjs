@@ -1,6 +1,6 @@
 import { NextContext } from 'next';
-import App from './main/App';
 import Head from 'next/head';
+import { MainMenu } from './main/MainMenu';
 
 function Start() {
   return (
@@ -8,8 +8,7 @@ function Start() {
       <Head>
         <title>Phase 10 Scorer</title>
       </Head>
-      <App />
-      <div id="modal-root"></div>
+      <MainMenu />
     </div>
   );
 }

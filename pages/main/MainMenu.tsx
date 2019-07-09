@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import React from 'react';
+import ProviderWrapper from '../game/ProviderWrapper';
 import TournamentManager from '../game/TournamentManager';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 
@@ -28,11 +29,13 @@ export const MainMenu: React.FC = () => {
             <RouteButton key={key} routeKey={key as RouteKeys} />
           ))}
       </div>
-      <TournamentManager
-        css={{
-          minWidth: 250,
-        }}
-      />
+      <ProviderWrapper>
+        <TournamentManager
+          css={{
+            minWidth: 250,
+          }}
+        />
+      </ProviderWrapper>
     </div>
   );
 };

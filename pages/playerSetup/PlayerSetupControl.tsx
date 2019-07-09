@@ -20,21 +20,21 @@ const PlayerEntry = styled.div({
   alignItems: 'center',
 });
 
-export const PlayerSetup: React.FC = () => {
+export const PlayerSetupControl: React.FC = () => {
   const dispatchPlayers = usePlayersDispatch();
   const players = usePlayersState();
   const [name, setName] = useState('');
   const [triggerFocus, setTriggerFocus] = useState(false);
   const textRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
 
-  const clickAdd = () => {
-    addPlayer(name);
-  };
-
   const addPlayer = (name: string) => {
     dispatchPlayers({ type: 'ADD', playerName: name.trim() });
     setName('');
     setTriggerFocus(true);
+  };
+
+  const clickAdd = () => {
+    addPlayer(name);
   };
 
   const clearAll = () => {
@@ -50,8 +50,8 @@ export const PlayerSetup: React.FC = () => {
       map(value => {
         value = value.slice(0, 20).replace(/[^\w\d\s]/g, '');
         setName(value);
-      })
-    )
+      }),
+    ),
   );
 
   const [keyUpCallback] = useEventCallback<
@@ -73,11 +73,11 @@ export const PlayerSetup: React.FC = () => {
           }
           return;
         }),
-        ignoreElements()
+        ignoreElements(),
       );
     },
     undefined,
-    [name]
+    [name],
   );
 
   useEffect(() => {
@@ -96,7 +96,9 @@ export const PlayerSetup: React.FC = () => {
           flex-direction: column;
         `}
       >
-        <div data-testid="player-counter">Players: {Object.keys(players).length}</div>
+        <div data-testid="player-counter">
+          Players: {Object.keys(players).length}
+        </div>
         <PlayerEntry>
           <label htmlFor="player_add_input">Player Name:</label>
           <PlayerNameInput
@@ -134,4 +136,4 @@ export const PlayerSetup: React.FC = () => {
   );
 };
 
-export default PlayerSetup;
+export default PlayerSetupControl;

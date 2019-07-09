@@ -2,17 +2,15 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { faScroll } from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { darken, lighten } from 'polished';
 import React from 'react';
-import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
-import FontAwesomeServerIcon from '../common/font-awesome/FontAwesomeServerIcon';
-import P10Button from '../common/button/P10Button';
-import Link from 'next/link';
 import LinkButton from '../common/button/LinkButton';
+import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 
 const linkTextColor = darken(0.1, '#006699');
 
-const Header = styled.header({
+const Header = styled.div({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -60,13 +58,13 @@ const NavBar: React.FC = ({ children }) => {
   return (
     <Header>
       <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
-        <FontAwesomeServerIcon
+        <FontAwesomeIcon
           css={{
             paddingRight: 4,
             fontSize: '.8em',
           }}
-          iconDef={faScroll}
-        ></FontAwesomeServerIcon>
+          icon={faScroll}
+        />
         Phase 10 Scorer
       </LinkButton>
       {Object.entries(RouteDefinitions)

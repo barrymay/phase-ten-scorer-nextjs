@@ -1,14 +1,11 @@
-import { IconName, IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import React from 'react';
-import LinkButton from '../common/button/LinkButton';
-import CreateTournament from '../game/CreateTournament';
-import GameView from '../game/GameView';
-import PlayerSetup from '../playerSetup/PlayerSetup';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
-  faTrophyAlt,
   faFlask,
+  faTrophyAlt,
   faUserFriends,
 } from '@fortawesome/pro-regular-svg-icons';
+import React from 'react';
+import LinkButton from '../common/button/LinkButton';
 
 export type RouteKeys = 'playerSetup' | 'createTournament' | 'testGame';
 
@@ -16,7 +13,6 @@ interface IRouteDefinition {
   icon: IconDefinition;
   text: string;
   route: string;
-  component: React.FC<any>;
   hideFromNavBar?: boolean;
 }
 
@@ -26,20 +22,17 @@ export const RouteDefinitions: RouteDefinitions = {
   playerSetup: {
     icon: faUserFriends,
     text: 'Player Setup',
-    route: '/playerSetup',
-    component: PlayerSetup,
+    route: '/PlayerSetup',
   },
   createTournament: {
     icon: faTrophyAlt,
     text: 'Create a Tournament',
-    route: '/createTournament',
-    component: CreateTournament,
+    route: '/CreateTournament',
   },
   testGame: {
     icon: faFlask,
     text: 'Test Game',
-    route: '/gameView/:gameId',
-    component: GameView,
+    route: '/GameView/:gameId',
     hideFromNavBar: true,
   },
 };

@@ -18,7 +18,7 @@ interface IErrorProps {
   className?: string;
 }
 
-const CreateTournament: React.FC = () => {
+const CreateTournamentControl: React.FC = () => {
   const {
     handleSubmit,
     register,
@@ -127,4 +127,4 @@ const CreateTournament: React.FC = () => {
   );
 };
 
-export default CreateTournament;
+export default CreateTournamentControl;
