@@ -11,9 +11,7 @@ import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 const linkTextColor = darken(0.1, '#006699');
 const Header = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
   font-size: 2em;
   background-image: linear-gradient(
     to right,
