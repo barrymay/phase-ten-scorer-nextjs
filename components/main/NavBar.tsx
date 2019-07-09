@@ -43,6 +43,7 @@ const NavBar: React.FC = ({ children }) => {
           font-size: ${isMinimal ? '.8em' : '1em'};
           padding: ${isMinimal ? '0px 10px' : '0px 10px'};
           color: ${linkTextColor};
+          font-weight: normal;
           height: unset;
           &:hover {
             color: ${lighten(0.5, linkTextColor)};
@@ -59,12 +60,7 @@ const NavBar: React.FC = ({ children }) => {
 
   return (
     <Header>
-      <LinkButton
-        href="/"
-        css={[HeaderLinkStyle, LinkStyle(false)]}
-        color={linkTextColor}
-        minimal
-      >
+      <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
         <FontAwesomeIcon
           css={{
             paddingRight: 4,
@@ -80,7 +76,6 @@ const NavBar: React.FC = ({ children }) => {
           <RouteButton
             key={key}
             css={LinkStyle(true)}
-            color={linkTextColor}
             minimal
             routeKey={key as RouteKeys}
           />
