@@ -1,6 +1,5 @@
-import { NextContext } from 'next';
 import Head from 'next/head';
-import { MainMenu } from './main/MainMenu';
+import { MainMenu } from '../components/main/MainMenu';
 
 function Start() {
   return (
@@ -12,10 +11,5 @@ function Start() {
     </div>
   );
 }
-Start.getInitialProps = async ({ req }: NextContext) => {
-  let pageProps = {};
-
-  return { pageProps };
-};
 
 export default Start;

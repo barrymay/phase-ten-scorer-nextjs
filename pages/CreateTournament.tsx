@@ -1,7 +1,6 @@
-import { NextContext } from 'next';
 import Head from 'next/head';
-import CreateTournamentControl from './game/CreateTournamentControl';
-import ProviderWrapper from './game/ProviderWrapper';
+import CreateTournamentControl from '../components/game/CreateTournamentControl';
+import ProviderWrapper from '../components/game/ProviderWrapper';
 
 function CreateTournament() {
   return (
@@ -15,10 +14,5 @@ function CreateTournament() {
     </div>
   );
 }
-CreateTournament.getInitialProps = async ({ req }: NextContext) => {
-  let pageProps = {};
-
-  return { pageProps };
-};
 
 export default CreateTournament;

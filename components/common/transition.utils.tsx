@@ -2,7 +2,7 @@ import { css } from '@emotion/core';
 
 export const getFadeCss = (
   parentSelector: string,
-  transitionTimeMs: number
+  transitionTimeMs: number,
 ) => css`
   flex: 1;
   position: relative;
@@ -43,7 +43,7 @@ export const getFadeCss = (
 export const getMoveCss = (
   parentSelector: string,
   transitionTimeMs: number,
-  moveLeft: boolean = false
+  moveLeft: boolean = false,
 ) => {
   const moveFactor = moveLeft ? 1 : -1;
   return css`

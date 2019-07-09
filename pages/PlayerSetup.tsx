@@ -1,7 +1,6 @@
-import { NextContext } from 'next';
 import Head from 'next/head';
-import ProviderWrapper from './game/ProviderWrapper';
-import PlayerSetupControl from './playerSetup/PlayerSetupControl';
+import ProviderWrapper from '../components/game/ProviderWrapper';
+import PlayerSetupControl from '../components/playerSetup/PlayerSetupControl';
 
 function PlayerSetup() {
   return (
@@ -15,10 +14,5 @@ function PlayerSetup() {
     </div>
   );
 }
-PlayerSetup.getInitialProps = async ({ req }: NextContext) => {
-  let pageProps = {};
-
-  return { pageProps };
-};
 
 export default PlayerSetup;

@@ -2,9 +2,9 @@
 import { jsx } from '@emotion/core';
 import { extractCritical } from 'emotion-server';
 import Document, { Main, NextScript } from 'next/document';
-import FontAwesomeSetup from './common/font-awesome/FontAwesomeSetup';
-import GlobalNormalize from './defaults/GlobalNormalize';
-import Meta from './Meta';
+import FontAwesomeSetup from '../components/common/font-awesome/FontAwesomeSetup';
+import GlobalNormalize from '../components/defaults/GlobalNormalize';
+import Meta from '../components/Meta';
 
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }: { renderPage: any }) {
