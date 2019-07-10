@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 export interface IRect {
@@ -8,16 +8,13 @@ export interface IRect {
   height: number;
 }
 
+export interface RefContainer<T> {
+  ref: RefObject<T>;
+}
+
 export default function useMeasure<T extends HTMLElement>(): [
-  {
-    ref: RefObject<T>;
-  },
-  {
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  }
+  RefContainer<T>,
+  IRect,
 ] {
   const ref = useRef<T>(null);
   const [bounds, set] = useState<IRect>({
@@ -30,7 +27,7 @@ export default function useMeasure<T extends HTMLElement>(): [
     () =>
       new ResizeObserver(([entry]) => {
         set(entry.contentRect);
-      })
+      }),
   );
 
   useEffect(() => {
@@ -43,7 +40,9 @@ export default function useMeasure<T extends HTMLElement>(): [
     if (ref.current) {
       ro.observe(ref.current);
     }
-    return () => ro.disconnect();
+    return () => {
+      ro.disconnect();
+    };
   }, [ro]);
   return [{ ref }, bounds];
 }

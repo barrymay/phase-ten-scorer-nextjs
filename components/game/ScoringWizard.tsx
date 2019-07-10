@@ -1,22 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { faArrowLeft, faArrowRight } from '@fortawesome/pro-regular-svg-icons';
 import React, {
   createRef,
   RefObject,
   useCallback,
-  useRef,
-  useState,
   useEffect,
   useMemo,
+  useRef,
+  useState,
 } from 'react';
 import P10Button from '../common/button/P10Button';
 import useMeasure, { IRect } from '../common/useMeasure';
 import { usePlayersState } from '../context/PlayersContext';
 import { IRound, IRoundPlayerData } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
-import SingleScoreForm from './SingleScoreForm';
 import DivAnimator from './DivAnimator';
-import { faArrowRight, faArrowLeft } from '@fortawesome/pro-regular-svg-icons';
+import SingleScoreForm from './SingleScoreForm';
 
 export interface ISingleScoreFormFuncs {
   performSubmit: () => void;
@@ -35,7 +35,6 @@ const ScoringWizard: React.FC<{
   const formRefMap = useRef<Array<RefObject<ISingleScoreFormFuncs>>>([]);
   const [refWidthMeasure, boundsWidth] = useMeasure<HTMLDivElement>();
   const [refHeightMeasure, boundsHeight] = useMeasure<HTMLDivElement>();
-
   const [
     { left: maxLeft, top: maxTop, width: maxWidth, height: maxHeight },
     setMaxBounds,
