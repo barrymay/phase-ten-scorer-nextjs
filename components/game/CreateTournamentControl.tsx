@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { navigate } from '@reach/router';
+import Router from 'next/router';
 import React, { useEffect } from 'react';
 import useForm from 'react-hook-form';
 import { DataType, ErrorMessages } from 'react-hook-form/dist/types';
@@ -58,7 +58,7 @@ const CreateTournamentControl: React.FC = () => {
     let name = getValues().tourneyName;
     let players = getValues().players;
     addTournament({ name, players });
-    navigate('/');
+    Router.push('/');
   };
 
   const onPlayerSelectorChange = (newValue: string[]) => {
