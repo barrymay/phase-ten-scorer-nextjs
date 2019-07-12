@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import {
-  usePlayersState,
-  IPlayerMap,
   IPlayer,
+  IPlayerMap,
+  usePlayersState,
 } from '../context/PlayersContext';
 const PlayerSelector: React.FC<{
   onChange: (newValue: string[]) => void;
@@ -13,6 +13,8 @@ const PlayerSelector: React.FC<{
   const players = usePlayersState();
 
   const selectPlayer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
     let targetValue = e.currentTarget.value;
     let isValueInPlayers = players[targetValue];
     if (!isValueInPlayers) {
