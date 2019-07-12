@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React from 'react';
-import { IRound } from '../context/TournamentContext';
 import css from '@emotion/css';
+import React, { useMemo } from 'react';
+import { IRound } from '../context/TournamentContext';
 
 const totalerStyle = css`
   display: flex;
@@ -22,29 +22,43 @@ const totalerStyle = css`
     border-top: 1px solid black;
   }
 `;
-const Totaler: React.FC<{ playerId: string; rounds: IRound[] }> = ({
-  playerId,
-  rounds,
-}) => {
+const Totaler: React.FC<{
+  expanded?: boolean;
+  playerId: string;
+  rounds: IRound[];
+}> = ({ expanded = false, playerId, rounds }) => {
   let total = 0;
-  return (
-    <div css={totalerStyle}>
-      <div key="total-top">{total}</div>
-      {rounds.map((item, index) => {
-        if (item[playerId]) {
-          total += item[playerId].score;
-          return (
-            <React.Fragment key={`total-${index}`}>
-              <div>{item[playerId].score}</div>
-              <div className="total">{total}</div>
-            </React.Fragment>
-          );
-        } else {
-          return null;
+
+  const totalOutput = useMemo(() => {
+    if (expanded) {
+      return (
+        <React.Fragment>
+          <div key="total-top">{total}</div>
+          {rounds.map((item, index) => {
+            if (item[playerId]) {
+              total += item[playerId].score;
+              return (
+                <React.Fragment key={`total-${index}`}>
+                  <div>{item[playerId].score}</div>
+                  <div className="total">{total}</div>
+                </React.Fragment>
+              );
+            }
+          })}
+        </React.Fragment>
+      );
+    } else {
+      const sum = rounds.reduce((result, next) => {
+        if (next[playerId]) {
+          result += next[playerId].score;
         }
-      })}
-    </div>
-  );
+        return result;
+      }, total);
+      return <div key="total-top">{sum}</div>;
+    }
+  }, []);
+
+  return <div css={totalerStyle}>{totalOutput}</div>;
 };
 
 export default Totaler;
