@@ -3,8 +3,6 @@ import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { faUserPlus, faUserSlash } from '@fortawesome/pro-regular-svg-icons';
 import React, { useEffect, useRef, useState } from 'react';
-import { useEventCallback } from 'rxjs-hooks';
-import { ignoreElements, map, pluck, withLatestFrom } from 'rxjs/operators';
 import P10Button from '../common/button/P10Button';
 import { CardContainer } from '../common/styles/basic';
 import { usePlayersDispatch, usePlayersState } from '../context/PlayersContext';
@@ -42,43 +40,20 @@ export const PlayerSetupControl: React.FC = () => {
     setName('');
   };
 
-  const [changeCallback] = useEventCallback<
-    React.ChangeEvent<HTMLInputElement>
-  >(event$ =>
-    event$.pipe(
-      pluck('target', 'value'),
-      map(value => {
-        value = value.slice(0, 20).replace(/[^\w\d\s]/g, '');
-        setName(value);
-      }),
-    ),
-  );
+  const keyHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      addPlayer(event.currentTarget.value);
+    } else if (event.key === 'Escape') {
+      setName('');
+    }
+  };
 
-  const [keyUpCallback] = useEventCallback<
-    React.KeyboardEvent<HTMLInputElement>,
-    undefined,
-    [typeof name]
-  >(
-    (event$, input$) => {
-      return event$.pipe(
-        withLatestFrom(input$),
-        map(([event, input]) => {
-          switch (event.key) {
-            case 'Enter':
-              addPlayer(input[0]);
-              break;
-            case 'Escape':
-              setName('');
-              break;
-          }
-          return;
-        }),
-        ignoreElements(),
-      );
-    },
-    undefined,
-    [name],
-  );
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.currentTarget.value
+      .slice(0, 20)
+      .replace(/[^\w\d\s]/g, '');
+    setName(newValue);
+  };
 
   useEffect(() => {
     let { current: input } = textRef;
@@ -105,8 +80,8 @@ export const PlayerSetupControl: React.FC = () => {
             id="player_add_input"
             ref={textRef}
             value={name}
-            onChange={changeCallback}
-            onKeyUp={keyUpCallback}
+            onChange={changeHandler}
+            onKeyUp={keyHandler}
             type="text"
           />
           <P10Button
