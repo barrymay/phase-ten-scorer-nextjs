@@ -1,15 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
+import dynamic from 'next/dynamic';
 import React, { useMemo, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';
 import Modal from '../common/Modal';
 import { IPlayer, usePlayerInfo } from '../context/PlayersContext';
 import { IRound } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
-import PhaseScorer from './PhaseScorer';
 import ScoringWizard from './ScoringWizard';
 import Totaler from './Totaler';
+
+const PhaseScorer = dynamic(() => import('./PhaseScorer'));
 
 interface IOwnProps {
   gameId: string;
