@@ -2,7 +2,6 @@
 import { jsx } from '@emotion/core';
 import Document, { Main, NextScript } from 'next/document';
 import FontAwesomeSetup from '../components/common/font-awesome/FontAwesomeSetup';
-import GlobalNormalize from '../components/defaults/GlobalNormalize';
 import Meta from '../components/Meta';
 
 export default class MyDocument extends Document {
@@ -18,7 +17,6 @@ export default class MyDocument extends Document {
     return (
       <html>
         <FontAwesomeSetup></FontAwesomeSetup>
-        <GlobalNormalize></GlobalNormalize>
         <Meta></Meta>
 
         <body>

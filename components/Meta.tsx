@@ -1,5 +1,7 @@
+import normalizeCss from '!!raw-loader!normalize.css';
 import { css, Global } from '@emotion/core';
 import Head from 'next/head';
+
 const Meta = () => (
   <div>
     <Head>
@@ -8,6 +10,7 @@ const Meta = () => (
     </Head>
     <Global
       styles={css`
+        ${normalizeCss}
         body {
           margin: 0;
 
