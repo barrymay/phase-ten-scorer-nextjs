@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import React, { useEffect, useRef } from 'react';
-import { useSprings, animated } from 'react-spring';
 import styled from '@emotion/styled';
+import React, { useEffect, useRef } from 'react';
+import { animated, useSprings } from 'react-spring';
 
 export interface CarouselSpringProps {
   x: number;
@@ -84,7 +84,7 @@ const DivAnimator: React.FC<{
         <animated.div
           key={i}
           style={{
-            transform: x.interpolate(x => `translate3d(${x}px,0,0)`),
+            transform: x.to(x => `translate3d(${x}px,0,0)`),
           }}
         >
           <div>{childArr[i]}</div>
