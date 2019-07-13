@@ -28,12 +28,12 @@ const getStateColors = (value: PhaseState) => {
     case 'new-complete':
       return {
         transformStyle: 'preserve-3d',
-        transform: 'rotateY(180deg)',
+        transform: 'rotateX(180deg)',
       };
     default:
       return {
         transformStyle: 'preserve-3d',
-        transform: 'rotateY(0deg)',
+        transform: 'rotateX(0deg)',
       };
   }
 };
@@ -42,16 +42,18 @@ const phaseStyle = css`
   min-width: 100px;
   border: 0px solid black;
   outline: none;
+  background: inherit;
+  color: inherit;
+  padding: 2px;
   cursor: pointer;
   &.completed {
     cursor: default;
   }
-  height: 20px;
+  height: 18px;
   .card {
     border: 1px solid black;
     border-radius: 0.25em;
     padding: 2px;
-    width: 100%;
     height: 100%;
     position: relative;
 
@@ -71,7 +73,7 @@ const phaseStyle = css`
     .back {
       color: white;
       background-color: green;
-      transform: rotateY(180deg);
+      transform: rotateY(180deg) rotateZ(180deg);
     }
   }
 `;
