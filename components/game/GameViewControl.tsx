@@ -91,12 +91,14 @@ const GameViewControl: React.FC = () => {
           width: ${100 / players.length}%;
           border: 1px solid black;
           align-content: center;
-          .playerName {
-            display: flex;
-            justify-content: center;
+          > div:not(:last-child) {
             border-bottom: 1px solid black;
           }
-          .total-container {
+          .player-data {
+            display: flex;
+            justify-content: center;
+          }
+          .player-total {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -180,15 +182,15 @@ const GameViewControl: React.FC = () => {
           {players.map(player => (
             <React.Fragment key={player.id}>
               <div className="column">
-                <div className="playerName">{player.name}</div>
-                <div className="playerName">
+                <div className="player-data">{player.name}</div>
+                <div className="player-total">
+                  <Totaler playerId={player.id} rounds={tournament.rounds} />
+                </div>
+                <div className="player-data">
                   <PhaseScorer
                     playerId={player.id}
                     rounds={tournament.rounds}
                   />
-                </div>
-                <div className="total-container">
-                  <Totaler playerId={player.id} rounds={tournament.rounds} />
                 </div>
               </div>
             </React.Fragment>

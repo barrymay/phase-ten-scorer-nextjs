@@ -32,7 +32,7 @@ const Totaler: React.FC<{
   const totalOutput = useMemo(() => {
     if (expanded) {
       return (
-        <React.Fragment>
+        <div css={totalerStyle}>
           <div key="total-top">{total}</div>
           {rounds.map((item, index) => {
             if (item[playerId]) {
@@ -45,7 +45,7 @@ const Totaler: React.FC<{
               );
             }
           })}
-        </React.Fragment>
+        </div>
       );
     } else {
       const sum = rounds.reduce((result, next) => {
@@ -54,11 +54,25 @@ const Totaler: React.FC<{
         }
         return result;
       }, total);
-      return <div key="total-top">{sum}</div>;
+      return (
+        <div
+          css={css`
+            display: flex;
+            .score {
+              flex: 1 1 auto;
+              padding-right: 8px;
+            }
+          `}
+          key="total-top"
+        >
+          <div className="score">Score:</div>
+          <div>{sum}</div>
+        </div>
+      );
     }
   }, []);
 
-  return <div css={totalerStyle}>{totalOutput}</div>;
+  return <React.Fragment>{totalOutput}</React.Fragment>;
 };
 
 export default Totaler;

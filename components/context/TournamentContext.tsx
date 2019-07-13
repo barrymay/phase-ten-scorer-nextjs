@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import uuid from 'uuid';
+import { usePlayersState } from './PlayersContext';
 
 export interface IRoundPlayerData {
   score: number;
@@ -91,14 +92,21 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   children,
   testValue,
 }) => {
+  const playerIds = Object.keys(usePlayersState());
   const [tournaments, setTournaments] = useState<InternalTournamentState>(
     INIT_STATE,
   );
   const resolveTournament = useCallback(
     (tournamentData: ITournament): ITournament => {
-      return {
+      const tournament = {
         ...tournamentData,
-        playerData: getRemainingPhases(tournamentData),
+        playerIds: tournamentData.playerIds.filter(item =>
+          playerIds.includes(item),
+        ),
+      };
+      return {
+        ...tournament,
+        playerData: getRemainingPhases(tournament),
       };
     },
     [],

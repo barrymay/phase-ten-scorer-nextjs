@@ -1,6 +1,7 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import { IRound } from '../context/TournamentContext';
+import PhaseButton from './PhaseButton';
 interface IPhase {
   id: number;
   rule: string;
@@ -59,29 +60,12 @@ const generateRowPhases = (inputArray: IPhase[]): IPhase[][] => {
 const rowPhases = generateRowPhases(phases);
 
 const phaseScorerStyle = css`
-  display: flex;
-  flex-direction: column;
-  .row {
-    display: flex;
-    .phase {
-      border: 1px solid black;
-      vertical-align: middle;
-      font-size: 0.8em;
-      display: flex;
-      border-radius: 16px;
-      min-width: 16px;
-      min-height: 16px;
-      align-items: center;
-      justify-content: center;
-      margin: 2px;
-      padding: 2px;
-      cursor: default;
-      &.completed {
-        color: white;
-        background-color: black;
-      }
-    }
-  }
+  padding: 4px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 5px;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 `;
 
 const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
@@ -97,21 +81,17 @@ const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
   }, []);
   return (
     <div css={phaseScorerStyle}>
-      {rowPhases.map((innerList, index) => (
-        <div key={`phase-row-${index}`} className="row">
-          {innerList.map((phase, index) => (
-            <div
-              key={`phase-${phase.id}`}
-              className={`phase ${
-                phasesList.includes(phase.id) ? 'completed' : ''
-              }`}
-              title={phase.rule}
-            >
-              {phase.id}
-            </div>
-          ))}
-        </div>
-      ))}
+      {rowPhases.map((innerList, index) =>
+        innerList.map((phase, index) => (
+          <PhaseButton
+            key={`phase-${phase.id}`}
+            isCompleted={phasesList.includes(phase.id)}
+            title={phase.rule}
+          >
+            {phase.id}
+          </PhaseButton>
+        )),
+      )}
     </div>
   );
 };
