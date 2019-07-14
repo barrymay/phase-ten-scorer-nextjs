@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { IRound } from '../context/TournamentContext';
 import PhaseButton, { PhaseState } from './PhaseButton';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 interface IPhase {
   id: number;
   shortRule: string;
@@ -62,6 +62,16 @@ const phases: IPhase[] = [
   },
 ];
 
+const getPhaseState = (rounds: IRound[], playerId: string) => {
+  return rounds.reduce<PhaseState[]>((result, next) => {
+    const roundForPlayer = next[playerId];
+    if (roundForPlayer) {
+      result[roundForPlayer.phaseCompleted] = 'complete';
+    }
+    return result;
+  }, new Array(10).fill('default'));
+};
+
 const phaseScorerStyle = css`
   padding: 4px;
   display: grid;
@@ -75,19 +85,16 @@ const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
   playerId,
   rounds,
 }) => {
-  const phasesList = useMemo(
-    () =>
-      rounds.reduce<PhaseState[]>((result, next) => {
-        const roundForPlayer = next[playerId];
-        if (roundForPlayer) {
-          result[roundForPlayer.phaseCompleted] = 'complete';
-        }
-        return result;
-      }, new Array(10).fill('default')),
-    [],
+  const lastRounds = useRef<PhaseState[] | null>(null);
+  const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
+    getPhaseState(rounds, playerId),
   );
 
-  const [phaseStates, setPhaseStates] = useState<PhaseState[]>(phasesList);
+  useEffect(() => {
+    if (!lastRounds.current || rounds.length !== lastRounds.current.length) {
+      setPhaseStates(getPhaseState(rounds, playerId));
+    }
+  }, [rounds]);
 
   const setPhase = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
