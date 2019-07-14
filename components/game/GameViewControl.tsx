@@ -97,6 +97,8 @@ const GameViewControl: React.FC = () => {
           .player-data {
             display: flex;
             justify-content: center;
+            // padding here is temporary unless measuring is set
+            padding-bottom: 10px;
           }
           .player-total {
             display: flex;
