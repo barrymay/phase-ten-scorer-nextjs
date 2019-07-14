@@ -5,49 +5,60 @@ import PhaseButton, { PhaseState } from './PhaseButton';
 import { useState, useMemo } from 'react';
 interface IPhase {
   id: number;
+  shortRule: string;
   rule: string;
 }
 
 const phases: IPhase[] = [
   {
     id: 1,
+    shortRule: 'S3/S3',
     rule: '2 sets of 3',
   },
   {
     id: 2,
+    shortRule: 'S3/R4',
     rule: '1 set of 3 + 1 run of 4',
   },
   {
     id: 3,
+    shortRule: 'S4/R4',
     rule: '1 set of 4 + 1 run of 4',
   },
   {
     id: 4,
+    shortRule: 'R7',
     rule: '1 run of 7',
   },
   {
     id: 5,
+    shortRule: 'R8',
     rule: '1 run of 8',
   },
   {
     id: 6,
+    shortRule: 'R9',
     rule: '1 run of 9',
   },
   {
     id: 7,
+    shortRule: 'S4/S4',
     rule: '2 sets of 4',
   },
   {
     id: 8,
+    shortRule: '7C',
     rule: '7 cards of one color',
   },
   {
     id: 9,
+    shortRule: 'S5/S2',
     rule: '1 set of 5 + 1 set of 2',
   },
   {
     id: 10,
-    rule: '1 set of 5 + 1 set of 2',
+    shortRule: 'S5/S3',
+    rule: '1 set of 5 + 1 set of 3',
   },
 ];
 
@@ -102,7 +113,24 @@ const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
               setPhase(e, index);
             }}
           >
-            {phase.id}
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                padding: 0px 4px;
+                .id {
+                  flex: 1 1 auto;
+                  text-align: left;
+                }
+                .rule {
+                  font-size: 0.8em;
+                  justify-content: flex-end;
+                }
+              `}
+            >
+              <div className="id">{phase.id}</div>
+              <div className="rule">{phase.shortRule}</div>
+            </div>
           </PhaseButton>
         );
       })}
