@@ -36,14 +36,14 @@ const PhaseButton: React.FC<
 > = props => {
   const { completedState, children, ...nonChildProps } = props;
   const lastState = useRef<PhaseState | null>('default');
-  const lastColor = useRef<string>('whtie');
+  const lastBgColor = useRef<string>('whtie');
 
   const phaseStyle = useMemo(() => {
     const desiredBackgroundColor =
       completedState === 'new-complete' ? 'green' : 'black';
 
-    if (lastState.current === 'default' || desiredBackgroundColor === 'black') {
-      lastColor.current = desiredBackgroundColor;
+    if (lastState.current === 'default' || completedState === 'complete') {
+      lastBgColor.current = desiredBackgroundColor;
     }
     lastState.current = completedState;
 
@@ -68,7 +68,6 @@ const PhaseButton: React.FC<
 
         .front,
         .back {
-          will-change: color, background-color;
           backface-visibility: hidden;
           position: absolute;
           top: 0;
@@ -82,7 +81,7 @@ const PhaseButton: React.FC<
         }
         .back {
           color: white;
-          background-color: ${lastColor.current};
+          background-color: ${lastBgColor.current};
           transform: rotateY(180deg) rotateZ(180deg);
         }
       }
