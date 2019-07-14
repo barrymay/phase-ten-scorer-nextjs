@@ -97,8 +97,6 @@ const GameViewControl: React.FC = () => {
           .player-data {
             display: flex;
             justify-content: center;
-            // padding here is temporary unless measuring is set
-            padding-bottom: 10px;
           }
           .player-total {
             display: flex;
@@ -188,7 +186,13 @@ const GameViewControl: React.FC = () => {
                 <div className="player-total">
                   <Totaler playerId={player.id} rounds={tournament.rounds} />
                 </div>
-                <div className="player-data">
+                <div
+                  className="player-data"
+                  css={css`
+                    // padding here is temporary unless measuring is set
+                    padding-bottom: 10px;
+                  `}
+                >
                   <PhaseScorer
                     playerId={player.id}
                     rounds={tournament.rounds}

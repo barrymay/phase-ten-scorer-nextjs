@@ -47,7 +47,7 @@ const phases: IPhase[] = [
   },
   {
     id: 8,
-    shortRule: '7C',
+    shortRule: 'C7',
     rule: '7 cards of one color',
   },
   {

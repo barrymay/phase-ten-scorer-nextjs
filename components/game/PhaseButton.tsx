@@ -87,14 +87,9 @@ const PhaseButton: React.FC<
     setFlip(getStateColors(completedState));
   }, [completedState]);
 
-  const flipButton = (e: MouseEvent<HTMLButtonElement>) => {
-    //setCurrentFlip(!currentFlip);
-    console.log('Hit', e.currentTarget);
-  };
-
   const className = `phase ${completedState === 'complete' ? 'completed' : ''}`;
   return (
-    <button css={phaseStyle} onClick={flipButton} {...nonChildProps}>
+    <button css={phaseStyle} {...nonChildProps}>
       <animated.div className="card" style={propsFlip}>
         <div className="back">{children}</div>
         <div className="front">{children}</div>
