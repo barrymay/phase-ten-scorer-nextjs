@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { CSSProperties } from '@emotion/serialize';
-import { Merge } from '@react-spring/shared';
+import { CSSProperties, SerializedStyles } from '@emotion/serialize';
+
 import { ButtonHTMLAttributes, useEffect, useMemo, useRef } from 'react';
 import { animated, useSpring } from 'react-spring';
+import { Merge } from '../../ts-common/merge';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
@@ -66,10 +67,10 @@ const baseButtonStyles = css`
   }
 `;
 
-const PhaseButton: React.FC<
-  Merge<ButtonHTMLAttributes<HTMLElement>, { completedState: PhaseState }>
-> = props => {
-  const { completedState, children, ...nonChildProps } = props;
+function useAnimatedCardFlip(
+  completedState: PhaseState,
+  // @ts-ignore
+): [SpringValues<ISpringType>, SerializedStyles] {
   const lastState = useRef<PhaseState | null>('default');
   const lastBgColor = useRef<string>('whtie');
 
@@ -102,6 +103,15 @@ const PhaseButton: React.FC<
   useEffect(() => {
     setFlip(getStateColors(completedState));
   }, [completedState]);
+
+  return [propsFlip, phaseStyle];
+}
+
+const PhaseButton: React.FC<
+  Merge<ButtonHTMLAttributes<HTMLElement>, { completedState: PhaseState }>
+> = props => {
+  const { completedState, children, ...nonChildProps } = props;
+  const [propsFlip, phaseStyle] = useAnimatedCardFlip(completedState);
 
   return (
     <button className={completedState} css={phaseStyle} {...nonChildProps}>
