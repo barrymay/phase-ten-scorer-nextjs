@@ -8,16 +8,6 @@
   "prettier.eslintIntegration": true,
   "eslint.enable": true,
   "jest.autoEnable": false,
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "[typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
   "editor.formatOnSave": true,
-  "eslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": true
 }
