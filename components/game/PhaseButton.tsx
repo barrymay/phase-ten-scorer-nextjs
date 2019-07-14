@@ -39,7 +39,7 @@ const phaseStyle = css`
   color: inherit;
   padding: 2px;
   cursor: pointer;
-  &.completed {
+  &.complete {
     cursor: default;
   }
   height: 18px;
@@ -86,10 +86,8 @@ const PhaseButton: React.FC<
   useEffect(() => {
     setFlip(getStateColors(completedState));
   }, [completedState]);
-
-  const className = `phase ${completedState === 'complete' ? 'completed' : ''}`;
   return (
-    <button css={phaseStyle} {...nonChildProps}>
+    <button className={completedState} css={phaseStyle} {...nonChildProps}>
       <animated.div className="card" style={propsFlip}>
         <div className="back">{children}</div>
         <div className="front">{children}</div>

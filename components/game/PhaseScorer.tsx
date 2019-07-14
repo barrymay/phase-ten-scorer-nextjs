@@ -93,6 +93,9 @@ const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     phaseId: number,
   ) => {
+    if (phaseStates[phaseId] === 'complete') {
+      return;
+    }
     const newStates = phaseStates.map<PhaseState>((item, index) =>
       index !== phaseId && item === 'new-complete' ? 'default' : item,
     );
