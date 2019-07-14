@@ -177,13 +177,7 @@ const GameViewControl: React.FC = () => {
                 <div className="player-total">
                   <Totaler playerId={player.id} rounds={tournament.rounds} />
                 </div>
-                <div
-                  className="player-data"
-                  css={css`
-                    // padding here is temporary unless measuring is set
-                    padding-bottom: 10px;
-                  `}
-                >
+                <div className="player-data">
                   <PhaseScorer
                     playerId={player.id}
                     rounds={tournament.rounds}

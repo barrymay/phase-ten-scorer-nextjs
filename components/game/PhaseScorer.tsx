@@ -76,7 +76,7 @@ const phaseScorerStyle = css`
   padding: 4px;
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 5px;
+  grid-gap: 2px;
   grid-template-rows: repeat(5, 1fr);
   grid-template-columns: repeat(2, 1fr);
 `;

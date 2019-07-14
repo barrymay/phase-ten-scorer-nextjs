@@ -2,9 +2,17 @@
 import { css, jsx } from '@emotion/core';
 import { CSSProperties, SerializedStyles } from '@emotion/serialize';
 
-import { ButtonHTMLAttributes, useEffect, useMemo, useRef } from 'react';
+import {
+  ButtonHTMLAttributes,
+  useEffect,
+  useMemo,
+  useRef,
+  cloneElement,
+  Children,
+} from 'react';
 import { animated, useSpring } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
+import useMeasure from '../common/useMeasure';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
@@ -39,12 +47,9 @@ const baseButtonStyles = css`
   &.complete {
     cursor: default;
   }
-  height: 18px;
   .card {
     border: 1px solid black;
     border-radius: 0.25em;
-    padding: 2px;
-    height: 100%;
     position: relative;
 
     .front,
@@ -112,12 +117,27 @@ const PhaseButton: React.FC<
 > = props => {
   const { completedState, children, ...nonChildProps } = props;
   const [propsFlip, phaseStyle] = useAnimatedCardFlip(completedState);
+  const [buttonSizer, buttonSize] = useMeasure<HTMLDivElement>();
 
   return (
-    <button className={completedState} css={phaseStyle} {...nonChildProps}>
-      <animated.div className="card" style={propsFlip}>
+    <button className={completedState} css={[phaseStyle]} {...nonChildProps}>
+      <animated.div
+        className="card"
+        style={propsFlip}
+        css={css`
+          min-height: ${buttonSize.height}px;
+        `}
+      >
         <div className="back">{children}</div>
-        <div className="front">{children}</div>
+        <div className="front">
+          {Children.map(children, (child, index) => {
+            return cloneElement(
+              // @ts-ignore
+              child,
+              index === 0 ? { ref: buttonSizer.ref } : undefined,
+            );
+          })}
+        </div>
       </animated.div>
     </button>
   );
