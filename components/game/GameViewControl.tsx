@@ -168,16 +168,7 @@ const GameViewControl: React.FC = () => {
           }
         `}
       >
-        <div className="header">
-          Game Id: {tournament.name}{' '}
-          <P10Button
-            minimal
-            title="Score Round (Ctrl-S)"
-            onClick={() => addScore()}
-          >
-            Score Round
-          </P10Button>
-        </div>
+        <div className="header">Game Id: {tournament.name} </div>
         <GameBoard>
           {players.map(player => (
             <React.Fragment key={player.id}>
@@ -202,6 +193,13 @@ const GameViewControl: React.FC = () => {
             </React.Fragment>
           ))}
         </GameBoard>
+        <P10Button
+          minimal
+          title="Score Round (Ctrl-S)"
+          onClick={() => addScore()}
+        >
+          Score Round
+        </P10Button>
       </div>
     </div>
   );
