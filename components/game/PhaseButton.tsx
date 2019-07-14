@@ -5,18 +5,11 @@ import { Merge } from '@react-spring/shared';
 import { ButtonHTMLAttributes, MouseEvent, useEffect, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
-type PhaseState = 'default' | 'complete' | 'new-complete';
+export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
   color: string;
   backgroundColor: string;
 }
-
-const getFlipState = (
-  isCompleted: boolean,
-  currentFlip: boolean,
-): PhaseState => {
-  return isCompleted ? 'complete' : currentFlip ? 'new-complete' : 'default';
-};
 
 const getStateColors = (value: PhaseState) => {
   switch (value) {
@@ -79,29 +72,27 @@ const phaseStyle = css`
 `;
 
 const PhaseButton: React.FC<
-  Merge<ButtonHTMLAttributes<HTMLElement>, { isCompleted: boolean }>
+  Merge<ButtonHTMLAttributes<HTMLElement>, { completedState: PhaseState }>
 > = props => {
-  const { isCompleted, children, ...nonChildProps } = props;
-  const [currentFlip, setCurrentFlip] = useState(isCompleted);
+  const { completedState, children, ...nonChildProps } = props;
 
   // @ts-ignore
   const [propsFlip, setFlip] = useSpring<ISpringType>(() => {
     return {
-      ...getStateColors(getFlipState(isCompleted, currentFlip)),
+      ...getStateColors(completedState),
     };
   });
 
   useEffect(() => {
-    const phaseState: PhaseState = isCompleted ? 'complete' : 'default';
-    setFlip(getStateColors(getFlipState(isCompleted, currentFlip)));
-  }, [isCompleted, currentFlip]);
+    setFlip(getStateColors(completedState));
+  }, [completedState]);
 
   const flipButton = (e: MouseEvent<HTMLButtonElement>) => {
-    setCurrentFlip(!currentFlip);
+    //setCurrentFlip(!currentFlip);
     console.log('Hit', e.currentTarget);
   };
 
-  const className = `phase ${isCompleted ? 'completed' : ''}`;
+  const className = `phase ${completedState === 'complete' ? 'completed' : ''}`;
   return (
     <button css={phaseStyle} onClick={flipButton} {...nonChildProps}>
       <animated.div className="card" style={propsFlip}>

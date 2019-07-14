@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { IRound } from '../context/TournamentContext';
-import PhaseButton from './PhaseButton';
+import PhaseButton, { PhaseState } from './PhaseButton';
+import { useState, useMemo } from 'react';
 interface IPhase {
   id: number;
   rule: string;
@@ -50,15 +51,6 @@ const phases: IPhase[] = [
   },
 ];
 
-const generateRowPhases = (inputArray: IPhase[]): IPhase[][] => {
-  const result: IPhase[][] = [];
-  for (let i = 0; i < inputArray.length; i += 5) {
-    result.push(inputArray.slice(i, i + 5));
-  }
-  return result;
-};
-const rowPhases = generateRowPhases(phases);
-
 const phaseScorerStyle = css`
   padding: 4px;
   display: grid;
@@ -72,26 +64,48 @@ const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
   playerId,
   rounds,
 }) => {
-  const phasesList = rounds.reduce<number[]>((result, next) => {
-    const roundForPlayer = next[playerId];
-    if (roundForPlayer) {
-      result.push(roundForPlayer.phaseCompleted);
-    }
-    return result;
-  }, []);
+  const phasesList = useMemo(
+    () =>
+      rounds.reduce<PhaseState[]>((result, next) => {
+        const roundForPlayer = next[playerId];
+        if (roundForPlayer) {
+          result[roundForPlayer.phaseCompleted] = 'complete';
+        }
+        return result;
+      }, new Array(10).fill('default')),
+    [],
+  );
+
+  const [phaseStates, setPhaseStates] = useState<PhaseState[]>(phasesList);
+
+  const setPhase = (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    phaseId: number,
+  ) => {
+    const newStates = phaseStates.map<PhaseState>((item, index) =>
+      index !== phaseId && item === 'new-complete' ? 'default' : item,
+    );
+    newStates[phaseId] =
+      newStates[phaseId] === 'default' ? 'new-complete' : 'default';
+    setPhaseStates(newStates);
+  };
+
   return (
     <div css={phaseScorerStyle}>
-      {rowPhases.map((innerList, index) =>
-        innerList.map((phase, index) => (
+      {phases.map((phase, index) => {
+        return (
           <PhaseButton
             key={`phase-${phase.id}`}
-            isCompleted={phasesList.includes(phase.id)}
+            completedState={phaseStates[index]}
             title={phase.rule}
+            onClick={e => {
+              setPhase(e, index);
+            }}
           >
             {phase.id}
           </PhaseButton>
-        )),
-      )}
+        );
+      })}
     </div>
   );
 };
