@@ -14,10 +14,6 @@ interface ISpringType extends CSSProperties {
 const getStateColors = (value: PhaseState) => {
   switch (value) {
     case 'complete':
-      return {
-        transformStyle: 'preserve-3d',
-        transform: 'rotateX(180deg)',
-      };
     case 'new-complete':
       return {
         transformStyle: 'preserve-3d',
@@ -30,6 +26,45 @@ const getStateColors = (value: PhaseState) => {
       };
   }
 };
+
+const baseButtonStyles = css`
+  min-width: 100px;
+  border: 0px solid black;
+  outline: none;
+  background: inherit;
+  color: inherit;
+  padding: 2px;
+  cursor: pointer;
+  &.complete {
+    cursor: default;
+  }
+  height: 18px;
+  .card {
+    border: 1px solid black;
+    border-radius: 0.25em;
+    padding: 2px;
+    height: 100%;
+    position: relative;
+
+    .front,
+    .back {
+      backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .front {
+      z-index: 2;
+      transform: rotateY(0deg);
+    }
+    .back {
+      color: white;
+      transform: rotateY(180deg) rotateZ(180deg);
+    }
+  }
+`;
 
 const PhaseButton: React.FC<
   Merge<ButtonHTMLAttributes<HTMLElement>, { completedState: PhaseState }>
@@ -47,45 +82,14 @@ const PhaseButton: React.FC<
     }
     lastState.current = completedState;
 
-    return css`
-      min-width: 100px;
-      border: 0px solid black;
-      outline: none;
-      background: inherit;
-      color: inherit;
-      padding: 2px;
-      cursor: pointer;
-      &.complete {
-        cursor: default;
-      }
-      height: 18px;
-      .card {
-        border: 1px solid black;
-        border-radius: 0.25em;
-        padding: 2px;
-        height: 100%;
-        position: relative;
-
-        .front,
-        .back {
-          backface-visibility: hidden;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-        }
-        .front {
-          z-index: 2;
-          transform: rotateY(0deg);
-        }
-        .back {
-          color: white;
+    return css(
+      baseButtonStyles,
+      css`
+        .card > .back {
           background-color: ${lastBgColor.current};
-          transform: rotateY(180deg) rotateZ(180deg);
         }
-      }
-    `;
+      `,
+    );
   }, [completedState]);
 
   // @ts-ignore
