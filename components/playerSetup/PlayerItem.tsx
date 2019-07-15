@@ -8,7 +8,10 @@ import { usePlayersDispatch, IPlayer } from '../context/PlayersContext';
 interface IOwnProps {
   players: IPlayer[];
 }
-type Props = { player: IPlayer; index: number };
+interface Props {
+  player: IPlayer;
+  index: number;
+}
 
 const Item = styled.div({
   display: 'flex',

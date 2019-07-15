@@ -108,7 +108,7 @@ function useAnimatedCardFlip(
 
   useEffect(() => {
     setFlip(getStateColors(completedState));
-  }, [completedState]);
+  }, [completedState, setFlip]);
 
   return [propsFlip, phaseStyle];
 }

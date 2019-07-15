@@ -89,14 +89,14 @@ const useMeasureAndUpdate = (
   const [measureRef, boundsUpdate] = useMeasure();
   const measureUpdateCallback = useCallback(() => {
     onMeasureUpdate();
-  }, []);
+  }, [onMeasureUpdate]);
 
   useEffect(() => {
     if (boundsUpdate.height !== height.current) {
       height.current = boundsUpdate.height;
       measureUpdateCallback();
     }
-  }, [boundsUpdate]);
+  }, [boundsUpdate, measureUpdateCallback]);
 
   return [measureRef, boundsUpdate];
 };
@@ -115,7 +115,7 @@ const PhaseScorer: React.FC<{
     if (!lastRounds.current || rounds.length !== lastRounds.current.length) {
       setPhaseStates(getPhaseState(rounds, playerId));
     }
-  }, [rounds]);
+  }, [playerId, rounds]);
   const [measureRef, sizer] = useMeasureAndUpdate(onMeasureUpdate);
 
   const setPhase = (

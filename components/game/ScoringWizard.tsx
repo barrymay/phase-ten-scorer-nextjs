@@ -165,6 +165,7 @@ const ScoringWizard: React.FC<{
     players,
     refHeightMeasure.ref,
     roundScore,
+    roundScoreInput,
     tournament.playerIds,
   ]);
 
