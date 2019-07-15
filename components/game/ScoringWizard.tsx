@@ -13,7 +13,11 @@ import React, {
 import P10Button from '../common/button/P10Button';
 import useMeasure, { IRect } from '../common/useMeasure';
 import { usePlayersState } from '../context/PlayersContext';
-import { IRound, IRoundPlayerData } from '../context/TournamentContext';
+import {
+  IRound,
+  IRoundPlayerData,
+  IRoundPartial,
+} from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import DivAnimator from './DivAnimator';
 import SingleScoreForm from './SingleScoreForm';
@@ -25,8 +29,9 @@ export interface ISingleScoreFormFuncs {
 }
 
 const ScoringWizard: React.FC<{
+  roundScoreInput: IRoundPartial;
   onComplete: (roundScore: IRound) => void;
-}> = ({ onComplete }) => {
+}> = ({ onComplete, roundScoreInput }) => {
   const players = usePlayersState();
   const { tournament } = useTournamentCurrentContext();
   const roundCount = useRef(tournament.rounds.length + 1).current;
@@ -35,6 +40,7 @@ const ScoringWizard: React.FC<{
   const formRefMap = useRef<Array<RefObject<ISingleScoreFormFuncs>>>([]);
   const [refWidthMeasure, boundsWidth] = useMeasure<HTMLDivElement>();
   const [refHeightMeasure, boundsHeight] = useMeasure<HTMLDivElement>();
+
   const [
     { left: maxLeft, top: maxTop, width: maxWidth, height: maxHeight },
     setMaxBounds,
@@ -142,6 +148,10 @@ const ScoringWizard: React.FC<{
           <SingleScoreForm
             ref={getOrCreateRef(i)}
             round={roundScore[playerId]}
+            inputPhase={
+              roundScoreInput[playerId] &&
+              roundScoreInput[playerId].phaseCompleted
+            }
             onSubmitScore={(score: IRoundPlayerData) =>
               completeScore(playerId, score)
             }

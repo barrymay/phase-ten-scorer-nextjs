@@ -18,6 +18,10 @@ export interface IRound {
   [playerId: string]: IRoundPlayerData;
 }
 
+export interface IRoundPartial {
+  [playerId: string]: Partial<IRoundPlayerData>;
+}
+
 export interface ITournament {
   id: string;
   name: string;

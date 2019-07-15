@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useCallback } from 'react';
 import P10Button from '../common/button/P10Button';
 import Modal from '../common/Modal';
 import { IPlayer, usePlayerInfo } from '../context/PlayersContext';
@@ -21,6 +21,7 @@ interface IOwnProps {
 const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
   const [showModal, setShowModal] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(true);
+  const [nextRoundScore, setNextRoundScore] = useState<IRound>({});
   const [winnerMessage, setWinnerMessage] = useState('');
   const mainDivRef = useRef<HTMLDivElement>(null);
 
@@ -71,6 +72,20 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
     }
     return resultString;
   }, [players, tournament.playerData, tournament.playerIds, winnerMessage]);
+
+  const updateMarkedPhase = useCallback(
+    (phase: number, playerId: string) => {
+      setNextRoundScore({
+        ...nextRoundScore,
+        [playerId]: {
+          phaseCompleted: phase,
+          score: -1,
+        },
+      });
+    },
+    [nextRoundScore],
+  );
+
   const addScore = () => {
     setShowModal(true);
   };
@@ -78,6 +93,7 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
   const submitScore = (newRoundScore: IRound) => {
     scoreRound(newRoundScore);
     setShowModal(false);
+    setNextRoundScore({});
     mainDivRef.current && mainDivRef.current.focus();
   };
 
@@ -140,7 +156,10 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
         onCancel={hideModal}
         width={300}
       >
-        <ScoringWizard onComplete={submitScore} />
+        <ScoringWizard
+          roundScoreInput={nextRoundScore}
+          onComplete={submitScore}
+        />
       </Modal>
       <Modal
         shown={!!winnersResult && showWinnerModal}
@@ -185,6 +204,9 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
                   <PhaseScorer
                     playerId={player.id}
                     rounds={tournament.rounds}
+                    onMarkedPhaseUpdate={markedPhase => {
+                      updateMarkedPhase(markedPhase, player.id);
+                    }}
                     onMeasureUpdate={() => {
                       onReady();
                       setAppear(true);

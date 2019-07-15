@@ -34,8 +34,9 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
   React.RefAttributes<ISingleScoreFormFuncs> & {
     round: IRoundPlayerData | undefined;
     onSubmitScore: (result: IRoundPlayerData) => void;
+    inputPhase?: number;
   }
-> = forwardRef(({ round, onSubmitScore }, ref) => {
+> = forwardRef(({ round, onSubmitScore, inputPhase }, ref) => {
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
   const { handleSubmit, register, errors, getValues, setValue } = useForm<
@@ -53,6 +54,9 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
     if (round) {
       setValue('score', '' + round.score);
       setValue('phaseCompleted', '' + round.phaseCompleted);
+    }
+    if (inputPhase) {
+      setValue('phaseCompleted', '' + inputPhase);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [round]);

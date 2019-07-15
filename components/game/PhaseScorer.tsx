@@ -105,7 +105,8 @@ const PhaseScorer: React.FC<{
   playerId: string;
   rounds: IRound[];
   onMeasureUpdate: () => void;
-}> = ({ playerId, rounds, onMeasureUpdate }) => {
+  onMarkedPhaseUpdate: (phaseMarked: number) => void;
+}> = ({ playerId, rounds, onMeasureUpdate, onMarkedPhaseUpdate }) => {
   const lastRounds = useRef<PhaseState[] | null>(null);
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
     getPhaseState(rounds, playerId),
@@ -121,6 +122,7 @@ const PhaseScorer: React.FC<{
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     phaseId: number,
   ) => {
+    const phaseSelected = phaseId + 1;
     if (phaseStates[phaseId] === 'complete') {
       return;
     }
@@ -129,6 +131,9 @@ const PhaseScorer: React.FC<{
     );
     newStates[phaseId] =
       newStates[phaseId] === 'default' ? 'new-complete' : 'default';
+    onMarkedPhaseUpdate(
+      newStates[phaseId] === 'new-complete' ? phaseSelected : -1,
+    );
     setPhaseStates(newStates);
   };
 
