@@ -98,7 +98,7 @@ function P10Button<T extends {}>(props: Props<T>) {
         height: ${minimal ? '100%' : ''};
       }
     `,
-    [],
+    [color, iconRight, minimal],
   );
 
   const content = (Tag: 'button' | 'a') => {

@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from 'react';
 import uuid from 'uuid';
 import { usePlayersState } from './PlayersContext';
 
@@ -96,7 +102,9 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   children,
   testValue,
 }) => {
-  const playerIds = Object.keys(usePlayersState());
+  const playersState = usePlayersState();
+  const playerIds = useMemo(() => Object.keys(playersState), [playersState]);
+
   const [tournaments, setTournaments] = useState<InternalTournamentState>(
     INIT_STATE,
   );
@@ -113,7 +121,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
         playerData: getRemainingPhases(tournament),
       };
     },
-    [],
+    [playerIds],
   );
 
   const updateTournaments = useCallback(

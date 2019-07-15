@@ -70,7 +70,7 @@ const Totaler: React.FC<{
         </div>
       );
     }
-  }, [rounds]);
+  }, [expanded, playerId, rounds]);
 
   return <React.Fragment>{totalOutput}</React.Fragment>;
 };
