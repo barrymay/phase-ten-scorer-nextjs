@@ -66,7 +66,7 @@ const getPhaseState = (rounds: IRound[], playerId: string) => {
   return rounds.reduce<PhaseState[]>((result, next) => {
     const roundForPlayer = next[playerId];
     if (roundForPlayer) {
-      result[roundForPlayer.phaseCompleted] = 'complete';
+      result[roundForPlayer.phaseCompleted - 1] = 'complete';
     }
     return result;
   }, new Array(10).fill('default'));
