@@ -18,7 +18,7 @@ interface IOwnProps {
   gameId: string;
 }
 
-const GameViewControl: React.FC = () => {
+const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
   const [showModal, setShowModal] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(true);
   const [winnerMessage, setWinnerMessage] = useState('');
@@ -155,7 +155,6 @@ const GameViewControl: React.FC = () => {
       >
         <div>{winnersResult}</div>
       </Modal>
-
       <div
         css={css`
           padding: 4px;
@@ -187,6 +186,7 @@ const GameViewControl: React.FC = () => {
                     playerId={player.id}
                     rounds={tournament.rounds}
                     onMeasureUpdate={() => {
+                      onReady();
                       setAppear(true);
                     }}
                   />

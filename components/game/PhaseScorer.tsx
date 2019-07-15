@@ -49,7 +49,7 @@ const phases: IPhase[] = [
   {
     id: 8,
     shortRule: 'C7',
-    rule: '7 cards of one color',
+    rule: '7 cards of one coGAMEr',
   },
   {
     id: 9,
