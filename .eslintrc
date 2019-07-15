@@ -1,5 +1,5 @@
 {
-  "plugins": ["emotion", "@typescript-eslint", "react"],
+  "plugins": ["emotion", "@typescript-eslint", "react", "react-hooks"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -24,7 +24,9 @@
     "@typescript-eslint/no-non-null-assertion": 0,
     "no-undef": "off",
     "no-console": ["error", { "allow": ["warn", "error"] }],
-    "@typescript-eslint/explicit-member-accessibility": "off"
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "parser": "@typescript-eslint/parser",
   "settings": {

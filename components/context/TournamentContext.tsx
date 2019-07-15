@@ -113,7 +113,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
         playerData: getRemainingPhases(tournament),
       };
     },
-    [],
+    [playerIds],
   );
 
   const updateTournaments = useCallback(
