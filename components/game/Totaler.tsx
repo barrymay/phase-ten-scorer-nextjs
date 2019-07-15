@@ -27,10 +27,9 @@ const Totaler: React.FC<{
   playerId: string;
   rounds: IRound[];
 }> = ({ expanded = false, playerId, rounds }) => {
-  let total = 0;
-
   const totalOutput = useMemo(() => {
     if (expanded) {
+      let total = 0;
       return (
         <div css={totalerStyle}>
           <div key="total-top">{total}</div>
@@ -53,7 +52,8 @@ const Totaler: React.FC<{
           result += next[playerId].score;
         }
         return result;
-      }, total);
+      }, 0);
+
       return (
         <div
           css={css`
@@ -70,7 +70,7 @@ const Totaler: React.FC<{
         </div>
       );
     }
-  }, []);
+  }, [rounds]);
 
   return <React.Fragment>{totalOutput}</React.Fragment>;
 };
