@@ -10,6 +10,7 @@ import { IRound } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import ScoringWizard from './ScoringWizard';
 import Totaler from './Totaler';
+import { useSpring, animated } from 'react-spring';
 
 const PhaseScorer = dynamic(() => import('./PhaseScorer'));
 
@@ -25,6 +26,8 @@ const GameViewControl: React.FC = () => {
 
   const { tournament, scoreRound } = useTournamentCurrentContext();
   const players = usePlayerInfo(tournament.playerIds);
+
+  const [appear, setAppear] = useState(false);
 
   const winnersResult = useMemo(() => {
     const playerData = tournament.playerData;
@@ -121,7 +124,6 @@ const GameViewControl: React.FC = () => {
       addScore();
     }
   };
-
   return (
     <div
       css={css`
@@ -166,6 +168,9 @@ const GameViewControl: React.FC = () => {
               margin-left: 10px;
             }
           }
+          transition: opacity 250ms ease-in-out;
+
+          opacity: ${appear ? 1 : 0};
         `}
       >
         <div className="header">Game Id: {tournament.name} </div>
@@ -181,6 +186,9 @@ const GameViewControl: React.FC = () => {
                   <PhaseScorer
                     playerId={player.id}
                     rounds={tournament.rounds}
+                    onMeasureUpdate={() => {
+                      setAppear(true);
+                    }}
                   />
                 </div>
               </div>

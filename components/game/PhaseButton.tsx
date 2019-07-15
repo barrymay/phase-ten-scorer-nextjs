@@ -9,6 +9,7 @@ import {
   useRef,
   cloneElement,
   Children,
+  RefObject,
 } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
@@ -113,11 +114,23 @@ function useAnimatedCardFlip(
 }
 
 const PhaseButton: React.FC<
-  Merge<ButtonHTMLAttributes<HTMLElement>, { completedState: PhaseState }>
+  Merge<
+    ButtonHTMLAttributes<HTMLElement>,
+    {
+      completedState: PhaseState;
+      buttonHeight: number;
+      measureRef?: RefObject<HTMLElement>;
+    }
+  >
 > = props => {
-  const { completedState, children, ...nonChildProps } = props;
+  const {
+    completedState,
+    children,
+    buttonHeight,
+    measureRef,
+    ...nonChildProps
+  } = props;
   const [propsFlip, phaseStyle] = useAnimatedCardFlip(completedState);
-  const [buttonSizer, buttonSize] = useMeasure<HTMLDivElement>();
 
   return (
     <button className={completedState} css={[phaseStyle]} {...nonChildProps}>
@@ -125,7 +138,7 @@ const PhaseButton: React.FC<
         className="card"
         style={propsFlip}
         css={css`
-          min-height: ${buttonSize.height}px;
+          min-height: ${buttonHeight}px;
         `}
       >
         <div className="back">{children}</div>
@@ -134,7 +147,7 @@ const PhaseButton: React.FC<
             return cloneElement(
               // @ts-ignore
               child,
-              index === 0 ? { ref: buttonSizer.ref } : undefined,
+              measureRef && index === 0 ? { ref: measureRef } : undefined,
             );
           })}
         </div>

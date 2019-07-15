@@ -2,7 +2,8 @@
 import { css, jsx } from '@emotion/core';
 import { IRound } from '../context/TournamentContext';
 import PhaseButton, { PhaseState } from './PhaseButton';
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import useMeasure, { RefContainer, IRect } from '../common/useMeasure';
 interface IPhase {
   id: number;
   shortRule: string;
@@ -81,20 +82,40 @@ const phaseScorerStyle = css`
   grid-template-columns: repeat(2, 1fr);
 `;
 
-const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
-  playerId,
-  rounds,
-}) => {
+const useMeasureAndUpdate = (
+  onMeasureUpdate: () => void,
+): [RefContainer<HTMLElement>, IRect] => {
+  const height = useRef(0);
+  const [measureRef, boundsUpdate] = useMeasure();
+  const measureUpdateCallback = useCallback(() => {
+    onMeasureUpdate();
+  }, []);
+
+  useEffect(() => {
+    if (boundsUpdate.height !== height.current) {
+      height.current = boundsUpdate.height;
+      measureUpdateCallback();
+    }
+  }, [boundsUpdate]);
+
+  return [measureRef, boundsUpdate];
+};
+
+const PhaseScorer: React.FC<{
+  playerId: string;
+  rounds: IRound[];
+  onMeasureUpdate: () => void;
+}> = ({ playerId, rounds, onMeasureUpdate }) => {
   const lastRounds = useRef<PhaseState[] | null>(null);
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
     getPhaseState(rounds, playerId),
   );
-
   useEffect(() => {
     if (!lastRounds.current || rounds.length !== lastRounds.current.length) {
       setPhaseStates(getPhaseState(rounds, playerId));
     }
   }, [rounds]);
+  const [measureRef, sizer] = useMeasureAndUpdate(onMeasureUpdate);
 
   const setPhase = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
@@ -122,6 +143,8 @@ const PhaseScorer: React.FC<{ playerId: string; rounds: IRound[] }> = ({
             onClick={e => {
               setPhase(e, index);
             }}
+            buttonHeight={sizer.height}
+            measureRef={index === 0 ? measureRef.ref : undefined}
           >
             <div
               css={css`
