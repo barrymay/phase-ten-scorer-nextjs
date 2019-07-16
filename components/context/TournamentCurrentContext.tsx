@@ -5,6 +5,7 @@ import { IRound, ITournament, useTournamentContext } from './TournamentContext';
 interface ITournamentCurrentContext {
   tournament: ITournament;
   scoreRound: (roundScore: IRound) => void;
+  removeCurrentTournament: () => void;
 }
 export const TournamentCurrentContext = React.createContext<ITournamentCurrentContext | null>(
   null,
@@ -18,7 +19,11 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
   tournamentId,
   children,
 }) => {
-  const { tournaments, updateTournament } = useTournamentContext();
+  const {
+    tournaments,
+    updateTournament,
+    removeTournament,
+  } = useTournamentContext();
   const currentTournament = tournaments.find(item => item.id === tournamentId);
   if (!currentTournament) {
     throw new Error('Invalid Tournament Id');
@@ -35,11 +40,19 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
     updateTournament(newValue);
   }
 
+  function removeCurrentTournament(): void {
+    if (!currentTournament) {
+      throw new Error('Invalid current tourname state');
+    }
+    removeTournament(tournamentId, true);
+  }
+
   return (
     <TournamentCurrentContext.Provider
       value={{
         tournament: currentTournament,
         scoreRound,
+        removeCurrentTournament,
       }}
     >
       {currentTournament ? children : null}

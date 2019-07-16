@@ -11,6 +11,7 @@ import { useTournamentCurrentContext } from '../context/TournamentCurrentContext
 import ScoringWizard from './ScoringWizard';
 import Totaler from './Totaler';
 import { useSpring, animated } from 'react-spring';
+import Router from 'next/router';
 
 const PhaseScorer = dynamic(() => import('./PhaseScorer'));
 
@@ -25,7 +26,11 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
   const [winnerMessage, setWinnerMessage] = useState('');
   const mainDivRef = useRef<HTMLDivElement>(null);
 
-  const { tournament, scoreRound } = useTournamentCurrentContext();
+  const {
+    tournament,
+    scoreRound,
+    removeCurrentTournament,
+  } = useTournamentCurrentContext();
   const players = usePlayerInfo(tournament.playerIds);
 
   const [appear, setAppear] = useState(false);
@@ -182,8 +187,8 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
           .header {
             display: flex;
             align-items: center;
-            button {
-              margin-left: 10px;
+            .name {
+              flex: 1 1 auto;
             }
           }
           transition: opacity 250ms ease-in-out;
@@ -191,7 +196,20 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
           opacity: ${appear ? 1 : 0};
         `}
       >
-        <div className="header">Game Id: {tournament.name} </div>
+        <div className="header">
+          <div className="name">Game Id: {tournament.name}</div>
+          <P10Button
+            minimal
+            color="red"
+            title="Remove Game"
+            onClick={() => {
+              removeCurrentTournament();
+              Router.push('/');
+            }}
+          >
+            REMOVE GAME
+          </P10Button>
+        </div>
         <GameBoard>
           {players.map(player => (
             <React.Fragment key={player.id}>
@@ -224,9 +242,6 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
         >
           Score Round
         </P10Button>
-        {/* <P10Button minimal title="Remove Game" onClick={() => removeGame()}>
-          REMOVE GAME
-        </P10Button> */}
       </div>
     </div>
   );

@@ -48,7 +48,7 @@ interface InternalTournamentContextState {
     name: string;
     players: string[];
   }) => void;
-  removeTournament: (tournamentId: string) => void;
+  removeTournament: (tournamentId: string, skipStateUpdate?: boolean) => void;
   updateTournament: (tournamentData: ITournament) => void;
 }
 
@@ -162,13 +162,17 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
     return () => undefined;
   }, [testValue, updateTournaments]);
 
-  useEffect((): VoidFunction => {
+  function saveTournamentState(tournaments: InternalTournamentState) {
     if (Array.isArray(tournaments)) {
       window.localStorage.setItem(
         TOURNAMENT_STORAGE_KEY,
         JSON.stringify(tournaments),
       );
     }
+  }
+
+  useEffect((): VoidFunction => {
+    saveTournamentState(tournaments);
     return () => undefined;
   }, [tournaments]);
 
@@ -191,9 +195,17 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
     setTournaments([...nextState, newTournament]);
   }
 
-  function removeTournament(tournamentId: string): void {
+  function removeTournament(
+    tournamentId: string,
+    skipStateUpdate?: boolean,
+  ): void {
     let nextState = tournaments !== 'loading' ? tournaments : [];
-    setTournaments(nextState.filter(item => item.id !== tournamentId));
+    const newState = nextState.filter(item => item.id !== tournamentId);
+    if (skipStateUpdate) {
+      saveTournamentState(newState);
+    } else {
+      setTournaments(nextState.filter(item => item.id !== tournamentId));
+    }
   }
 
   return (
