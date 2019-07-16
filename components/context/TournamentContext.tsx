@@ -47,7 +47,7 @@ interface InternalTournamentContextState {
   }: {
     name: string;
     players: string[];
-  }) => void;
+  }) => ITournament;
   removeTournament: (tournamentId: string, skipStateUpdate?: boolean) => void;
   updateTournament: (tournamentData: ITournament) => void;
 }
@@ -182,7 +182,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   }: {
     name: string;
     players: string[];
-  }): void {
+  }): ITournament {
     let nextState = tournaments !== 'loading' ? tournaments : [];
 
     const newTournament: ITournament = {
@@ -192,7 +192,19 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
       rounds: [],
     };
 
-    setTournaments([...nextState, newTournament]);
+    saveTournamentState([...nextState, newTournament]);
+    return newTournament;
+  }
+
+  function saveTournaments(
+    newTournamentState: ITournament[],
+    skipStateUpdate?: boolean,
+  ) {
+    if (skipStateUpdate) {
+      saveTournamentState(newTournamentState);
+    } else {
+      setTournaments(newTournamentState);
+    }
   }
 
   function removeTournament(
@@ -201,11 +213,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   ): void {
     let nextState = tournaments !== 'loading' ? tournaments : [];
     const newState = nextState.filter(item => item.id !== tournamentId);
-    if (skipStateUpdate) {
-      saveTournamentState(newState);
-    } else {
-      setTournaments(nextState.filter(item => item.id !== tournamentId));
-    }
+    saveTournaments(newState, skipStateUpdate);
   }
 
   return (

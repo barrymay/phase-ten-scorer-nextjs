@@ -57,8 +57,8 @@ const CreateTournamentControl: React.FC = () => {
   const onSubmit = (submitVal: any) => {
     let name = getValues().tourneyName;
     let players = getValues().players;
-    addTournament({ name, players });
-    Router.push('/');
+    const newTournament = addTournament({ name, players });
+    Router.push(`/GameView/${newTournament.id}`);
   };
 
   const onPlayerSelectorChange = (newValue: string[]) => {
