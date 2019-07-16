@@ -48,7 +48,7 @@ const TournamentManager: React.FC<{
                 faIconDef={faTimesCircle}
                 minimal
                 onClick={() => {
-                  removeTournament({ tournamentId: item.id });
+                  removeTournament(item.id);
                 }}
               />
             </div>

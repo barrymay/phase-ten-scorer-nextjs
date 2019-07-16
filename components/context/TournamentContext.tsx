@@ -48,7 +48,7 @@ interface InternalTournamentContextState {
     name: string;
     players: string[];
   }) => void;
-  removeTournament: ({ tournamentId }: { tournamentId: string }) => void;
+  removeTournament: (tournamentId: string) => void;
   updateTournament: (tournamentData: ITournament) => void;
 }
 
@@ -108,6 +108,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   const [tournaments, setTournaments] = useState<InternalTournamentState>(
     INIT_STATE,
   );
+
   const resolveTournament = useCallback(
     (tournamentData: ITournament): ITournament => {
       const tournament = {
@@ -190,7 +191,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
     setTournaments([...nextState, newTournament]);
   }
 
-  function removeTournament({ tournamentId }: { tournamentId: string }): void {
+  function removeTournament(tournamentId: string): void {
     let nextState = tournaments !== 'loading' ? tournaments : [];
     setTournaments(nextState.filter(item => item.id !== tournamentId));
   }

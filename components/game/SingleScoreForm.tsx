@@ -55,7 +55,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
       setValue('score', '' + round.score);
       setValue('phaseCompleted', '' + round.phaseCompleted);
     }
-    if (inputPhase) {
+    if (inputPhase && inputPhase > 0) {
       setValue('phaseCompleted', '' + inputPhase);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

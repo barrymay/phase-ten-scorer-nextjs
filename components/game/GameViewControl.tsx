@@ -224,6 +224,9 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
         >
           Score Round
         </P10Button>
+        {/* <P10Button minimal title="Remove Game" onClick={() => removeGame()}>
+          REMOVE GAME
+        </P10Button> */}
       </div>
     </div>
   );
