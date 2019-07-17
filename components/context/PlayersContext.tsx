@@ -61,6 +61,8 @@ export function isPlayerNameValid(
   );
 }
 
+const playerCache = new Map<string, IPlayer[]>();
+
 function playerReducer(
   state: InternalPlayersState,
   action: PlayerAction,
@@ -71,6 +73,7 @@ function playerReducer(
     case 'ADD':
       if (isPlayerNameValid(resultState, action.playerName)) {
         let newKey = uuid();
+        playerCache.clear();
         return {
           ...newState,
           [newKey]: { id: newKey, name: action.playerName, losses: 0, wins: 0 },
@@ -80,8 +83,10 @@ function playerReducer(
       }
     case 'REMOVE':
       delete newState[action.playerId];
+      playerCache.clear();
       return newState;
     case 'SET':
+      playerCache.clear();
       return { ...action.players };
     default:
       return state;
@@ -163,12 +168,21 @@ export function usePlayersDispatch(): React.Dispatch<PlayerAction> {
 }
 
 export function usePlayerInfo(playerIds: string[]): IPlayer[] {
+  const playerCacheKey = JSON.stringify(playerIds);
   const playersList = Object.values(usePlayersState());
-  return playerIds.reduce<IPlayer[]>((result, next) => {
-    let foundPlayer = playersList.find(player => player.id === next);
-    if (foundPlayer) {
-      result.push(foundPlayer);
-    }
-    return result;
-  }, []);
+
+  const potentialValue = playerCache.get(playerCacheKey);
+  if (potentialValue) {
+    return potentialValue;
+  } else {
+    const newValue = playerIds.reduce<IPlayer[]>((result, next) => {
+      let foundPlayer = playersList.find(player => player.id === next);
+      if (foundPlayer) {
+        result.push(foundPlayer);
+      }
+      return result;
+    }, []);
+    playerCache.set(playerCacheKey, newValue);
+    return newValue;
+  }
 }
