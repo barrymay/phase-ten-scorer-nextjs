@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IRound } from '../context/TournamentContext';
 import PhaseButton, { PhaseState } from './PhaseButton';
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import useMeasure, { RefContainer, IRect } from '../common/useMeasure';
 interface IPhase {
   id: number;
   shortRule: string;
