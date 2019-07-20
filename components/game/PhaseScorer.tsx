@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IRound } from '../context/TournamentContext';
 import PhaseButton, { PhaseState } from './PhaseButton';
+import styled from '@emotion/styled';
 interface IPhase {
   id: number;
   shortRule: string;
@@ -73,7 +74,7 @@ const getPhaseState = (rounds: IRound[], playerId: string) => {
   }, new Array(10).fill('default'));
 };
 
-const phaseScorerStyle = css`
+const Container = styled.div`
   padding: 4px;
   display: grid;
   grid-auto-flow: column;
@@ -138,7 +139,7 @@ const PhaseScorer: React.FC<{
   };
 
   return (
-    <div css={phaseScorerStyle}>
+    <Container>
       {phases.map((phase, index) => {
         return (
           <PhaseButton
@@ -172,7 +173,7 @@ const PhaseScorer: React.FC<{
           </PhaseButton>
         );
       })}
-    </div>
+    </Container>
   );
 };
 

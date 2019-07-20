@@ -12,6 +12,11 @@ import ScoringWizard from './ScoringWizard';
 import Totaler from './Totaler';
 import { useSpring, animated } from 'react-spring';
 import Router from 'next/router';
+import {
+  TournamentCurrentRoundContext,
+  TournamentCurrentRoundProvider,
+} from '../context/TournamentCurrentRoundContext';
+import GameViewColumn from './GameViewColumn';
 
 const PhaseScorer = dynamic(() => import('./PhaseScorer'));
 
@@ -19,7 +24,31 @@ interface IOwnProps {
   gameId: string;
 }
 
-const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
+function useTrueWhenEmpty<T>(
+  arrayToEmpty: T[],
+  callWhenEmpty?: VoidFunction,
+): [boolean, (checkValue: T) => void] {
+  const arrayToEmptyRef = useRef(arrayToEmpty);
+  const callWhenEmptyRef = useRef(callWhenEmpty);
+
+  const [valid, setValid] = useState(false);
+
+  const checkCallback = useCallback((checkValue: T) => {
+    arrayToEmptyRef.current = arrayToEmptyRef.current.filter(
+      item => item !== checkValue,
+    );
+    if (!arrayToEmptyRef.current.length) {
+      setValid(true);
+      if (callWhenEmptyRef.current) {
+        callWhenEmptyRef.current();
+      }
+    }
+  }, []);
+
+  return [valid, checkCallback];
+}
+
+const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   const [showModal, setShowModal] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(true);
   const [nextRoundScore, setNextRoundScore] = useState<IRound>({});
@@ -33,7 +62,10 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
   } = useTournamentCurrentContext();
   const players = usePlayerInfo(tournament.playerIds);
 
-  const [appear, setAppear] = useState(false);
+  const [appear, setRemovePlayerFromSet] = useTrueWhenEmpty(
+    players.map(item => item.id),
+    onReady,
+  );
 
   const winnersResult = useMemo(() => {
     const playerData = tournament.playerData;
@@ -77,19 +109,6 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
     }
     return resultString;
   }, [players, tournament.playerData, tournament.playerIds, winnerMessage]);
-
-  const updateMarkedPhase = useCallback(
-    (phase: number, playerId: string) => {
-      setNextRoundScore({
-        ...nextRoundScore,
-        [playerId]: {
-          phaseCompleted: phase,
-          score: -1,
-        },
-      });
-    },
-    [nextRoundScore],
-  );
 
   const addScore = () => {
     setShowModal(true);
@@ -212,27 +231,13 @@ const GameViewControl: React.FC<{ onReady: () => void }> = ({ onReady }) => {
         </div>
         <GameBoard>
           {players.map(player => (
-            <React.Fragment key={player.id}>
-              <div className="column">
-                <div className="player-data">{player.name}</div>
-                <div className="player-total">
-                  <Totaler playerId={player.id} rounds={tournament.rounds} />
-                </div>
-                <div className="player-data">
-                  <PhaseScorer
-                    playerId={player.id}
-                    rounds={tournament.rounds}
-                    onMarkedPhaseUpdate={markedPhase => {
-                      updateMarkedPhase(markedPhase, player.id);
-                    }}
-                    onMeasureUpdate={() => {
-                      onReady();
-                      setAppear(true);
-                    }}
-                  />
-                </div>
-              </div>
-            </React.Fragment>
+            <TournamentCurrentRoundProvider key={player.id} player={player}>
+              <GameViewColumn
+                onReady={() => {
+                  setRemovePlayerFromSet(player.id);
+                }}
+              ></GameViewColumn>
+            </TournamentCurrentRoundProvider>
           ))}
         </GameBoard>
         <P10Button
