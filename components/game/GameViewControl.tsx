@@ -2,27 +2,17 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
-import React, { useMemo, useRef, useState, useCallback } from 'react';
+import Router from 'next/router';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';
 import Modal from '../common/Modal';
 import { IPlayer, usePlayerInfo } from '../context/PlayersContext';
 import { IRound } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
-import ScoringWizard from './ScoringWizard';
-import Totaler from './Totaler';
-import { useSpring, animated } from 'react-spring';
-import Router from 'next/router';
-import {
-  TournamentCurrentRoundContext,
-  TournamentCurrentRoundProvider,
-} from '../context/TournamentCurrentRoundContext';
 import GameViewColumn from './GameViewColumn';
+import ScoringWizard from './ScoringWizard';
 
 const PhaseScorer = dynamic(() => import('./PhaseScorer'));
-
-interface IOwnProps {
-  gameId: string;
-}
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
@@ -48,6 +38,10 @@ function useTrueWhenEmpty<T>(
   return [valid, checkCallback];
 }
 
+export interface IPlayerPhaseMap {
+  [player: string]: number | undefined;
+}
+
 const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   const [showModal, setShowModal] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(true);
@@ -62,7 +56,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   } = useTournamentCurrentContext();
   const players = usePlayerInfo(tournament.playerIds);
 
-  const [appear, setRemovePlayerFromSet] = useTrueWhenEmpty(
+  const [appear, playerReady] = useTrueWhenEmpty(
     players.map(item => item.id),
     onReady,
   );
@@ -109,6 +103,14 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     }
     return resultString;
   }, [players, tournament.playerData, tournament.playerIds, winnerMessage]);
+
+  const nextPhaseMap = useRef<IPlayerPhaseMap>({});
+  const updateMarkedPhase = useCallback(
+    (playerId: string, phase: number | undefined) => {
+      nextPhaseMap.current[playerId] = phase;
+    },
+    [],
+  );
 
   const addScore = () => {
     setShowModal(true);
@@ -164,6 +166,9 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       addScore();
     }
   };
+
+  const [nextPhase, setNextPhase] = useState<number | undefined>(undefined);
+
   return (
     <div
       css={css`
@@ -181,8 +186,8 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         width={300}
       >
         <ScoringWizard
-          roundScoreInput={nextRoundScore}
           onComplete={submitScore}
+          nextPhaseMap={nextPhaseMap.current}
         />
       </Modal>
       <Modal
@@ -231,13 +236,16 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         </div>
         <GameBoard>
           {players.map(player => (
-            <TournamentCurrentRoundProvider key={player.id} player={player}>
-              <GameViewColumn
-                onReady={() => {
-                  setRemovePlayerFromSet(player.id);
-                }}
-              ></GameViewColumn>
-            </TournamentCurrentRoundProvider>
+            <GameViewColumn
+              key={player.id}
+              player={player}
+              onReady={() => {
+                playerReady(player.id);
+              }}
+              updateMarkedPhase={phase => {
+                updateMarkedPhase(player.id, phase);
+              }}
+            ></GameViewColumn>
           ))}
         </GameBoard>
         <P10Button

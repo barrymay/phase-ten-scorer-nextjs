@@ -2,13 +2,16 @@
 import { jsx } from '@emotion/core';
 import React from 'react';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
-import { useTournamentCurrentRoundContext } from '../context/TournamentCurrentRoundContext';
 import PhaseScorer from './PhaseScorer';
 import Totaler from './Totaler';
+import { IPlayer } from '../context/PlayersContext';
 
-const GameViewColumn: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
+const GameViewColumn: React.FC<{
+  player: IPlayer;
+  onReady: VoidFunction;
+  updateMarkedPhase: (phase: number | undefined) => void;
+}> = ({ onReady, player, updateMarkedPhase }) => {
   const { tournament } = useTournamentCurrentContext();
-  const { updateMarkedPhase, player } = useTournamentCurrentRoundContext();
 
   return (
     <div className="column">
@@ -18,8 +21,7 @@ const GameViewColumn: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       </div>
       <div className="player-data">
         <PhaseScorer
-          playerId={player.id}
-          rounds={tournament.rounds}
+          player={player}
           onMarkedPhaseUpdate={updateMarkedPhase}
           onMeasureUpdate={onReady}
         />

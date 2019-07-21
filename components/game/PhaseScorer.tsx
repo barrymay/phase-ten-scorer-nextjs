@@ -5,6 +5,8 @@ import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IRound } from '../context/TournamentContext';
 import PhaseButton, { PhaseState } from './PhaseButton';
 import styled from '@emotion/styled';
+import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
+import { IPlayer } from '../context/PlayersContext';
 interface IPhase {
   id: number;
   shortRule: string;
@@ -64,14 +66,22 @@ const phases: IPhase[] = [
   },
 ];
 
-const getPhaseState = (rounds: IRound[], playerId: string) => {
-  return rounds.reduce<PhaseState[]>((result, next) => {
+const getPhaseState = (
+  rounds: IRound[],
+  playerId: string,
+  startingPhase?: number,
+) => {
+  const result = rounds.reduce<PhaseState[]>((result, next) => {
     const roundForPlayer = next[playerId];
     if (roundForPlayer) {
       result[roundForPlayer.phaseCompleted - 1] = 'complete';
     }
     return result;
   }, new Array(10).fill('default'));
+  if (startingPhase) {
+    result[startingPhase - 1] = 'new-complete';
+  }
+  return result;
 };
 
 const Container = styled.div`
@@ -103,26 +113,28 @@ const useMeasureAndUpdate = (
 };
 
 const PhaseScorer: React.FC<{
-  playerId: string;
-  rounds: IRound[];
+  player: IPlayer;
+  startingPhase?: number | undefined;
   onMeasureUpdate: () => void;
   onMarkedPhaseUpdate: (phaseMarked: number) => void;
-}> = ({ playerId, rounds, onMeasureUpdate, onMarkedPhaseUpdate }) => {
+}> = ({ onMeasureUpdate, onMarkedPhaseUpdate, player, startingPhase }) => {
   const lastRounds = useRef<PhaseState[] | null>(null);
+  const { tournament } = useTournamentCurrentContext();
+
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
-    getPhaseState(rounds, playerId),
+    getPhaseState(tournament.rounds, player.id, startingPhase),
   );
   useEffect(() => {
-    if (!lastRounds.current || rounds.length !== lastRounds.current.length) {
-      setPhaseStates(getPhaseState(rounds, playerId));
+    if (
+      !lastRounds.current ||
+      tournament.rounds.length !== lastRounds.current.length
+    ) {
+      setPhaseStates(getPhaseState(tournament.rounds, player.id));
     }
-  }, [playerId, rounds]);
+  }, [player.id, tournament.rounds]);
   const [measureRef, sizer] = useMeasureAndUpdate(onMeasureUpdate);
 
-  const setPhase = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
-    phaseId: number,
-  ) => {
+  const setPhase = (phaseId: number) => {
     const phaseSelected = phaseId + 1;
     if (phaseStates[phaseId] === 'complete') {
       return;
@@ -146,8 +158,8 @@ const PhaseScorer: React.FC<{
             key={`phase-${phase.id}`}
             completedState={phaseStates[index]}
             title={phase.rule}
-            onClick={e => {
-              setPhase(e, index);
+            onClick={() => {
+              setPhase(index);
             }}
             buttonHeight={sizer.height}
             measureRef={index === 0 ? measureRef.ref : undefined}

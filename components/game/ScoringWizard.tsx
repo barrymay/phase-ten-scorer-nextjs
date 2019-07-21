@@ -21,6 +21,7 @@ import {
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import DivAnimator from './DivAnimator';
 import SingleScoreForm from './SingleScoreForm';
+import { IPlayerPhaseMap } from './GameViewControl';
 
 export interface ISingleScoreFormFuncs {
   performSubmit: () => void;
@@ -29,9 +30,9 @@ export interface ISingleScoreFormFuncs {
 }
 
 const ScoringWizard: React.FC<{
-  roundScoreInput: IRoundPartial;
+  nextPhaseMap: IPlayerPhaseMap;
   onComplete: (roundScore: IRound) => void;
-}> = ({ onComplete, roundScoreInput }) => {
+}> = ({ onComplete, nextPhaseMap }) => {
   const players = usePlayersState();
   const { tournament } = useTournamentCurrentContext();
   const roundCount = useRef(tournament.rounds.length + 1).current;
@@ -148,10 +149,7 @@ const ScoringWizard: React.FC<{
           <SingleScoreForm
             ref={getOrCreateRef(i)}
             round={roundScore[playerId]}
-            inputPhase={
-              roundScoreInput[playerId] &&
-              roundScoreInput[playerId].phaseCompleted
-            }
+            inputPhase={nextPhaseMap[playerId]}
             onSubmitScore={(score: IRoundPlayerData) =>
               completeScore(playerId, score)
             }
@@ -162,10 +160,10 @@ const ScoringWizard: React.FC<{
   }, [
     completeScore,
     getOrCreateRef,
+    nextPhaseMap,
     players,
     refHeightMeasure.ref,
     roundScore,
-    roundScoreInput,
     tournament.playerIds,
   ]);
 
