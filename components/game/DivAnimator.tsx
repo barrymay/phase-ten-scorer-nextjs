@@ -30,9 +30,7 @@ function getProcessFunc(
     const nextValue = index * width - curSelection * width;
     const fromValue = isSpringAtRest
       ? { x: nextValue }
-      : fromBoundsRef.current[index] !== undefined
-      ? fromBoundsRef.current[index]
-      : undefined;
+      : fromBoundsRef.current[index];
     const newValue = {
       x: nextValue,
       from: fromValue,
@@ -60,6 +58,14 @@ const DivAnimator: React.FC<{
     childArr.length,
     () => ({ x: 0 }),
   );
+
+  useEffect(() => {
+    fromBoundsRef.current = Array.from(new Array(childArr.length).keys()).map(
+      item => ({
+        x: item * boundsWidth,
+      }),
+    );
+  }, [boundsWidth, childArr.length]);
 
   useEffect(() => {
     pastSelectionRef.current = currentSelectionRef.current;
