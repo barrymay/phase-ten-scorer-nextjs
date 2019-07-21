@@ -53,6 +53,9 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
       phaseCompleted: null,
     },
   });
+  // HACK - useForm should prevent updates on its own setValue being mutated
+  const setValueRef = useRef(setValue);
+
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -61,13 +64,13 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
 
   useEffect(() => {
     if (round) {
-      setValue('score', '' + round.score);
-      setValue('phaseCompleted', '' + round.phaseCompleted);
+      setValueRef.current('score', '' + round.score);
+      setValueRef.current('phaseCompleted', '' + round.phaseCompleted);
     }
     if (inputPhase && inputPhase > 0) {
-      setValue('phaseCompleted', '' + inputPhase);
+      setValueRef.current('phaseCompleted', '' + inputPhase);
     }
-  }, [inputPhase, round, setValue]);
+  }, [inputPhase, round]);
 
   useImperativeHandle<ISingleScoreFormFuncs, ISingleScoreFormFuncs>(
     ref,
