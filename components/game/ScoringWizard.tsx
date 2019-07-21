@@ -151,9 +151,7 @@ const ScoringWizard: React.FC<{
             ref={getOrCreateRef(i)}
             round={roundScore[player.id]}
             inputPhase={nextPhaseMap[playerId]}
-            onSubmitScore={(score: IRoundPlayerData) =>
-              completeScore(playerId, score)
-            }
+            onSubmitScore={completeScore}
           />
         </div>
       );

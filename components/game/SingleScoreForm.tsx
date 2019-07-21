@@ -37,7 +37,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
   React.RefAttributes<ISingleScoreFormFuncs> & {
     player: IPlayer;
     round: IRoundPlayerData | undefined;
-    onSubmitScore: (result: IRoundPlayerData) => void;
+    onSubmitScore: (playerId: string, result: IRoundPlayerData) => void;
     inputPhase?: number;
   }
 > = forwardRef(({ round, onSubmitScore, inputPhase, player }, ref) => {
@@ -67,8 +67,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
     if (inputPhase && inputPhase > 0) {
       setValue('phaseCompleted', '' + inputPhase);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [round]);
+  }, [inputPhase, round, setValue]);
 
   useImperativeHandle<ISingleScoreFormFuncs, ISingleScoreFormFuncs>(
     ref,
@@ -98,7 +97,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
     let { score, phaseCompleted } = getValues();
     // TODO - this if check shouldn't need to occur
     if (score && phaseCompleted) {
-      onSubmitScore({
+      onSubmitScore(player.id, {
         score: +score,
         phaseCompleted: +phaseCompleted,
       });
