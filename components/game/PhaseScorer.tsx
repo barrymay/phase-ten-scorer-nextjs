@@ -168,6 +168,7 @@ const PhaseScorer: React.FC<{
       {phases.map((phase, index) => {
         return (
           <PhaseButton
+            tabIndex={-1}
             key={`phase-${phase.id}`}
             completedState={phaseStates[index]}
             title={phase.rule}

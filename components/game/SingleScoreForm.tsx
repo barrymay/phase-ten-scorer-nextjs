@@ -62,9 +62,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
   }, [register]);
 
   useEffect(() => {
-    if (inputPhase && inputPhase > 0) {
-      setValueRef.current('phaseCompleted', '' + inputPhase);
-    }
+    setValueRef.current('phaseCompleted', `${inputPhase || 0}`);
   }, [inputPhase]);
 
   useImperativeHandle<ISingleScoreFormFuncs, ISingleScoreFormFuncs>(

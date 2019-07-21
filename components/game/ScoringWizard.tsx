@@ -91,10 +91,18 @@ const ScoringWizard: React.FC<{
   };
 
   const keyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    let catchEvent = false;
     if (event.key === 'Enter') {
+      catchEvent = true;
       moveNext();
     } else if (event.ctrlKey && event.key === 'Backspace') {
+      catchEvent = true;
       moveBack();
+    }
+
+    if (catchEvent) {
+      event.preventDefault();
+      event.stopPropagation();
     }
   };
 
