@@ -7,6 +7,7 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
+  useCallback,
 } from 'react';
 import useForm from 'react-hook-form';
 import ValidatedInput from '../common/forms/ValidatedInput';
@@ -42,6 +43,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
 > = forwardRef(({ round, onSubmitScore, inputPhase, player }, ref) => {
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
+
   const { handleSubmit, register, errors, getValues, setValue } = useForm<
     IFormData
   >({
@@ -52,6 +54,10 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
     },
   });
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    register({ name: 'phaseCompleted' });
+  }, [register]);
 
   useEffect(() => {
     if (round) {
@@ -79,6 +85,13 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
         setTabIndex(enabled ? 0 : -1);
       },
     }),
+  );
+
+  const updatePhase = useCallback(
+    (phase: number | undefined) => {
+      setValue('phaseCompleted', `${phase || ''}`);
+    },
+    [setValue],
   );
 
   const onSubmit = () => {
@@ -129,26 +142,9 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
           Completed Phase:
           <PhaseScorer
             player={player}
-            isInternalState
             startingPhase={inputPhase}
+            onMarkedPhaseUpdate={updatePhase}
           />
-          {/* <ValidatedInput
-            name="phaseCompleted"
-            autoComplete="off"
-            onInput={restrictInput}
-            tabIndex={tabIndex}
-            errors={errors}
-            inputRef={register({
-              required: 'A phase must is required (0 if no phase completed)',
-              validate: (inputScore: string) => {
-                let value = +inputScore;
-                if (value < 0 || value > 10) {
-                  return 'A valid phase (from 0 to 10) must be entered';
-                }
-              },
-            })}
-            type="text"
-          /> */}
         </label>
       </form>
     </React.Fragment>

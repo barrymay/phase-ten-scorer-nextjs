@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { IRound, ITournament, useTournamentContext } from './TournamentContext';
 
 interface ITournamentCurrentContext {
   tournament: ITournament;
   scoreRound: (roundScore: IRound) => void;
   removeCurrentTournament: () => void;
+  roundNum: number;
 }
 export const TournamentCurrentContext = React.createContext<ITournamentCurrentContext | null>(
   null,
@@ -24,6 +25,7 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
     updateTournament,
     removeTournament,
   } = useTournamentContext();
+  const [roundNum, setRoundNum] = useState(1);
   const currentTournament = tournaments.find(item => item.id === tournamentId);
   if (!currentTournament) {
     throw new Error('Invalid Tournament Id');
@@ -38,6 +40,7 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
       rounds: currentTournament.rounds.concat(roundScore),
     };
     updateTournament(newValue);
+    setRoundNum(newValue.rounds.length);
   }
 
   function removeCurrentTournament(): void {
@@ -53,6 +56,7 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
         tournament: currentTournament,
         scoreRound,
         removeCurrentTournament,
+        roundNum,
       }}
     >
       {currentTournament ? children : null}

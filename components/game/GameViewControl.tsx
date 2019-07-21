@@ -45,7 +45,6 @@ export interface IPlayerPhaseMap {
 const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   const [showModal, setShowModal] = useState(false);
   const [showWinnerModal, setShowWinnerModal] = useState(true);
-  const [nextRoundScore, setNextRoundScore] = useState<IRound>({});
   const [winnerMessage, setWinnerMessage] = useState('');
   const mainDivRef = useRef<HTMLDivElement>(null);
 
@@ -53,6 +52,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     tournament,
     scoreRound,
     removeCurrentTournament,
+    roundNum,
   } = useTournamentCurrentContext();
   const players = usePlayerInfo(tournament.playerIds);
 
@@ -119,7 +119,6 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   const submitScore = (newRoundScore: IRound) => {
     scoreRound(newRoundScore);
     setShowModal(false);
-    setNextRoundScore({});
     mainDivRef.current && mainDivRef.current.focus();
   };
 

@@ -11,7 +11,7 @@ const GameViewColumn: React.FC<{
   onReady: VoidFunction;
   updateMarkedPhase: (phase: number | undefined) => void;
 }> = ({ onReady, player, updateMarkedPhase }) => {
-  const { tournament } = useTournamentCurrentContext();
+  const { tournament, roundNum } = useTournamentCurrentContext();
 
   return (
     <div className="column">
@@ -21,6 +21,7 @@ const GameViewColumn: React.FC<{
       </div>
       <div className="player-data">
         <PhaseScorer
+          roundNum={roundNum}
           player={player}
           onMarkedPhaseUpdate={updateMarkedPhase}
           onMeasureUpdate={onReady}

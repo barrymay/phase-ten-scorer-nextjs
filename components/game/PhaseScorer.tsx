@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, MouseEvent } from 'react';
 import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IRound } from '../context/TournamentContext';
 import PhaseButton, { PhaseState } from './PhaseButton';
@@ -113,9 +113,9 @@ const useMeasureAndUpdate = (
 };
 
 const PhaseScorer: React.FC<{
+  roundNum?: number | undefined;
   player: IPlayer;
   startingPhase?: number | undefined;
-  isInternalState?: boolean;
   onMeasureUpdate?: VoidFunction;
   onMarkedPhaseUpdate?: (phaseMarked: number) => void;
 }> = ({
@@ -123,7 +123,7 @@ const PhaseScorer: React.FC<{
   onMarkedPhaseUpdate,
   player,
   startingPhase,
-  isInternalState,
+  roundNum,
 }) => {
   const lastRounds = useRef<PhaseState[] | null>(null);
   const { tournament } = useTournamentCurrentContext();
@@ -131,33 +131,38 @@ const PhaseScorer: React.FC<{
     getPhaseState(tournament.rounds, player.id, startingPhase),
   );
   useEffect(() => {
-    if (
-      !lastRounds.current ||
-      tournament.rounds.length !== lastRounds.current.length
-    ) {
-      //setPhaseStates(getPhaseState(tournament.rounds, player.id));
+    if (roundNum) {
+      setPhaseStates(getPhaseState(tournament.rounds, player.id));
     }
-  }, [player.id, tournament.rounds]);
+  }, [player.id, roundNum, tournament.rounds]);
   const [measureRef, sizer] = useMeasureAndUpdate(onMeasureUpdate);
 
-  const setPhase = (phaseId: number) => {
-    const phaseSelected = phaseId + 1;
-    if (phaseStates[phaseId] === 'complete') {
-      return;
-    }
-    const newStates = phaseStates.map<PhaseState>((item, index) =>
-      index !== phaseId && item === 'new-complete' ? 'default' : item,
-    );
-    newStates[phaseId] =
-      newStates[phaseId] === 'default' ? 'new-complete' : 'default';
+  const setPhase = useCallback(
+    (e: MouseEvent<HTMLElement>, phaseId: number) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
 
-    onMarkedPhaseUpdate &&
-      onMarkedPhaseUpdate(
-        newStates[phaseId] === 'new-complete' ? phaseSelected : -1,
+      const phaseSelected = phaseId + 1;
+      if (phaseStates[phaseId] === 'complete') {
+        return;
+      }
+      const newStates = phaseStates.map<PhaseState>((item, index) =>
+        index !== phaseId && item === 'new-complete' ? 'default' : item,
       );
+      newStates[phaseId] =
+        newStates[phaseId] === 'default' ? 'new-complete' : 'default';
 
-    setPhaseStates(newStates);
-  };
+      onMarkedPhaseUpdate &&
+        onMarkedPhaseUpdate(
+          newStates[phaseId] === 'new-complete' ? phaseSelected : -1,
+        );
+
+      setPhaseStates(newStates);
+    },
+    [onMarkedPhaseUpdate, phaseStates],
+  );
 
   return (
     <Container>
@@ -167,8 +172,8 @@ const PhaseScorer: React.FC<{
             key={`phase-${phase.id}`}
             completedState={phaseStates[index]}
             title={phase.rule}
-            onClick={() => {
-              setPhase(index);
+            onClick={e => {
+              setPhase(e, index);
             }}
             buttonHeight={sizer.height}
             measureRef={index === 0 ? measureRef.ref : undefined}
