@@ -125,7 +125,6 @@ const PhaseScorer: React.FC<{
   startingPhase,
   roundNum,
 }) => {
-  const lastRounds = useRef<PhaseState[] | null>(null);
   const { tournament } = useTournamentCurrentContext();
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
     getPhaseState(tournament.rounds, player.id, startingPhase),

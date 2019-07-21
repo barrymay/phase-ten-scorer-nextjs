@@ -45,8 +45,6 @@ export interface IPlayerPhaseMap {
 
 const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   const [showModal, setShowModal] = useState(false);
-  const [showWinnerModal, setShowWinnerModal] = useState(true);
-  const [winnerMessage, setWinnerMessage] = useState('');
   const mainDivRef = useRef<HTMLDivElement>(null);
 
   const {
