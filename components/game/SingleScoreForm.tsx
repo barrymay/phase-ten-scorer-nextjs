@@ -36,11 +36,10 @@ const formStyle = css`
 const SingleScoreForm: React.ForwardRefExoticComponent<
   React.RefAttributes<ISingleScoreFormFuncs> & {
     player: IPlayer;
-    round: IRoundPlayerData | undefined;
     onSubmitScore: (playerId: string, result: IRoundPlayerData) => void;
     inputPhase?: number;
   }
-> = forwardRef(({ round, onSubmitScore, inputPhase, player }, ref) => {
+> = forwardRef(({ onSubmitScore, inputPhase, player }, ref) => {
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
 
@@ -63,14 +62,10 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
   }, [register]);
 
   useEffect(() => {
-    if (round) {
-      setValueRef.current('score', '' + round.score);
-      setValueRef.current('phaseCompleted', '' + round.phaseCompleted);
-    }
     if (inputPhase && inputPhase > 0) {
       setValueRef.current('phaseCompleted', '' + inputPhase);
     }
-  }, [inputPhase, round]);
+  }, [inputPhase]);
 
   useImperativeHandle<ISingleScoreFormFuncs, ISingleScoreFormFuncs>(
     ref,

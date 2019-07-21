@@ -119,6 +119,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   const submitScore = (newRoundScore: IRound) => {
     scoreRound(newRoundScore);
     setShowModal(false);
+    nextPhaseMap.current = {};
     mainDivRef.current && mainDivRef.current.focus();
   };
 

@@ -36,9 +36,13 @@ const ScoringWizard: React.FC<{
   const players = usePlayersState();
   const { tournament } = useTournamentCurrentContext();
   const roundCount = useRef(tournament.rounds.length + 1).current;
+
   const [playerIndex, setPlayerIndex] = useState(0);
-  const [roundScore, setRoundScore] = useState<IRound>({});
+  const playerIndexRef = useRef(playerIndex);
+
+  const roundScoreRef = useRef<IRound>({});
   const formRefMap = useRef<Array<RefObject<ISingleScoreFormFuncs>>>([]);
+
   const [refWidthMeasure, boundsWidth] = useMeasure<HTMLDivElement>();
   const [refHeightMeasure, boundsHeight] = useMeasure<HTMLDivElement>();
 
@@ -65,6 +69,7 @@ const ScoringWizard: React.FC<{
     (nextPlayer: number) => {
       const formRef = getOrCreateRef(nextPlayer);
       formRef.current && formRef.current.setFocus();
+      playerIndexRef.current = nextPlayer;
       setPlayerIndex(nextPlayer);
       formRefMap.current.forEach((item, i) => {
         item.current && item.current.enableTabIndex(i === nextPlayer);
@@ -114,25 +119,19 @@ const ScoringWizard: React.FC<{
   const completeScore = useCallback(
     (playerId: string, score: IRoundPlayerData) => {
       const updatedValue = {
-        ...roundScore,
+        ...roundScoreRef.current,
         [playerId]: score,
       };
 
-      if (playerIndex < tournament.playerIds.length - 1) {
-        setRoundScore(updatedValue);
-        const nextPageIndex = playerIndex + 1;
+      if (playerIndexRef.current < tournament.playerIds.length - 1) {
+        roundScoreRef.current = updatedValue;
+        const nextPageIndex = playerIndexRef.current + 1;
         updatePlayerIndex(nextPageIndex);
       } else {
         onComplete(updatedValue);
       }
     },
-    [
-      onComplete,
-      playerIndex,
-      roundScore,
-      tournament.playerIds.length,
-      updatePlayerIndex,
-    ],
+    [onComplete, tournament.playerIds.length, updatePlayerIndex],
   );
 
   const childWrap: React.ReactNode[] = useMemo<React.ReactNode[]>(() => {
@@ -149,7 +148,6 @@ const ScoringWizard: React.FC<{
           <SingleScoreForm
             player={player}
             ref={getOrCreateRef(i)}
-            round={roundScore[player.id]}
             inputPhase={nextPhaseMap[playerId]}
             onSubmitScore={completeScore}
           />
@@ -162,7 +160,6 @@ const ScoringWizard: React.FC<{
     nextPhaseMap,
     players,
     refHeightMeasure.ref,
-    roundScore,
     tournament.playerIds,
   ]);
 
