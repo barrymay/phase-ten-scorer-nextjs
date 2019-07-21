@@ -138,11 +138,9 @@ const PhaseScorer: React.FC<{
       //setPhaseStates(getPhaseState(tournament.rounds, player.id));
     }
   }, [player.id, tournament.rounds]);
-  console.log('HHH', phaseStates);
   const [measureRef, sizer] = useMeasureAndUpdate(onMeasureUpdate);
 
   const setPhase = (phaseId: number) => {
-    debugger;
     const phaseSelected = phaseId + 1;
     if (phaseStates[phaseId] === 'complete') {
       return;
