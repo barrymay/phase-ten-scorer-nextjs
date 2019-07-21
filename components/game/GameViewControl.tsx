@@ -11,6 +11,7 @@ import { IRound } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
+import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 
 const PhaseScorer = dynamic(() => import('./PhaseScorer'));
 
@@ -61,12 +62,12 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     onReady,
   );
 
-  const winnersResult = useMemo(() => {
+  const winners = useMemo<IWinnerList[]>(() => {
     const playerData = tournament.playerData;
     if (!playerData) {
-      return '';
+      return [];
     }
-    const winners = tournament.playerIds.reduce<
+    return tournament.playerIds.reduce<
       Array<{ player: IPlayer; score: number }>
     >((result, next) => {
       let nextPlayerData = playerData[next];
@@ -81,28 +82,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       }
       return result;
     }, []);
-
-    let resultString = '';
-    if (winners.length > 0) {
-      if (winners.length === 1) {
-        resultString += 'The winner is  ';
-      } else {
-        resultString += 'The winners are ';
-      }
-    }
-    resultString += winners.reduce((result, next) => {
-      if (result) {
-        result += ', and ';
-      }
-      result += `${next.player.name} with ${next.score}`;
-      return result;
-    }, '');
-    if (resultString !== winnerMessage) {
-      setWinnerMessage(resultString);
-      setShowWinnerModal(true);
-    }
-    return resultString;
-  }, [players, tournament.playerData, tournament.playerIds, winnerMessage]);
+  }, [players, tournament.playerData, tournament.playerIds]);
 
   const nextPhaseMap = useRef<IPlayerPhaseMap>({});
   const updateMarkedPhase = useCallback(
@@ -113,7 +93,9 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   );
 
   const addScore = () => {
-    setShowModal(true);
+    if (!winners.length) {
+      setShowModal(true);
+    }
   };
 
   const submitScore = (newRoundScore: IRound) => {
@@ -190,19 +172,6 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
           nextPhaseMap={nextPhaseMap.current}
         />
       </Modal>
-      <Modal
-        shown={!!winnersResult && showWinnerModal}
-        title="Winner"
-        onClick={() => {
-          setShowWinnerModal(false);
-        }}
-        onCancel={() => {
-          setShowWinnerModal(false);
-        }}
-        width={300}
-      >
-        <div>{winnersResult}</div>
-      </Modal>
       <div
         css={css`
           padding: 4px;
@@ -216,7 +185,6 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
             }
           }
           transition: opacity 250ms ease-in-out;
-
           opacity: ${appear ? 1 : 0};
         `}
       >
@@ -248,13 +216,17 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
             ></GameViewColumn>
           ))}
         </GameBoard>
-        <P10Button
-          minimal
-          title="Score Round (Ctrl-S)"
-          onClick={() => addScore()}
-        >
-          Score Round
-        </P10Button>
+        {winners.length ? (
+          <WinnerDisplay winners={winners} />
+        ) : (
+          <P10Button
+            minimal
+            title="Score Round (Ctrl-S)"
+            onClick={() => addScore()}
+          >
+            Score Round
+          </P10Button>
+        )}
       </div>
     </div>
   );
