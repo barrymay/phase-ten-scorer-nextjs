@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 export interface IRect {
@@ -30,13 +30,13 @@ export default function useMeasure<T extends HTMLElement>(): [
       }),
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current) {
       set(ref.current.getBoundingClientRect());
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref.current) {
       ro.observe(ref.current);
     }
