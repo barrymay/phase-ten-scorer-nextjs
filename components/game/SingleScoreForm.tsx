@@ -12,6 +12,8 @@ import useForm from 'react-hook-form';
 import ValidatedInput from '../common/forms/ValidatedInput';
 import { IRoundPlayerData } from '../context/TournamentContext';
 import { ISingleScoreFormFuncs } from './ScoringWizard';
+import PhaseScorer from './PhaseScorer';
+import { IPlayer } from '../context/PlayersContext';
 
 // validation will prevent non-numerics
 interface IFormData {
@@ -32,11 +34,12 @@ const formStyle = css`
 
 const SingleScoreForm: React.ForwardRefExoticComponent<
   React.RefAttributes<ISingleScoreFormFuncs> & {
+    player: IPlayer;
     round: IRoundPlayerData | undefined;
     onSubmitScore: (result: IRoundPlayerData) => void;
     inputPhase?: number;
   }
-> = forwardRef(({ round, onSubmitScore, inputPhase }, ref) => {
+> = forwardRef(({ round, onSubmitScore, inputPhase, player }, ref) => {
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
   const { handleSubmit, register, errors, getValues, setValue } = useForm<
@@ -124,7 +127,12 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
         </label>
         <label>
           Completed Phase:
-          <ValidatedInput
+          <PhaseScorer
+            player={player}
+            isInternalState
+            startingPhase={inputPhase}
+          />
+          {/* <ValidatedInput
             name="phaseCompleted"
             autoComplete="off"
             onInput={restrictInput}
@@ -140,7 +148,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
               },
             })}
             type="text"
-          />
+          /> */}
         </label>
       </form>
     </React.Fragment>

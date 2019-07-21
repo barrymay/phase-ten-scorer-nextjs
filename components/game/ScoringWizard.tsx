@@ -137,18 +137,19 @@ const ScoringWizard: React.FC<{
 
   const childWrap: React.ReactNode[] = useMemo<React.ReactNode[]>(() => {
     return tournament.playerIds.map((playerId, i) => {
-      const { name: playerName } = players[playerId];
+      const player = players[playerId];
 
       return (
         <div
-          data-testid={`scorer-${playerId}`}
-          key={playerId}
+          data-testid={`scorer-${player.id}`}
+          key={player.id}
           ref={refHeightMeasure.ref}
         >
-          <div>Player: {playerName}</div>
+          <div>Player: {player.name}</div>
           <SingleScoreForm
+            player={player}
             ref={getOrCreateRef(i)}
-            round={roundScore[playerId]}
+            round={roundScore[player.id]}
             inputPhase={nextPhaseMap[playerId]}
             onSubmitScore={(score: IRoundPlayerData) =>
               completeScore(playerId, score)

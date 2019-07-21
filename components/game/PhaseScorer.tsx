@@ -94,12 +94,12 @@ const Container = styled.div`
 `;
 
 const useMeasureAndUpdate = (
-  onMeasureUpdate: () => void,
+  onMeasureUpdate?: VoidFunction,
 ): [RefContainer<HTMLElement>, IRect] => {
   const height = useRef(0);
   const [measureRef, boundsUpdate] = useMeasure();
   const measureUpdateCallback = useCallback(() => {
-    onMeasureUpdate();
+    onMeasureUpdate && onMeasureUpdate();
   }, [onMeasureUpdate]);
 
   useEffect(() => {
@@ -115,12 +115,18 @@ const useMeasureAndUpdate = (
 const PhaseScorer: React.FC<{
   player: IPlayer;
   startingPhase?: number | undefined;
-  onMeasureUpdate: () => void;
-  onMarkedPhaseUpdate: (phaseMarked: number) => void;
-}> = ({ onMeasureUpdate, onMarkedPhaseUpdate, player, startingPhase }) => {
+  isInternalState?: boolean;
+  onMeasureUpdate?: VoidFunction;
+  onMarkedPhaseUpdate?: (phaseMarked: number) => void;
+}> = ({
+  onMeasureUpdate,
+  onMarkedPhaseUpdate,
+  player,
+  startingPhase,
+  isInternalState,
+}) => {
   const lastRounds = useRef<PhaseState[] | null>(null);
   const { tournament } = useTournamentCurrentContext();
-
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
     getPhaseState(tournament.rounds, player.id, startingPhase),
   );
@@ -129,12 +135,14 @@ const PhaseScorer: React.FC<{
       !lastRounds.current ||
       tournament.rounds.length !== lastRounds.current.length
     ) {
-      setPhaseStates(getPhaseState(tournament.rounds, player.id));
+      //setPhaseStates(getPhaseState(tournament.rounds, player.id));
     }
   }, [player.id, tournament.rounds]);
+  console.log('HHH', phaseStates);
   const [measureRef, sizer] = useMeasureAndUpdate(onMeasureUpdate);
 
   const setPhase = (phaseId: number) => {
+    debugger;
     const phaseSelected = phaseId + 1;
     if (phaseStates[phaseId] === 'complete') {
       return;
@@ -144,9 +152,12 @@ const PhaseScorer: React.FC<{
     );
     newStates[phaseId] =
       newStates[phaseId] === 'default' ? 'new-complete' : 'default';
-    onMarkedPhaseUpdate(
-      newStates[phaseId] === 'new-complete' ? phaseSelected : -1,
-    );
+
+    onMarkedPhaseUpdate &&
+      onMarkedPhaseUpdate(
+        newStates[phaseId] === 'new-complete' ? phaseSelected : -1,
+      );
+
     setPhaseStates(newStates);
   };
 
