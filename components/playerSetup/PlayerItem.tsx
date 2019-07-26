@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import P10Button from '../common/button/P10Button';
 import { usePlayersDispatch, IPlayer } from '../context/PlayersContext';
 

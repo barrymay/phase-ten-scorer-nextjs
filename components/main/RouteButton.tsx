@@ -1,9 +1,9 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
   faFlask,
-  faTrophyAlt,
+  faTrophy,
   faUserFriends,
-} from '@fortawesome/pro-regular-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
 import { ExtraP10ButtonProps } from '../common/button/P10Button';
@@ -26,7 +26,7 @@ export const RouteDefinitions: RouteDefinitions = {
     route: '/PlayerSetup',
   },
   createTournament: {
-    icon: faTrophyAlt,
+    icon: faTrophy,
     text: 'Create a Tournament',
     route: '/CreateTournament',
   },

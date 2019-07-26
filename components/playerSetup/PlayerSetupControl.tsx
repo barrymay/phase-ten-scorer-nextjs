@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { faUserPlus, faUserSlash } from '@fortawesome/pro-regular-svg-icons';
+import { faUserPlus, faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import React, { useEffect, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';
 import { CardContainer } from '../common/styles/basic';

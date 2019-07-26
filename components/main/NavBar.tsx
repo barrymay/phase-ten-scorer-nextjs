@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { faScroll } from '@fortawesome/pro-regular-svg-icons';
+import { faScroll } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { darken, lighten, rgba } from 'polished';
 import React from 'react';

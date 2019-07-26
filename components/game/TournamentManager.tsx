@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import Router from 'next/router';
 import React from 'react';
 import P10Button from '../common/button/P10Button';

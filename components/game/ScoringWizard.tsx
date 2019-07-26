@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { faArrowLeft, faArrowRight } from '@fortawesome/pro-regular-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import React, {
   createRef,
   RefObject,
