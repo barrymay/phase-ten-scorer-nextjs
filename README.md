@@ -21,7 +21,8 @@ The app is in active development and showcases a few modern tech features around
 - [React Hook Form](https://react-hook-form.com)
   - Convenient and simple hook-based form library - a great help to simplify usage of forms while still staying in a hook-based component.
 - [Font Awesome 5](https://fontawesome.com)
-  - This may currently cause problems if you don't have a Font Awesome Pro license. Feel free to reach out if this causes you an issue. I plan to have a way to work around this in the future.
+  - This may currently cause problems if you don't have a Font Awesome Pro license. Feel free to reach out if this causes you an issue.
+  - _IMPORTANT_ If you don't have a pro license, please checkout and use the free-images folder
 
 And last but definitely not least, [TypeScript](https://www.typescriptlang.org) all around!
 
