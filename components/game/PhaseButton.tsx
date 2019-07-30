@@ -10,6 +10,7 @@ import {
   cloneElement,
   Children,
   RefObject,
+  isValidElement,
 } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
@@ -144,11 +145,12 @@ const PhaseButton: React.FC<
         <div className="back">{children}</div>
         <div className="front">
           {Children.map(children, (child, index) => {
-            return cloneElement(
-              // @ts-ignore
-              child,
-              measureRef && index === 0 ? { ref: measureRef } : undefined,
-            );
+            return isValidElement(child)
+              ? cloneElement(
+                  child,
+                  measureRef && index === 0 ? { ref: measureRef } : undefined,
+                )
+              : null;
           })}
         </div>
       </animated.div>
