@@ -7,6 +7,7 @@ import { DataType, ErrorMessages } from 'react-hook-form/dist/types';
 import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
+import { CardContainer } from '../common/styles/basic';
 
 interface IFormData {
   tourneyName: string;
@@ -69,60 +70,66 @@ const CreateTournamentControl: React.FC = () => {
   };
 
   const styledLabel = css`
-    padding-top: 4;
-    padding-right: 4;
+    padding-bottom: 4px;
   `;
 
   return (
     <div
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .header {
+          justify-content: center;
+          padding: 5px 0px 10px 0px;
+          font-weight: 700;
+        }
+      `}
     >
-      <form
-        css={{
-          display: 'flex',
-          flexDirection: 'column',
-          flex: '1 1 auto',
-          width: 280,
-        }}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <label css={styledLabel}>
-          Tournament Name:
-          <input
-            css={{ width: '100%' }}
-            data-testid="tourneyName"
-            name="tourneyName"
-            autoComplete="off"
-            ref={register({
-              maxLength: {
-                value: 20,
-                message: 'Tournament Name must be less than 20 characters',
-              },
-              required: 'Tournament Name is required',
-              validate: (name: string) => {
-                if (tournamentNames.includes(name)) {
-                  return `Tournament name '${name}' is already in use`;
-                }
-              },
-            })}
-            type="text"
-          />
-        </label>
-        <label css={styledLabel}>
-          Selected Players:
-          <PlayerSelector onChange={onPlayerSelectorChange} />
-        </label>
-        <FormErrors css={{ marginTop: 10 }} errors={errors} />
-        <div
-          css={{ display: 'flex', marginTop: 10, justifyContent: 'flex-end' }}
+      <div className="header">Tournament Manager</div>
+      <CardContainer>
+        <form
+          css={{
+            width: 280,
+          }}
+          onSubmit={handleSubmit(onSubmit)}
         >
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+          <label css={styledLabel}>
+            Tournament Name:
+            <input
+              css={css`
+                width: 100%;
+              `}
+              data-testid="tourneyName"
+              name="tourneyName"
+              autoComplete="off"
+              ref={register({
+                maxLength: {
+                  value: 20,
+                  message: 'Tournament Name must be less than 20 characters',
+                },
+                required: 'Tournament Name is required',
+                validate: (name: string) => {
+                  if (tournamentNames.includes(name)) {
+                    return `Tournament name '${name}' is already in use`;
+                  }
+                },
+              })}
+              type="text"
+            />
+          </label>
+          <label css={styledLabel}>
+            Selected Players:
+            <PlayerSelector onChange={onPlayerSelectorChange} />
+          </label>
+          <FormErrors css={{ marginTop: 10 }} errors={errors} />
+          <div
+            css={{ display: 'flex', marginTop: 10, justifyContent: 'flex-end' }}
+          >
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </CardContainer>
     </div>
   );
 };

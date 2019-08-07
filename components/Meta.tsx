@@ -11,6 +11,15 @@ const Meta = () => (
     <Global
       styles={css`
         ${normalizeCss}
+
+        box-sizing: border-box;
+
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+
         body {
           margin: 0;
 
