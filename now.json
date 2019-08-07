@@ -1,5 +1,7 @@
 {
-  "env": {
-    "FA_PRO_AUTH": "@faauth"
+  "build": {
+    "env": {
+      "FA_PRO_AUTH": "@faauth"
+    }
   }
 }
