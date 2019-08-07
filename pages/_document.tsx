@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import Document, { Main, NextScript } from 'next/document';
+import Document, { Main, NextScript, Html, Head } from 'next/document';
 import FontAwesomeSetup from '../components/common/font-awesome/FontAwesomeSetup';
 import Meta from '../components/Meta';
 
@@ -15,7 +15,8 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html>
+      <Html>
+        <Head />
         <FontAwesomeSetup></FontAwesomeSetup>
         <Meta></Meta>
 
@@ -23,7 +24,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }
