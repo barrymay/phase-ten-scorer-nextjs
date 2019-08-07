@@ -187,7 +187,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         `}
       >
         <div className="header">
-          <div className="name">Game Id: {tournament.name}</div>
+          <div className="name">Game: {tournament.name}</div>
           <P10Button
             minimal
             color="red"
