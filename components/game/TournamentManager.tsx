@@ -39,7 +39,7 @@ const TournamentManager: React.FC<{
             flex-direction: row;
             flex: 1;
             padding: 2px;
-            &:first-child {
+            &:first-of-type {
               border-radius: 2px 2px 0px 0px;
             }
             &:last-child {

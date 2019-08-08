@@ -7,6 +7,7 @@ import { darken, lighten, rgba } from 'polished';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
+import LoginButton from '../common/LoginButton';
 
 const linkTextColor = darken(0.1, '#006699');
 const Header = styled.div`
@@ -80,6 +81,7 @@ const NavBar: React.FC = ({ children }) => {
             routeKey={key as RouteKeys}
           />
         ))}
+      <LoginButton css={[HeaderLinkStyle, LinkStyle(true)]} />
     </Header>
   );
 };
