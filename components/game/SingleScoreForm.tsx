@@ -136,6 +136,9 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
         <label>
           Completed Phase:
           <PhaseScorer
+            css={css`
+              max-width: 100%;
+            `}
             player={player}
             startingPhase={inputPhase}
             onMarkedPhaseUpdate={updatePhase}

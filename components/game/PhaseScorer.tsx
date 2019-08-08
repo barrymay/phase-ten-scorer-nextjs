@@ -120,12 +120,14 @@ const PhaseScorer: React.FC<{
   startingPhase?: number | undefined;
   onMeasureUpdate?: VoidFunction;
   onMarkedPhaseUpdate?: (phaseMarked: number) => void;
+  className?: string;
 }> = ({
   onMeasureUpdate,
   onMarkedPhaseUpdate,
   player,
   startingPhase,
   roundNum,
+  className,
 }) => {
   const { tournament } = useTournamentCurrentContext();
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
@@ -166,7 +168,7 @@ const PhaseScorer: React.FC<{
   );
 
   return (
-    <Container>
+    <Container className={className}>
       {phases.map((phase, index) => {
         return (
           <PhaseButton
