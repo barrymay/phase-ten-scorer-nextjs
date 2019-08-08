@@ -1,16 +1,15 @@
 import { ApolloServer, gql } from 'apollo-server-micro';
 
 const rootSchema = gql`
-  type Cat {
-    species: String!
-    fluffy: Boolean!
-    nice: Boolean!
-    age: Int!
+  type User {
+    id: String!
+    name: String!
+    email: String!
   }
 
   type Query {
-    cat: String
-    cats: [Cat]!
+    user: User
+    getUser(userId: String): String
   }
 
   schema {
@@ -20,8 +19,15 @@ const rootSchema = gql`
 
 const resolvers = {
   Query: {
-    cat: () => {
-      return 'Hi There';
+    user: () => {
+      return {
+        id: 'FooBar',
+        name: 'Foo',
+        email: 'Foo@Bar.com',
+      };
+    },
+    getUser: (userId: string) => {
+      return 'Hi There: ' + userId;
     },
   },
 };
