@@ -8,7 +8,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: () => {
+    hello: (_root: any, _args: any, _context: any) => {
       return 'Hello world!';
     },
   },
