@@ -24,19 +24,27 @@ const TournamentManager: React.FC<{
           padding-bottom: 2px;
           font-weight: 700;
         }
+        .no-value {
+          display: flex;
+          justify-content: center;
+        }
         .list {
           display: flex;
           flex-direction: column;
-          .no-value {
-            display: flex;
-            justify-content: center;
-          }
+          border: 1px solid #cccccc;
+          border-radius: 4px;
+
           .tournament-button {
             display: flex;
             flex-direction: row;
             flex: 1;
             padding: 2px;
-            border-radius: 4px;
+            &:first-child {
+              border-radius: 2px 2px 0px 0px;
+            }
+            &:last-child {
+              border-radius: 0px 0px 2px 2px;
+            }
             transition: color 100ms ease-in-out,
               background-color 100ms ease-in-out;
             &:hover {
@@ -53,16 +61,22 @@ const TournamentManager: React.FC<{
       `}
     >
       <div className="header">Active Tournaments:</div>
-      <div className="list">
-        {!tournaments.length ? (
-          <div className="no-value">No Tournaments Created</div>
-        ) : (
-          tournaments.map(item => {
+      {!tournaments.length ? (
+        <div className="no-value">No Tournaments Created</div>
+      ) : (
+        <div className="list">
+          {tournaments.map((item, index) => {
             const playerCount = `${item.playerIds.length} Player${
               item.playerIds.length !== 1 ? 's' : ''
             }`;
             return (
-              <div key={item.id} className="tournament-button">
+              <div
+                key={item.id}
+                className="tournament-button"
+                css={css`
+                  background: ${index % 2 ? '#eee' : 'white'};
+                `}
+              >
                 <div
                   className="tournamentName"
                   onClick={() => {
@@ -81,9 +95,9 @@ const TournamentManager: React.FC<{
                 />
               </div>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 };
