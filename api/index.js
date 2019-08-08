@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from 'apollo-server-micro';
+const { ApolloServer, gql } = require('apollo-server-micro');
 
 const typeDefs = gql`
   type Query {
@@ -8,7 +8,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    hello: (_root: any, _args: any, _context: any) => {
+    hello: (root, args, context) => {
       return 'Hello world!';
     },
   },
