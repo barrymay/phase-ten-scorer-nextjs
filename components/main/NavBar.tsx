@@ -7,6 +7,7 @@ import { darken, lighten, rgba } from 'polished';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
+import { useAuth0 } from '../common/auth/react-auth0-wrapper';
 
 const linkTextColor = darken(0.1, '#006699');
 const Header = styled.div`
@@ -36,6 +37,8 @@ const HeaderLinkStyle = css`
 `;
 
 const NavBar: React.FC = ({ children }) => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+console.log("isAuthenticated")
   const LinkStyle = React.useCallback(
     isMinimal =>
       css`
@@ -80,6 +83,19 @@ const NavBar: React.FC = ({ children }) => {
             routeKey={key as RouteKeys}
           />
         ))}
+      <div>
+        {!isAuthenticated && (
+          <button
+            onClick={() => {
+              return loginWithRedirect({});
+            }}
+          >
+            Log in
+          </button>
+        )}
+
+        {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+      </div>
     </Header>
   );
 };
