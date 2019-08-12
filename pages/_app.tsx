@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import NavBar from '../components/main/NavBar';
 import { Auth0Provider } from '../components/common/auth/react-auth0-wrapper';
-import config from '../auth.config.json';
+import config from '../auth.config';
 
 // A function that routes the user to the right place
 // after login
@@ -18,7 +18,6 @@ const onRedirectCallback = (appState: any) => {
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
-
     return (
       <Container>
         <Auth0Provider
