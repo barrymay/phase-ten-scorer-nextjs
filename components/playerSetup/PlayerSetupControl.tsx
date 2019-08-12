@@ -64,50 +64,64 @@ export const PlayerSetupControl: React.FC = () => {
   }, [triggerFocus]);
 
   return (
-    <CardContainer>
-      <div
-        css={css`
-          display: flex;
-          flex-direction: column;
-        `}
-      >
-        <div data-testid="player-counter">
-          Players: {Object.keys(players).length}
-        </div>
-        <PlayerEntry>
-          <label htmlFor="player_add_input">Player Name:</label>
-          <PlayerNameInput
-            id="player_add_input"
-            ref={textRef}
-            value={name}
-            onChange={changeHandler}
-            onKeyUp={keyHandler}
-            type="text"
-          />
-          <P10Button
-            css={css`
-              margin-left: 4px;
-            `}
-            onClick={clickAdd}
-            faIconDef={faUserPlus}
-            title="Add Player"
-            minimal
-          />
-        </PlayerEntry>
-        <PlayerList players={players} />
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .header {
+          justify-content: center;
+          padding: 5px 0px 10px 0px;
+          font-weight: 700;
+        }
+      `}
+    >
+      <div className="header">Player Setup</div>
+      <CardContainer>
         <div
           css={css`
-            padding-top: 2px;
             display: flex;
-            justify-content: flex-end;
+            flex-direction: column;
           `}
         >
-          <P10Button minimal faIconDef={faUserSlash} onClick={clearAll}>
-            Clear All
-          </P10Button>
+          <div data-testid="player-counter">
+            Players: {Object.keys(players).length}
+          </div>
+          <PlayerEntry>
+            <label htmlFor="player_add_input">Player Name:</label>
+            <PlayerNameInput
+              id="player_add_input"
+              ref={textRef}
+              value={name}
+              onChange={changeHandler}
+              onKeyUp={keyHandler}
+              type="text"
+            />
+            <P10Button
+              css={css`
+                margin-left: 4px;
+              `}
+              onClick={clickAdd}
+              faIconDef={faUserPlus}
+              title="Add Player"
+              minimal
+            />
+          </PlayerEntry>
+          <PlayerList players={players} />
+          <div
+            css={css`
+              padding-top: 2px;
+              display: flex;
+              justify-content: flex-end;
+            `}
+          >
+            <P10Button minimal faIconDef={faUserSlash} onClick={clearAll}>
+              Clear All
+            </P10Button>
+          </div>
         </div>
-      </div>
-    </CardContainer>
+      </CardContainer>
+    </div>
   );
 };
 

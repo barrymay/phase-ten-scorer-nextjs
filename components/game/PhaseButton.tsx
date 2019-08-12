@@ -39,7 +39,7 @@ const getStateColors = (value: PhaseState) => {
 };
 
 const baseButtonStyles = css`
-  min-width: 100px;
+  min-width: 65px;
   border: 0px solid black;
   outline: none;
   background: inherit;
@@ -53,6 +53,7 @@ const baseButtonStyles = css`
     border: 1px solid black;
     border-radius: 0.25em;
     position: relative;
+    box-sizing: content-box;
 
     .front,
     .back {

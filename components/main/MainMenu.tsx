@@ -11,6 +11,7 @@ const menuStyle = css`
   flex-direction: column;
   align-items: center;
   .buttonList {
+    padding: 10px 0px;
     display: flex;
     flex-direction: column;
     button {
@@ -31,9 +32,9 @@ export const MainMenu: React.FC = () => {
       </div>
       <ProviderWrapper>
         <TournamentManager
-          css={{
-            minWidth: 250,
-          }}
+          css={css`
+            min-width: 250px;
+          `}
         />
       </ProviderWrapper>
     </div>
