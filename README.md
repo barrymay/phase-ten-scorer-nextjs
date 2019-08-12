@@ -23,8 +23,20 @@ The app is in active development and showcases a few modern tech features around
 - [Font Awesome 5](https://fontawesome.com)
   - This may currently cause problems if you don't have a Font Awesome Pro license. Feel free to reach out if this causes you an issue.
   - _IMPORTANT_ If you don't have a pro license, please checkout and use the free-images folder
+- [Auth0](http://auth0.com)
+  - Using the free tier for simplified authentication
 
 And last but definitely not least, [TypeScript](https://www.typescriptlang.org) all around!
+
+## Environment variables
+
+Create an .env file in the root folder
+
+AUTH0_DOMAIN="<AUTH0_DOMAIN>"
+AUTH0_CLIENT="<AUTH0_CLIENT_KEY>"
+FA_PRO_AUTH="<FONT_AWESOME_PRO_KEY>" (if purchased)
+
+## Other stuff
 
 Any ideas for feedback please feel free to reach out!
 
