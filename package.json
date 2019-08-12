@@ -63,7 +63,7 @@
     "husky": "^2.3.0",
     "jest-emotion": "^10.0.11",
     "jest-teamcity-reporter": "^0.9.0",
-    "react-test-renderer": "^16.8.6",
+    "react-test-renderer": "^16.9.0",
     "react-testing-library": "6.1.2"
   },
   "scripts": {
