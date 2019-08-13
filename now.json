@@ -2,7 +2,9 @@
   "version": 2,
   "build": {
     "env": {
-      "FA_PRO_AUTH": "@faauth"
+      "FA_PRO_AUTH": "@faauth",
+      "AUTH0_DOMAIN": "@auth0-domain",
+      "AUTH0_CLIENT": "@auth0-client"
     }
   }
 }
