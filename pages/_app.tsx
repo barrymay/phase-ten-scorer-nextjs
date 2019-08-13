@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import NavBar from '../components/main/NavBar';
-import { Auth0Provider } from '../components/common/auth/react-auth0-wrapper';
 import config from '../auth.config';
+import withAuth from '../components/common/auth/withAuth';
 
 // A function that routes the user to the right place
 // after login
@@ -15,25 +15,17 @@ const onRedirectCallback = (appState: any) => {
   );
 };
 
-class MyApp extends App {
+class MyApp extends App<{ user?: any }> {
   render() {
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        <Auth0Provider
-          domain={config.domain}
-          clientId={config.clientId}
-          redirectUriCallback={() => window.location.origin}
-          // @ts-ignore
-          onRedirectCallback={onRedirectCallback}
-        >
-          <NavBar />
-          <Component {...pageProps} />
-          <div id="modal-root"></div>
-        </Auth0Provider>
+        <NavBar user={this.props.user} />
+        <Component {...pageProps} />
+        <div id="modal-root"></div>
       </Container>
     );
   }
 }
 
-export default MyApp;
+export default withAuth(MyApp);

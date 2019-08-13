@@ -14,6 +14,9 @@ The app is in active development and showcases a few modern tech features around
 - [NextJS (Server-Side Rendering)](https://nextjs.org)
   - Somewhat magical platform - I had written this in create-react-app starting out, then used to implement SSR with great success
   - At present only localStorage is used for storing state, but this will change in the near future!
+- [Now](https://now.sh)
+  - Serverless free hosting!
+  - Major tip: Use `now dev` to run full now serverless in test mode
 - [Emotion](https://emotion.sh/docs/introduction)
   - Excellent css-in-js library. Well documented, extremely performant
 - [React-spring](https://www.react-spring.io)
@@ -37,6 +40,12 @@ AUTH0_DOMAIN="<AUTH0_DOMAIN>"
 AUTH0_CLIENT="<AUTH0_CLIENT_KEY>"
 FA_PRO_AUTH="<FONT_AWESOME_PRO_KEY>" (if purchased)
 ```
+
+## Thank you!
+
+Libraries I've gained ideas from:
+
+- https://github.com/awb305/Auth0-Nextjs-Serverless - Great example of integrating auth0 into a serverless nextjs example
 
 ## Other stuff
 

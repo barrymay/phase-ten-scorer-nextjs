@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { MainMenu } from '../components/main/MainMenu';
+import withAuth from '../components/common/auth/withAuth';
 
-function Start() {
+function Start({ user }: { user: any }) {
   return (
     <div>
       <Head>
