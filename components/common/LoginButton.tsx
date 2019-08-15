@@ -20,11 +20,11 @@ const LoginButton: React.FC<{ className?: string; user: any }> = ({
   user,
 }) => {
   const login = () => {
-    Router.push('/login');
+    window.location.href = `${window.location.origin}/login`;
   };
 
   const logout = () => {
-    Router.push('/logout');
+    window.location.href = `${window.location.origin}/logout`;
   };
 
   // TODO: Remove hardcoded width
