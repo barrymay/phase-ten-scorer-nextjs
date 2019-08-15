@@ -64,7 +64,6 @@ const withAuth = (WrappedComponent: any) =>
       const userJson = await userData.json();
       const { user } = userJson;
       componentProps.user = user;
-
       return { ...componentProps };
     }
 

@@ -16,11 +16,15 @@ const onRedirectCallback = (appState: any) => {
 };
 
 class MyApp extends App<{ user?: any }> {
+  private user: any = undefined;
   render() {
+    if (this.props.user) {
+      this.user = this.props.user;
+    }
     const { Component, pageProps } = this.props;
     return (
       <Container>
-        <NavBar user={this.props.user} />
+        <NavBar user={this.user} />
         <Component {...pageProps} />
         <div id="modal-root"></div>
       </Container>
