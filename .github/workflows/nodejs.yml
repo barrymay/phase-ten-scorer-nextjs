@@ -24,3 +24,5 @@ jobs:
         npm test
       env:
         CI: true
+        FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
+
