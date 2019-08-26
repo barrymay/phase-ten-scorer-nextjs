@@ -123,13 +123,17 @@ function P10Button<T extends {}>(props: Props<T>) {
     );
   };
 
-  return renderAs === 'Link' ? (
-    <Link href={href} passHref>
-      {content('a')}
-    </Link>
-  ) : (
-    content('button')
-  );
+  if (renderAs === 'Link') {
+    if (!href) {
+      throw new Error("Linked Buttons must have defined href's");
+    }
+    return (
+      <Link href={href} passHref>
+        {content('a')}
+      </Link>
+    );
+  }
+  return content('button');
 }
 
 export default P10Button;
