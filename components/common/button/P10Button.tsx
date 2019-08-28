@@ -52,7 +52,6 @@ function P10Button<T extends {}>(props: Props<T>) {
       justify-content: center;
 
       text-decoration: none;
-      border: none;
       font-family: inherit;
       font-size: inherit;
       color: inherit;
@@ -75,10 +74,15 @@ function P10Button<T extends {}>(props: Props<T>) {
         -moz-transition: all ${transitionSpeed};
         transition: all ${transitionSpeed};
       }
+      border: 3px solid ${color};
+      border-width: ${minimal ? '1px' : ''};
+      border-color: ${minimal ? 'transparent' : ''};
+      &:focus {
+        border-color: #333;
+      }
 
       /* Button 1 */
       &.btn-1 {
-        border: 3px solid ${color};
         color: ${color};
         &:focus {
           background-color: lighten(${color}, 40%);
@@ -93,7 +97,6 @@ function P10Button<T extends {}>(props: Props<T>) {
         align-items: center;
         justify-content: center;
         margin: ${minimal ? '0px' : '2px 0px'};
-        border-width: ${minimal ? '0px' : ''};
         padding: ${minimal ? '2px' : ''};
         height: ${minimal ? '100%' : ''};
       }

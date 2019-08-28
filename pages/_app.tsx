@@ -2,6 +2,7 @@ import App, { Container } from 'next/app';
 import NavBar from '../components/main/NavBar';
 import config from '../auth.config';
 import withAuth from '../components/common/auth/withAuth';
+import { Fragment } from 'react';
 
 // A function that routes the user to the right place
 // after login
@@ -23,11 +24,11 @@ class MyApp extends App<{ user?: any }> {
     }
     const { Component, pageProps } = this.props;
     return (
-      <Container>
+      <Fragment>
         <NavBar user={this.user} />
         <Component {...pageProps} />
         <div id="modal-root"></div>
-      </Container>
+      </Fragment>
     );
   }
 }
