@@ -229,6 +229,9 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
               css={css`
                 display: flex;
                 border-radius: 4px;
+                &:focus {
+                  border-color: #333;
+                }
               `}
               minimal
               title="Score Round (Ctrl-S)"

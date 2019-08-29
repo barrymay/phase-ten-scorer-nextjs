@@ -77,9 +77,6 @@ function P10Button<T extends {}>(props: Props<T>) {
       border: 3px solid ${color};
       border-width: ${minimal ? '1px' : ''};
       border-color: ${minimal ? 'transparent' : ''};
-      &:focus {
-        border-color: #333;
-      }
 
       /* Button 1 */
       &.btn-1 {

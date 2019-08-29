@@ -82,31 +82,58 @@ export const PlayerSetupControl: React.FC = () => {
           css={css`
             display: flex;
             flex-direction: column;
+            .list-header {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding-bottom: 2px;
+              .list-header-name {
+                font-weight: bold;
+              }
+              button {
+                padding-top: 0px;
+                padding-bottom: 0px;
+              }
+            }
+            .list-label {
+              font-weight: bold;
+              padding-bottom: 2px;
+            }
           `}
         >
-          <div data-testid="player-counter">
-            Players: {Object.keys(players).length}
+          <div className="list-header">
+            <div className="list-header-name" data-testid="player-counter">
+              Players: {Object.keys(players).length}
+            </div>
+            <P10Button minimal faIconDef={faUserSlash} onClick={clearAll}>
+              Clear All
+            </P10Button>
           </div>
-          <PlayerEntry>
-            <label htmlFor="player_add_input">Player Name:</label>
-            <PlayerNameInput
-              id="player_add_input"
-              ref={textRef}
-              value={name}
-              onChange={changeHandler}
-              onKeyUp={keyHandler}
-              type="text"
-            />
-            <P10Button
-              css={css`
-                margin-left: 4px;
-              `}
-              onClick={clickAdd}
-              faIconDef={faUserPlus}
-              title="Add Player"
-              minimal
-            />
-          </PlayerEntry>
+          <div>
+            <PlayerEntry>
+              <label htmlFor="player_add_input">Player Name:</label>
+              <PlayerNameInput
+                id="player_add_input"
+                ref={textRef}
+                value={name}
+                onChange={changeHandler}
+                onKeyUp={keyHandler}
+                type="text"
+              />
+              <P10Button
+                css={css`
+                  margin-left: 4px;
+                `}
+                onClick={clickAdd}
+                faIconDef={faUserPlus}
+                title="Add Player"
+                minimal
+              />
+            </PlayerEntry>
+          </div>
+          <div className="list-label" data-testid="player-counter">
+            Players:
+          </div>
           <PlayerList players={players} />
           <div
             css={css`
@@ -114,11 +141,7 @@ export const PlayerSetupControl: React.FC = () => {
               display: flex;
               justify-content: flex-end;
             `}
-          >
-            <P10Button minimal faIconDef={faUserSlash} onClick={clearAll}>
-              Clear All
-            </P10Button>
-          </div>
+          ></div>
         </div>
       </CardContainer>
     </div>

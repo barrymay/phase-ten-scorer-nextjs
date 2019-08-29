@@ -7,7 +7,7 @@ const CreateTournament: React.FC = () => {
   return (
     <Fragment>
       <Head>
-        <title>Phase 10 Scorer</title>
+        <title>Phase 10 Scorer - Create</title>
       </Head>
       <ProviderWrapper>
         <CreateTournamentControl />
