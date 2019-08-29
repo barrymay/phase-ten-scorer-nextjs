@@ -3,7 +3,7 @@ import ProviderWrapper from '../components/game/ProviderWrapper';
 import PlayerSetupControl from '../components/playerSetup/PlayerSetupControl';
 import { Fragment } from 'react';
 
-const PlayerSetup: React.FC<{ className: string }> = ({ className }) => {
+const PlayerSetup: React.FC = () => {
   return (
     <Fragment>
       <Head>
@@ -11,7 +11,7 @@ const PlayerSetup: React.FC<{ className: string }> = ({ className }) => {
       </Head>
 
       <ProviderWrapper>
-        <PlayerSetupControl className={className} />
+        <PlayerSetupControl />
       </ProviderWrapper>
     </Fragment>
   );

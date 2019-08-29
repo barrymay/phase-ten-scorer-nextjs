@@ -18,9 +18,7 @@ const PlayerEntry = styled.div({
   alignItems: 'center',
 });
 
-export const PlayerSetupControl: React.FC<{ className: string }> = ({
-  className,
-}) => {
+export const PlayerSetupControl: React.FC = () => {
   const dispatchPlayers = usePlayersDispatch();
   const players = usePlayersState();
   const [name, setName] = useState('');
@@ -67,7 +65,6 @@ export const PlayerSetupControl: React.FC<{ className: string }> = ({
 
   return (
     <div
-      className={className}
       css={css`
         display: flex;
         flex-direction: column;

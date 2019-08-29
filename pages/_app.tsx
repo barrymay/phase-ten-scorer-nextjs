@@ -35,12 +35,13 @@ class MyApp extends App<{ user?: any }> {
           `}
         >
           <NavBar user={this.user} />
-          <Component
+          <div
             css={css`
               flex: 1 1 auto;
             `}
-            {...pageProps}
-          />
+          >
+            <Component {...pageProps} />
+          </div>
           <div id="modal-root"></div>
         </div>
       </Fragment>

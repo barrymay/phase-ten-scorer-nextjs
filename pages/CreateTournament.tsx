@@ -3,14 +3,14 @@ import CreateTournamentControl from '../components/game/CreateTournamentControl'
 import ProviderWrapper from '../components/game/ProviderWrapper';
 import { Fragment } from 'react';
 
-const CreateTournament: React.FC<{ className: string }> = ({ className }) => {
+const CreateTournament: React.FC = () => {
   return (
     <Fragment>
       <Head>
         <title>Phase 10 Scorer</title>
       </Head>
       <ProviderWrapper>
-        <CreateTournamentControl className={className} />
+        <CreateTournamentControl />
       </ProviderWrapper>
     </Fragment>
   );

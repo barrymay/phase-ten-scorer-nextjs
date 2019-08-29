@@ -12,7 +12,7 @@ const Start: React.FC<{ user: any; className: string }> = ({
       <Head>
         <title>Phase 10 Scorer</title>
       </Head>
-      <MainMenu className={className} />
+      <MainMenu />
     </Fragment>
   );
 };
