@@ -217,13 +217,29 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         {winners.length ? (
           <WinnerDisplay winners={winners} />
         ) : (
-          <P10Button
-            minimal
-            title="Score Round (Ctrl-S)"
-            onClick={() => addScore()}
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              padding-top: 4px;
+              align-items: center;
+            `}
           >
-            Score Round
-          </P10Button>
+            <P10Button
+              css={css`
+                display: flex;
+                border-radius: 4px;
+                &:focus {
+                  border-color: #333;
+                }
+              `}
+              minimal
+              title="Score Round (Ctrl-S)"
+              onClick={() => addScore()}
+            >
+              Score Round
+            </P10Button>
+          </div>
         )}
       </div>
     </div>

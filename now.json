@@ -1,8 +1,43 @@
 {
   "version": 2,
+  "env": {
+    "AUTH0_DOMAIN": "@auth0-domain",
+    "AUTH0_CLIENT": "@auth0-client",
+    "AUTH0_CLIENT_SECRET": "@auth0-client-secret",
+    "AUTH0_CALLBACK_URL": "@auth0-callback-url",
+    "ROOT_DOMAIN": "@root-domain"
+  },
   "build": {
     "env": {
       "FA_PRO_AUTH": "@faauth"
     }
-  }
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    },
+    {
+      "src": "auth/**/*.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/login",
+      "dest": "/auth/auth.js"
+    },
+    {
+      "src": "/callback",
+      "dest": "/auth/auth.js"
+    },
+    {
+      "src": "/logout",
+      "dest": "/auth/auth.js"
+    },
+    {
+      "src": "/user",
+      "dest": "/auth/auth.js"
+    }
+  ]
 }

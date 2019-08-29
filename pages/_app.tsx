@@ -1,7 +1,10 @@
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import App, { Container } from 'next/app';
 import NavBar from '../components/main/NavBar';
-import { Auth0Provider } from '../components/common/auth/react-auth0-wrapper';
 import config from '../auth.config';
+import withAuth from '../components/common/auth/withAuth';
+import { Fragment } from 'react';
 
 // A function that routes the user to the right place
 // after login
@@ -15,25 +18,35 @@ const onRedirectCallback = (appState: any) => {
   );
 };
 
-class MyApp extends App {
+class MyApp extends App<{ user?: any }> {
+  private user: any = undefined;
   render() {
+    if (this.props.user) {
+      this.user = this.props.user;
+    }
     const { Component, pageProps } = this.props;
     return (
-      <Container>
-        <Auth0Provider
-          domain={config.domain}
-          clientId={config.clientId}
-          redirectUriCallback={() => window.location.origin}
-          // @ts-ignore
-          onRedirectCallback={onRedirectCallback}
+      <Fragment>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+          `}
         >
-          <NavBar />
-          <Component {...pageProps} />
+          <NavBar user={this.user} />
+          <div
+            css={css`
+              flex: 1 1 auto;
+            `}
+          >
+            <Component {...pageProps} />
+          </div>
           <div id="modal-root"></div>
-        </Auth0Provider>
-      </Container>
+        </div>
+      </Fragment>
     );
   }
 }
 
-export default MyApp;
+export default withAuth(MyApp);

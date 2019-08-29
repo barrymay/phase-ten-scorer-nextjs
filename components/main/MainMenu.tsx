@@ -20,9 +20,9 @@ const menuStyle = css`
   }
 `;
 
-export const MainMenu: React.FC = () => {
+export const MainMenu: React.FC<{ className?: string }> = ({ className }) => {
   return (
-    <div css={menuStyle}>
+    <div className={className} css={menuStyle}>
       <div className="buttonList">
         {Object.entries(RouteDefinitions)
           .filter(([, value]) => !value.hideFromNavBar)

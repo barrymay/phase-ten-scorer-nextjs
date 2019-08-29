@@ -5,7 +5,7 @@ import { TournamentCurrentProvider } from '../../components/context/TournamentCu
 import GameViewControl from '../../components/game/GameViewControl';
 import ProviderWrapper from '../../components/game/ProviderWrapper';
 import Spinner from '../../components/common/Spinner';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 const style = css`
   position: relative;
@@ -22,14 +22,20 @@ const style = css`
     }
   }
 `;
-const GameView = ({ gameId }: { gameId: string }) => {
+const GameView = ({
+  gameId,
+  className,
+}: {
+  gameId: string;
+  className: string;
+}) => {
   const [showSpinner, setShowSpinner] = useState(true);
   return (
-    <div>
+    <Fragment>
       <Head>
         <title>Phase 10 Scorer - Game</title>
       </Head>
-      <div css={style}>
+      <div className={className} css={style}>
         {showSpinner ? (
           <div className="container spinner">
             <Spinner />
@@ -47,7 +53,7 @@ const GameView = ({ gameId }: { gameId: string }) => {
           </TournamentCurrentProvider>
         </ProviderWrapper>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

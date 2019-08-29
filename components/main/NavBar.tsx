@@ -36,7 +36,7 @@ const HeaderLinkStyle = css`
   }
 `;
 
-const NavBar: React.FC = ({ children }) => {
+const NavBar: React.FC<{ user: any }> = ({ children, user }) => {
   const LinkStyle = React.useCallback(
     isMinimal =>
       css`
@@ -81,7 +81,7 @@ const NavBar: React.FC = ({ children }) => {
             routeKey={key as RouteKeys}
           />
         ))}
-      <LoginButton css={[HeaderLinkStyle, LinkStyle(true)]} />
+      <LoginButton css={[HeaderLinkStyle, LinkStyle(true)]} user={user} />
     </Header>
   );
 };

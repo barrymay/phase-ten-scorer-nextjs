@@ -6,9 +6,7 @@ import React from 'react';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
 
-const TournamentManager: React.FC<{
-  className?: string;
-}> = ({ className }) => {
+const TournamentManager: React.FC = () => {
   const { tournaments, removeTournament } = useTournamentContext();
   function openGame(gameId: string): void {
     Router.push(`/GameView/${gameId}`);
@@ -16,7 +14,6 @@ const TournamentManager: React.FC<{
 
   return (
     <div
-      className={className}
       css={css`
         .header {
           display: flex;

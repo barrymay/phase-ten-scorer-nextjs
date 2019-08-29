@@ -9,5 +9,8 @@
   "eslint.enable": true,
   "jest.autoEnable": false,
   "editor.formatOnSave": true,
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "files.exclude": {
+    "**/.next": true
+  }
 }

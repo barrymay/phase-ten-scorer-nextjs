@@ -1,19 +1,20 @@
 import Head from 'next/head';
 import ProviderWrapper from '../components/game/ProviderWrapper';
 import PlayerSetupControl from '../components/playerSetup/PlayerSetupControl';
+import { Fragment } from 'react';
 
-function PlayerSetup() {
+const PlayerSetup: React.FC = () => {
   return (
-    <div>
+    <Fragment>
       <Head>
-        <title>Phase 10 Scorer</title>
+        <title>Phase 10 Scorer - Players</title>
       </Head>
 
       <ProviderWrapper>
         <PlayerSetupControl />
       </ProviderWrapper>
-    </div>
+    </Fragment>
   );
-}
+};
 
 export default PlayerSetup;

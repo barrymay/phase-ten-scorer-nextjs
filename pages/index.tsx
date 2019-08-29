@@ -1,15 +1,20 @@
 import Head from 'next/head';
 import { MainMenu } from '../components/main/MainMenu';
+import withAuth from '../components/common/auth/withAuth';
+import { Fragment } from 'react';
 
-function Start() {
+const Start: React.FC<{ user: any; className: string }> = ({
+  user,
+  className,
+}) => {
   return (
-    <div>
+    <Fragment>
       <Head>
         <title>Phase 10 Scorer</title>
       </Head>
       <MainMenu />
-    </div>
+    </Fragment>
   );
-}
+};
 
 export default Start;
