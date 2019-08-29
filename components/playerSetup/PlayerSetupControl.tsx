@@ -10,7 +10,7 @@ import PlayerList from './PlayerList';
 
 const PlayerNameInput = styled.input`
   max-width: 200px;
-  margin-left: 4px;
+  margin: 0px 4px;
 `;
 
 const PlayerEntry = styled.div({
@@ -80,31 +80,27 @@ export const PlayerSetupControl: React.FC = () => {
       <CardContainer>
         <div
           css={css`
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            grid-gap: 2px;
+            label {
+              font-weight: bold;
+            }
             .list-header {
               display: flex;
               align-items: center;
               justify-content: space-between;
-              padding-bottom: 2px;
-              .list-header-name {
-                font-weight: bold;
-              }
               button {
                 padding-top: 0px;
                 padding-bottom: 0px;
               }
             }
-            .list-label {
-              font-weight: bold;
-              padding-bottom: 2px;
-            }
           `}
         >
           <div className="list-header">
-            <div className="list-header-name" data-testid="player-counter">
+            <label data-testid="player-counter">
               Players: {Object.keys(players).length}
-            </div>
+            </label>
             <P10Button minimal faIconDef={faUserSlash} onClick={clearAll}>
               Clear All
             </P10Button>
@@ -131,13 +127,12 @@ export const PlayerSetupControl: React.FC = () => {
               />
             </PlayerEntry>
           </div>
-          <div className="list-label" data-testid="player-counter">
-            Players:
+          <div>
+            <label data-testid="player-counter">Players:</label>
+            <PlayerList players={players} />
           </div>
-          <PlayerList players={players} />
           <div
             css={css`
-              padding-top: 2px;
               display: flex;
               justify-content: flex-end;
             `}
