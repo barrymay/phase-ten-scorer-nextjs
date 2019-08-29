@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import App, { Container } from 'next/app';
 import NavBar from '../components/main/NavBar';
 import config from '../auth.config';
@@ -25,9 +27,22 @@ class MyApp extends App<{ user?: any }> {
     const { Component, pageProps } = this.props;
     return (
       <Fragment>
-        <NavBar user={this.user} />
-        <Component {...pageProps} />
-        <div id="modal-root"></div>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+          `}
+        >
+          <NavBar user={this.user} />
+          <Component
+            css={css`
+              flex: 1 1 auto;
+            `}
+            {...pageProps}
+          />
+          <div id="modal-root"></div>
+        </div>
       </Fragment>
     );
   }

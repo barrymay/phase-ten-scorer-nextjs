@@ -1,18 +1,19 @@
 import Head from 'next/head';
 import CreateTournamentControl from '../components/game/CreateTournamentControl';
 import ProviderWrapper from '../components/game/ProviderWrapper';
+import { Fragment } from 'react';
 
-function CreateTournament() {
+const CreateTournament: React.FC<{ className: string }> = ({ className }) => {
   return (
-    <div>
+    <Fragment>
       <Head>
         <title>Phase 10 Scorer</title>
       </Head>
       <ProviderWrapper>
-        <CreateTournamentControl />
+        <CreateTournamentControl className={className} />
       </ProviderWrapper>
-    </div>
+    </Fragment>
   );
-}
+};
 
 export default CreateTournament;

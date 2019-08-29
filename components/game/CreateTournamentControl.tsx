@@ -19,7 +19,9 @@ interface IErrorProps {
   className?: string;
 }
 
-const CreateTournamentControl: React.FC = () => {
+const CreateTournamentControl: React.FC<{ className: string }> = ({
+  className,
+}) => {
   const {
     handleSubmit,
     register,
@@ -75,6 +77,7 @@ const CreateTournamentControl: React.FC = () => {
 
   return (
     <div
+      className={className}
       css={css`
         display: flex;
         flex-direction: column;
