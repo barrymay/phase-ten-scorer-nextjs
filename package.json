@@ -67,7 +67,7 @@
     "@types/js-cookie": "^2.2.2",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.11.0",
-    "eslint": "^5.0.0",
+    "eslint": "^6.2.2",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-emotion": "^10.0.14",
     "eslint-plugin-react": "^7.14.3",
