@@ -11063,7 +11063,7 @@ react-scripts@3.0.1:
   optionalDependencies:
     fsevents "2.0.6"
 
-react-spring@^9.0.0-beta.31:
+react-spring@^9.0.0-beta.33:
   version "9.0.0-beta.33"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-9.0.0-beta.33.tgz#b367559c5ddada133b5cbe771d456a1918dc5c23"
   integrity sha512-fSGlIEeJJ1gzEHuD/AbQC3fd7pXic8P/O9ssz4DBiSs2SANkO+BESlgbFaFLVrLgRvjdd+bKF7WrdGeaPEVv2w==
