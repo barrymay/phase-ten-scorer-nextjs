@@ -1,4 +1,4 @@
-# phase=ten-scorer-nextjs
+# phase-ten-scorer-nextjs
 
 Phase 10 Scorer is a simple scoring app for the [Phase 10 Card Game](https://en.wikipedia.org/wiki/phase_10), demonstrating several recent libraries revolving around modern JS libraries.
 
