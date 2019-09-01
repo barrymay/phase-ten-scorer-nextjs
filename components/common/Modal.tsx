@@ -78,7 +78,7 @@ const Modal: React.FC<{
     leave: { opacity: 0 },
     onDestroyed: isDestroyed => {
       if (isDestroyed && !shown) {
-        let mainDiv = mainDivRef.current;
+        const mainDiv = mainDivRef.current;
         const modalRoot = getModalRoot();
         if (
           modalRoot &&
@@ -93,7 +93,7 @@ const Modal: React.FC<{
 
   useEffect(() => {
     if (shown) {
-      let mainDiv = mainDivRef.current;
+      const mainDiv = mainDivRef.current;
       const modalRoot = getModalRoot();
       modalRoot.appendChild(mainDiv);
       appended.current = true;

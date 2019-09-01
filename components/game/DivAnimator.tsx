@@ -21,9 +21,9 @@ const Container = styled.div`
 `;
 
 function getProcessFunc(
-  width: number = 200,
+  width = 200,
   fromBoundsRef: React.MutableRefObject<Array<{ x: number }>>,
-  curSelection: number = 0,
+  curSelection = 0,
   isSpringAtRest?: boolean,
 ) {
   return function processPosition(index: number) {
