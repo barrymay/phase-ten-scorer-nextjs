@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { transparentize } from 'polished';
-import { ErrorMessages, DataType } from 'react-hook-form/dist/types';
+import { ErrorMessages } from 'react-hook-form/dist/types';
 import React from 'react';
 
 interface IFormErrorsProps {
-  errors: ErrorMessages<DataType>;
+  errors: ErrorMessages<any>;
   className?: string;
 }
 
