@@ -7,7 +7,7 @@
     "@auth0/auth0-spa-js": "^1.1.1",
     "@babel/core": "^7.5.5",
     "@cypress/code-coverage": "^1.5.0",
-    "@emotion/core": "^10.0.14",
+    "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.14",
     "@fortawesome/fontawesome-pro": "^5.8.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
