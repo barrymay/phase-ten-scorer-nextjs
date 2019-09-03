@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import useForm from 'react-hook-form';
-import { DataType, ErrorMessages } from 'react-hook-form/dist/types';
+import { ErrorMessages } from 'react-hook-form/dist/types';
 import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
@@ -12,11 +12,6 @@ import { CardContainer } from '../common/styles/basic';
 interface IFormData {
   tourneyName: string;
   players: string[];
-}
-
-interface IErrorProps {
-  errors: ErrorMessages<DataType>;
-  className?: string;
 }
 
 const CreateTournamentControl: React.FC = () => {
@@ -56,8 +51,8 @@ const CreateTournamentControl: React.FC = () => {
   }, [register]);
 
   const onSubmit = (submitVal: any) => {
-    let name = getValues().tourneyName;
-    let players = getValues().players;
+    const name = getValues().tourneyName;
+    const players = getValues().players;
     const newTournament = addTournament({ name, players });
     Router.push(`/GameView/${newTournament.id}`);
   };

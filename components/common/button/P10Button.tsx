@@ -101,7 +101,7 @@ function P10Button<T extends {}>(props: Props<T>) {
     [color, iconRight, minimal],
   );
 
-  const content = (Tag: 'button' | 'a') => {
+  const content = (Tag: string) => {
     return (
       <Tag
         css={[topLevelStyle]}
