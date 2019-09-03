@@ -45,12 +45,20 @@ const NavBar: React.FC<{ user: any }> = ({ children, user }) => {
     isMinimal =>
       css`
         &.btn-1 {
-          font-size: calc(16px + 2vw);
+          font-size: 0.8em;
           padding: ${isMinimal ? '0px 10px' : '0px 10px'};
           color: ${linkTextColor};
           font-weight: normal;
           height: unset;
           label {
+            padding-left: 4px;
+            font-size: 50%;
+            @media (min-width: 375px) {
+              font-size: 70%;
+            }
+            @media (min-width: 500px) {
+              font-size: 100%;
+            }
           }
           &:hover {
             color: ${lighten(0.5, linkTextColor)};
