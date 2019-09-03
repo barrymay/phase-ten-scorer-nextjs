@@ -20,6 +20,10 @@ const Header = styled.div`
     #006699
   );
   border-bottom: 1px solid black;
+  .nav-main {
+    display: flex;
+    flex: 1 1 auto;
+  }
 `;
 
 const HeaderLinkStyle = css`
@@ -41,11 +45,13 @@ const NavBar: React.FC<{ user: any }> = ({ children, user }) => {
     isMinimal =>
       css`
         &.btn-1 {
-          font-size: ${isMinimal ? '.8em' : '1em'};
+          font-size: calc(16px + 2vw);
           padding: ${isMinimal ? '0px 10px' : '0px 10px'};
           color: ${linkTextColor};
           font-weight: normal;
           height: unset;
+          label {
+          }
           &:hover {
             color: ${lighten(0.5, linkTextColor)};
             background: ${rgba(linkTextColor, 0.2)};
@@ -61,16 +67,18 @@ const NavBar: React.FC<{ user: any }> = ({ children, user }) => {
 
   return (
     <Header>
-      <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
-        <FontAwesomeIcon
-          css={{
-            paddingRight: 4,
-            fontSize: '.8em',
-          }}
-          icon={faScroll}
-        />
-        Phase 10 Scorer
-      </LinkButton>
+      <div className="nav-main">
+        <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
+          <FontAwesomeIcon
+            css={css`
+              padding-right: 4;
+              font-size: 0.8em;
+            `}
+            icon={faScroll}
+          />
+          <label>Phase 10 Scorer</label>
+        </LinkButton>
+      </div>
       {Object.entries(RouteDefinitions)
         .filter(([, value]) => !value.hideFromNavBar)
         .map(([key, value]) => (
