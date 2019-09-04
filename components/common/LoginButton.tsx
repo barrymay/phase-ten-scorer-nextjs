@@ -14,6 +14,9 @@ import Router from 'next/router';
 const LoginStyles = styled.div`
   display: flex;
   align-items: center;
+  label {
+    font-size: 0.8em;
+  }
 `;
 const LoginButton: React.FC<{ className?: string; user: any }> = ({
   className,
@@ -26,33 +29,40 @@ const LoginButton: React.FC<{ className?: string; user: any }> = ({
   const logout = () => {
     window.location.href = `${window.location.origin}/logout`;
   };
-
   // TODO: Remove hardcoded width
   return (
     <LoginStyles>
-      <div>
-        {!user && (
+      {!user && (
+        <P10Button
+          minimal
+          className={className}
+          faIconDef={faSignIn}
+          title="Log in"
+          onClick={() => login()}
+        />
+      )}
+
+      {user && (
+        <Fragment>
           <P10Button
             minimal
             className={className}
-            faIconDef={faSignIn}
-            title="Log in"
-            onClick={() => login()}
-          />
-        )}
-
-        {user && (
-          <Fragment>
-            <P10Button
-              minimal
-              className={className}
-              faIconDef={faSignOut}
-              title="Log out"
-              onClick={() => logout()}
-            />
-          </Fragment>
-        )}
-      </div>
+            faIconDef={faSignOut}
+            iconRight
+            title="Log out"
+            onClick={() => logout()}
+          >
+            <img
+              width={32}
+              css={css`
+                border-radius: 4px;
+              `}
+              title={user.displayName}
+              src={user.picture}
+            ></img>
+          </P10Button>
+        </Fragment>
+      )}
     </LoginStyles>
   );
 };
