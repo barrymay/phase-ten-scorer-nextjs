@@ -16,6 +16,11 @@ import { animated, useSpring } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
 import useMeasure from '../common/useMeasure';
 
+interface IPhaseButtonSpring {
+  transformStyle: string;
+  transform: string;
+}
+
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
   color: string;
@@ -77,7 +82,7 @@ const baseButtonStyles = css`
 
 function useAnimatedCardFlip(
   completedState: PhaseState,
-  // @ts-ignore
+  // @ts-ignore - SpringValues would be an ideal result to represent the uninterpolated and interpolated props, but it's not exposed
 ): [SpringValues<ISpringType>, SerializedStyles] {
   const lastState = useRef<PhaseState | null>('default');
   const lastBgColor = useRef<string>('whtie');
@@ -101,8 +106,7 @@ function useAnimatedCardFlip(
     );
   }, [completedState]);
 
-  // @ts-ignore
-  const [propsFlip, setFlip] = useSpring<ISpringType>(() => {
+  const [propsFlip, setFlip] = useSpring<IPhaseButtonSpring>(() => {
     return {
       ...getStateColors(completedState),
     };
