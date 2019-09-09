@@ -6,7 +6,7 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.2.3",
     "@babel/core": "^7.5.5",
-    "@cypress/code-coverage": "^1.5.0",
+    "@cypress/code-coverage": "^1.10.1",
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@fortawesome/fontawesome-pro": "^5.8.2",
