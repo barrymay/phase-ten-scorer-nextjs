@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import useForm from 'react-hook-form';
-import { ErrorMessages } from 'react-hook-form/dist/types';
 import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
@@ -44,7 +43,6 @@ const CreateTournamentControl: React.FC = () => {
           } else if (inputValue.length > 4) {
             return 'Only 4 players are allowed';
           }
-          return '';
         },
       },
     );
