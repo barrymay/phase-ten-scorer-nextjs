@@ -21,7 +21,6 @@
     "@types/react-dom": "16.9.0",
     "@types/styled-jsx": "^2.2.8",
     "@types/uuid": "^3.4.4",
-    "@zeit/next-sass": "^1.0.1",
     "apollo-server-micro": "^2.9.3",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
