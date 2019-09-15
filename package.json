@@ -14,6 +14,8 @@
     "@fortawesome/pro-regular-svg-icons": "^5.8.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
+    "@types/express": "^4.17.1",
+    "@types/http-proxy-middleware": "^0.19.3",
     "@types/mongodb": "^3.3.1",
     "@types/node": "^12.7.5",
     "@types/react": "16.9.2",
@@ -35,6 +37,7 @@
     "express-session": "^1.16.2",
     "graphql": "^14.4.2",
     "helmet": "^3.21.0",
+    "http-proxy-middleware": "^0.20.0",
     "isomorphic-fetch": "^2.2.1",
     "istanbul-lib-coverage": "^2.0.5",
     "js-cookie": "^2.2.1",
@@ -79,7 +82,7 @@
   },
   "scripts": {
     "dev": "now dev",
-    "dev-ci": "next",
+    "dev-ci": "ts-node --project tsconfig-node.json ./scripts/ci-server-startup.ts",
     "ci-server": "ts-node --project tsconfig-node.json ./scripts/build-server.ts",
     "build": "next build",
     "publish": "now"
