@@ -84,7 +84,8 @@
   },
   "scripts": {
     "dev": "now dev",
-    "dev-ci": "concurrently --kill-others 'npm:ci-auth-server' 'npm:ci-next-server'",
+    "pre-dev-ci": "ts-node --project tsconfig-node.json ./github-setup.ts",
+    "dev-ci": "yarn pre-dev-ci && concurrently --kill-others 'npm:ci-auth-server' 'npm:ci-next-server'",
     "ci-next-server": "ts-node --project tsconfig-node.json ./scripts/next-server-startup.ts",
     "ci-auth-server": "ts-node --project tsconfig-node.json ./scripts/auth-server.ts",
     "build": "next build",
