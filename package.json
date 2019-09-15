@@ -93,6 +93,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "e2e": "start-test dev-ci 3000 cy:run",
+    "e2e:open": "start-test dev-ci 3000 cy:open",
     "build": "next build",
     "publish": "now"
   },

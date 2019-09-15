@@ -16,5 +16,6 @@ describe('Index page', () => {
     cy.findByText('Player Setup').should('exist');
     cy.findByText('Create a Tournament').should('exist');
     cy.findByText('No Tournaments Created').should('exist');
+    cy.findAllByText('Phase 10 Scorer').should('exist');
   });
 });
