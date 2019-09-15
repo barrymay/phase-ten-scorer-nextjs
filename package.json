@@ -14,6 +14,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.8.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.1",
     "@types/http-proxy-middleware": "^0.19.3",
     "@types/mongodb": "^3.3.1",
@@ -23,6 +24,7 @@
     "@types/styled-jsx": "^2.2.8",
     "@types/uuid": "^3.4.4",
     "apollo-server-micro": "^2.9.3",
+    "concurrently": "^4.1.2",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "cypress": "^3.3.1",
@@ -82,8 +84,9 @@
   },
   "scripts": {
     "dev": "now dev",
-    "dev-ci": "ts-node --project tsconfig-node.json ./scripts/ci-server-startup.ts",
-    "ci-server": "ts-node --project tsconfig-node.json ./scripts/build-server.ts",
+    "dev-ci": "concurrently --kill-others 'npm:ci-auth-server' 'npm:ci-next-server'",
+    "ci-next-server": "ts-node --project tsconfig-node.json ./scripts/next-server-startup.ts",
+    "ci-auth-server": "ts-node --project tsconfig-node.json ./scripts/auth-server.ts",
     "build": "next build",
     "publish": "now"
   },

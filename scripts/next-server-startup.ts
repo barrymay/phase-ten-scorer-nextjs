@@ -3,8 +3,11 @@ import express from 'express';
 import next from 'next';
 import auth from '../auth/auth';
 import proxyMiddleware from 'http-proxy-middleware';
+import dotenv from 'dotenv';
+import { IncomingMessage, ServerResponse } from 'http';
 
-const port = parseInt(process.env.PORT, 10) || 3000;
+dotenv.config();
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const env = process.env.NODE_ENV;
 const dev = env !== 'production';
 const app = next({
@@ -17,15 +20,19 @@ const handle = app.getRequestHandler();
 // hook up routes to the routes exposed by the proxy
 const devProxy = {
   '/user': {
-    target: 'https://localhost:3001/',
+    target: 'http://localhost:3001',
     changeOrigin: true,
   },
   '/login': {
-    target: 'https://localhost:3001/',
+    target: 'http://localhost:3001',
     changeOrigin: true,
   },
   '/logout': {
-    target: 'https://localhost:3001/',
+    target: 'http://localhost:3001',
+    changeOrigin: true,
+  },
+  '/callback': {
+    target: 'http://localhost:3001',
     changeOrigin: true,
   },
 };
@@ -38,15 +45,17 @@ app
 
     // Set up the proxy.
     if (dev && devProxy) {
-      Object.keys(devProxy).forEach(function(context) {
-        server.use(proxyMiddleware(context, devProxy[context]));
+      Object.entries(devProxy).forEach(([key, value]) => {
+        server.use(proxyMiddleware(key, value));
       });
     }
 
     // Default catch-all handler to allow Next.js to handle all other routes
-    server.all('*', (req, res) => handle(req, res));
+    server.all('*', (req: IncomingMessage, res: ServerResponse) =>
+      handle(req, res),
+    );
 
-    server.listen(port, err => {
+    server.listen(port, (err: Error) => {
       if (err) {
         throw err;
       }
