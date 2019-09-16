@@ -43,13 +43,13 @@ const withAuth = (WrappedComponent: any) =>
 
       // determine the protocol for local vs production
       let protocol = 'https:';
-      let host = req
+      const host = req
         ? req.headers.host || req.headers['x-forwarded-host']
         : window.location.hostname;
 
       if (host && host.indexOf('localhost') > -1) {
         protocol = 'http:';
-        host = req.headers['x-forwarded-host'];
+        //host = req.headers['x-forwarded-host'];
       }
 
       // if on server side mimic the client making the request by using req headers

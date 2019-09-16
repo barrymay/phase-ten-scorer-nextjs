@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [10.x]
 
     steps:
       - uses: actions/checkout@v1
@@ -22,9 +22,13 @@ jobs:
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - name: yarn build
+      - name: yarn e2e
         run: |
-          yarn build
+          yarn e2e
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: coverage-report
+          path: coverage/lcov-report
