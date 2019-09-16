@@ -4,25 +4,31 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [10.x]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        yarn install
-        npm run build --if-present
-        npm test
-      env:
-        CI: true
-        FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: yarn install
+        run: |
+          yarn install
+        env:
+          CI: true
+          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
+      - name: yarn e2e
+        run: |
+          yarn e2e
+        env:
+          CI: true
+          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: coverage-report
+          path: coverage/lcov-report
