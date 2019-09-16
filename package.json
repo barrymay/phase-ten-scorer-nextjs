@@ -6,6 +6,7 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.2.3",
     "@babel/core": "^7.6.0",
+    "@babel/preset-typescript": "^7.6.0",
     "@cypress/code-coverage": "^1.10.1",
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
@@ -24,6 +25,8 @@
     "@types/styled-jsx": "^2.2.8",
     "@types/uuid": "^3.4.4",
     "apollo-server-micro": "^2.9.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-istanbul": "^5.2.0",
     "concurrently": "^4.1.2",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
@@ -62,7 +65,7 @@
     "source-map-support": "^0.5.13",
     "start-server-and-test": "^1.10.2",
     "styled-jsx": "^3.2.2",
-    "ts-node": "^8.3.0",
+    "ts-node": "^8.4.1",
     "typescript": "3.5.3",
     "uuid": "^3.3.2",
     "webpack": "^4.40.0"
@@ -76,10 +79,10 @@
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "cypress": "^3.4.1",
+    "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-emotion": "^10.0.14",
     "eslint-plugin-react": "^7.14.3",
-    "eslint": "^6.3.0",
     "faker": "^4.1.0",
     "husky": "^3.0.5",
     "ts-loader": "^6.1.0"
@@ -96,12 +99,18 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "e2e": "start-test dev-ci 3000 cy:run",
-    "e2e:open": "start-test dev-ci 3000 cy:open",
+    "e2e:open": "yarn pree2e && start-test dev-ci 3000 cy:open",
+    "pree2e": "rm -rf .nyc_output coverage .next || true",
     "build": "next build",
-    "publish": "now"
+    "publish": "now",
+    "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100"
   },
   "resolutions": {
     "@types/react": "16.9.1"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true
   },
   "browserslist": {
     "production": [

@@ -13,6 +13,7 @@
 
 const wp = require('@cypress/webpack-preprocessor');
 module.exports = on => {
+  on('task', require('@cypress/code-coverage/task'));
   const options = {
     webpackOptions: {
       resolve: {
@@ -22,8 +23,11 @@ module.exports = on => {
         rules: [
           {
             test: /\.tsx?$/,
-            loader: 'ts-loader',
-            options: { transpileOnly: true },
+            loader: require.resolve('babel-loader'),
+            options: {
+              presets: ['@babel/preset-typescript'],
+              plugins: ['istanbul'],
+            },
           },
         ],
       },

@@ -6,3 +6,5 @@ yarn-error.log
 foo
 cypress/**/*.mp4
 cypress/**/*.png
+coverage
+.nyc_output
