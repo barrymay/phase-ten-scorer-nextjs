@@ -43,7 +43,6 @@ const CreateTournamentControl: React.FC = () => {
           } else if (inputValue.length > 4) {
             return 'Only 4 players are allowed';
           }
-          return '';
         },
       },
     );
