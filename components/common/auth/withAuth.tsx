@@ -47,7 +47,7 @@ const withAuth = (WrappedComponent: any) =>
         ? req.headers.host || req.headers['x-forwarded-host']
         : window.location.hostname;
 
-      if (host && host.indexOf('localhost') > -1) {
+      if (host && host.includes('localhost')) {
         protocol = 'http:';
         const forwardedHost = req.headers['x-forwarded-host'];
         if (forwardedHost) {
