@@ -113,6 +113,8 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
           Score:
           <ValidatedInput
             name="score"
+            type="number"
+            pattern="\d*"
             autoComplete="off"
             onInput={restrictInput}
             errors={errors}
@@ -129,7 +131,6 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
               });
               scoreRef.current = registerRef;
             }}
-            type="text"
           />
         </label>
         <label>
