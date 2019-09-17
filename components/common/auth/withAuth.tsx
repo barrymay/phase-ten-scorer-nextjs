@@ -43,13 +43,16 @@ const withAuth = (WrappedComponent: any) =>
 
       // determine the protocol for local vs production
       let protocol = 'https:';
-      const host = req
+      let host = req
         ? req.headers.host || req.headers['x-forwarded-host']
         : window.location.hostname;
 
       if (host && host.indexOf('localhost') > -1) {
         protocol = 'http:';
-        //host = req.headers['x-forwarded-host'];
+        const forwardedHost = req.headers['x-forwarded-host'];
+        if (forwardedHost) {
+          host = forwardedHost;
+        }
       }
 
       // if on server side mimic the client making the request by using req headers
@@ -59,7 +62,6 @@ const withAuth = (WrappedComponent: any) =>
       }
 
       const userData = await fetch(`${protocol}//${host}/user`, options);
-
       // place user in component props
       const userJson = await userData.json();
       const { user } = userJson;
