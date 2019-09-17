@@ -90,7 +90,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
   );
 
   const onSubmit = () => {
-    let { score, phaseCompleted } = getValues();
+    const { score, phaseCompleted } = getValues();
     // TODO - this if check shouldn't need to occur
     if (score && phaseCompleted) {
       onSubmitScore(player.id, {
@@ -121,7 +121,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
               register(registerRef, {
                 required: 'Score is required',
                 validate: (inputScore: string) => {
-                  let value = +inputScore;
+                  const value = +inputScore;
                   if (value < 0 || value > 500) {
                     return 'Score must be between 0 and 500';
                   }

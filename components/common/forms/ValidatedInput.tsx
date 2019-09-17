@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { FieldErrors } from 'react-hook-form/dist/types';
+import { ErrorMessages } from 'react-hook-form/dist/types';
 
 interface OwnProps
   extends React.DetailedHTMLProps<
@@ -11,7 +11,7 @@ interface OwnProps
     HTMLInputElement
   > {
   inputRef: ((ref: any) => void) | undefined;
-  errors?: FieldErrors<any>;
+  errors?: ErrorMessages<any>;
 }
 
 const ValidatedInput: React.FC<OwnProps> = ({

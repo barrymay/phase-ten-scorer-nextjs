@@ -2,10 +2,10 @@
 import { jsx } from '@emotion/core';
 import { transparentize } from 'polished';
 import React from 'react';
-import { FieldErrors } from 'react-hook-form/dist/types';
+import { ErrorMessages } from 'react-hook-form/dist/types';
 
 interface IFormErrorsProps {
-  errors: FieldErrors<any>;
+  errors: ErrorMessages<any>;
   className?: string;
 }
 
