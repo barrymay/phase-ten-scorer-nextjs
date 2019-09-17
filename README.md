@@ -115,6 +115,6 @@ People and Libraries I've gotten help and/or ideas from, along with the many exc
 
 ## Other stuff
 
-Any ideas for feedback please feel free to reach out!
+Any ideas or feedback please feel free to reach out!
 
 Copyright (c) 2019 Barry May (barry4dev@outlook.com)
