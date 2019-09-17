@@ -16,5 +16,11 @@ describe('Index page', () => {
     cy.getByText('Create a Tournament').should('exist');
     cy.getByText('No Tournaments Created').should('exist');
     cy.getAllByText('Phase 10 Scorer').should('exist');
+
+    cy.getByText('Create a Tournament').click();
+
+    cy.getByText('Tournament Manager').should('exist');
+    cy.getByText('Tournament Name:').should('exist');
+    cy.getByText('Selected Players:').should('exist');
   });
 });
