@@ -125,7 +125,6 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
                   if (value < 0 || value > 500) {
                     return 'Score must be between 0 and 500';
                   }
-                  return '';
                 },
               });
               scoreRef.current = registerRef;
