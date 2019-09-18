@@ -68,7 +68,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     return tournament.playerIds.reduce<
       Array<{ player: IPlayer; score: number }>
     >((result, next) => {
-      let nextPlayerData = playerData[next];
+      const nextPlayerData = playerData[next];
       if (nextPlayerData && !nextPlayerData.phasesLeft.length) {
         const player = players.find(item => item.id === next);
         if (player) {
