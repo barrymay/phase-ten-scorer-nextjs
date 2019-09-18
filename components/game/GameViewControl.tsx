@@ -13,8 +13,6 @@ import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 
-const PhaseScorer = dynamic(() => import('./PhaseScorer'));
-
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
   callWhenEmpty?: VoidFunction,
