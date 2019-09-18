@@ -67,12 +67,12 @@ function playerReducer(
   state: InternalPlayersState,
   action: PlayerAction,
 ): InternalPlayersState {
-  let resultState = typeof state === 'string' ? {} : state;
-  let newState = { ...resultState };
+  const resultState = typeof state === 'string' ? {} : state;
+  const newState = { ...resultState };
   switch (action.type) {
     case 'ADD':
       if (isPlayerNameValid(resultState, action.playerName)) {
-        let newKey = uuid();
+        const newKey = uuid();
         playerCache.clear();
         return {
           ...newState,
@@ -176,7 +176,7 @@ export function usePlayerInfo(playerIds: string[]): IPlayer[] {
     return potentialValue;
   } else {
     const newValue = playerIds.reduce<IPlayer[]>((result, next) => {
-      let foundPlayer = playersList.find(player => player.id === next);
+      const foundPlayer = playersList.find(player => player.id === next);
       if (foundPlayer) {
         result.push(foundPlayer);
       }

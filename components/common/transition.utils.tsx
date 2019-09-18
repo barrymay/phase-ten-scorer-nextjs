@@ -43,7 +43,7 @@ export const getFadeCss = (
 export const getMoveCss = (
   parentSelector: string,
   transitionTimeMs: number,
-  moveLeft: boolean = false,
+  moveLeft = false,
 ) => {
   const moveFactor = moveLeft ? 1 : -1;
   return css`
