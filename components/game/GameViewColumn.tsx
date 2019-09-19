@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import React from 'react';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import PhaseScorer from './PhaseScorer';
@@ -15,7 +15,17 @@ const GameViewColumn: React.FC<{
 
   return (
     <div className="column">
-      <div className="player-data">{player.name}</div>
+      <div className="player-data">
+        {player.name}{' '}
+        <span
+          css={css`
+            padding-left: 4px;
+            font-size: 0.8em;
+          `}
+        >
+          ({player.wins.length}-{player.losses.length})
+        </span>
+      </div>
       <div className="player-total">
         <Totaler playerId={player.id} rounds={tournament.rounds} />
       </div>
