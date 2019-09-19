@@ -2,7 +2,6 @@
 import { css, jsx } from '@emotion/core';
 import {
   IPlayer,
-  IPlayerMap,
   usePlayersDispatch,
   usePlayersState,
 } from '../context/PlayersContext';
