@@ -10,7 +10,7 @@
     "@cypress/code-coverage": "^1.10.1",
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
-    "@fortawesome/fontawesome-pro": "^5.8.2",
+    "@fortawesome/fontawesome-pro": "^5.11.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
     "@fortawesome/pro-regular-svg-icons": "^5.8.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
