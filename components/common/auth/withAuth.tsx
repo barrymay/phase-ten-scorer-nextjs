@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 import Router from 'next/router';
-import { NextComponentType, NextPageContext } from 'next-server/dist/lib/utils';
+import { NextPageContext } from 'next';
 
 export const logout = () => {
   cookie.remove('token');
