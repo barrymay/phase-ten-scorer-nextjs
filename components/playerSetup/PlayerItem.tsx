@@ -31,7 +31,8 @@ export const PlayerItem: React.FC<Props> = ({ player, index }) => {
   return (
     <Item>
       <PlayerName key={player.id}>
-        Player #{index + 1}: {player.name}
+        Player #{index + 1}: {player.name} ({player.wins.length}-
+        {player.losses.length})
       </PlayerName>
       <P10Button
         title="Remove Item"
