@@ -13,8 +13,6 @@ import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 
-const PhaseScorer = dynamic(() => import('./PhaseScorer'));
-
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
   callWhenEmpty?: VoidFunction,
@@ -65,10 +63,10 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     if (!playerData) {
       return [];
     }
-    return tournament.playerIds.reduce<
+    const winnersList = tournament.playerIds.reduce<
       Array<{ player: IPlayer; score: number }>
     >((result, next) => {
-      let nextPlayerData = playerData[next];
+      const nextPlayerData = playerData[next];
       if (nextPlayerData && !nextPlayerData.phasesLeft.length) {
         const player = players.find(item => item.id === next);
         if (player) {
@@ -80,6 +78,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       }
       return result;
     }, []);
+    return winnersList;
   }, [players, tournament.playerData, tournament.playerIds]);
 
   const nextPhaseMap = useRef<IPlayerPhaseMap>({});
@@ -103,36 +102,40 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     mainDivRef.current && mainDivRef.current.focus();
   };
 
-  const GameBoard = useMemo(
-    () =>
-      styled.div(css`
+  const GameBoard = useMemo(() => {
+    const arr = new Array(players.length)
+      .fill(100 / players.length + '%')
+      .join(' ');
+    return styled.div(css`
+      display: grid;
+      grid-template-columns: 50% 50%;
+      @media (min-width: 650px) {
+        grid-template-columns: ${arr};
+      }
+      .header {
         display: flex;
-        .header {
-          display: flex;
+      }
+      .column {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        align-content: center;
+        > div:not(:last-child) {
+          border-bottom: 1px solid black;
         }
-        .column {
+        .player-data {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .player-total {
           display: flex;
           flex-direction: column;
-          width: ${100 / players.length}%;
-          border: 1px solid black;
-          align-content: center;
-          > div:not(:last-child) {
-            border-bottom: 1px solid black;
-          }
-          .player-data {
-            display: flex;
-            justify-content: center;
-          }
-          .player-total {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
+          align-items: center;
         }
-      `),
-
-    [players.length],
-  );
+      }
+    `);
+  }, [players.length]);
 
   const hideModal = () => {
     setShowModal(false);

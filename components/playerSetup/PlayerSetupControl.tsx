@@ -56,7 +56,7 @@ export const PlayerSetupControl: React.FC = () => {
   };
 
   useEffect(() => {
-    let { current: input } = textRef;
+    const { current: input } = textRef;
     if (triggerFocus && input) {
       input.focus();
     }

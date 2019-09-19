@@ -152,7 +152,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
 
     let firstValue: ITournament[] = [];
     try {
-      let storedValue =
+      const storedValue =
         window.localStorage.getItem(TOURNAMENT_STORAGE_KEY) || '[]';
       firstValue = (JSON.parse(storedValue) || []) as ITournament[];
     } catch (e) {
@@ -183,7 +183,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
     name: string;
     players: string[];
   }): ITournament {
-    let nextState = tournaments !== 'loading' ? tournaments : [];
+    const nextState = tournaments !== 'loading' ? tournaments : [];
 
     const newTournament: ITournament = {
       id: uuid(),
@@ -211,7 +211,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
     tournamentId: string,
     skipStateUpdate?: boolean,
   ): void {
-    let nextState = tournaments !== 'loading' ? tournaments : [];
+    const nextState = tournaments !== 'loading' ? tournaments : [];
     const newState = nextState.filter(item => item.id !== tournamentId);
     saveTournaments(newState, skipStateUpdate);
   }
@@ -240,7 +240,7 @@ export function useTournamentContext(): TournamentContextState {
   if (context.tournaments === 'loading') {
     throw new Error('Player state is not loaded');
   }
-  let result = {
+  const result = {
     ...context,
     tournaments: context.tournaments,
   };

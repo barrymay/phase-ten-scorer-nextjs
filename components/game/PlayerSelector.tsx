@@ -15,14 +15,14 @@ const PlayerSelector: React.FC<{
   const selectPlayer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    let targetValue = e.currentTarget.value;
-    let isValueInPlayers = players[targetValue];
+    const targetValue = e.currentTarget.value;
+    const isValueInPlayers = players[targetValue];
     if (!isValueInPlayers) {
       return;
     }
 
-    let isValueInList = listState.includes(targetValue);
-    let newValue = isValueInList
+    const isValueInList = listState.includes(targetValue);
+    const newValue = isValueInList
       ? listState.filter(item => item !== targetValue)
       : listState.concat(targetValue);
     setListState(newValue);

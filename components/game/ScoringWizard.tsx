@@ -68,7 +68,11 @@ const ScoringWizard: React.FC<{
   const updatePlayerIndex = useCallback(
     (nextPlayer: number) => {
       const formRef = getOrCreateRef(nextPlayer);
-      formRef.current && formRef.current.setFocus();
+      // HACK - ensure focus doesn't get set until form has animated.
+      // If react-spring gives callback, use it!
+      setTimeout(() => {
+        formRef.current && formRef.current.setFocus();
+      }, 500);
       playerIndexRef.current = nextPlayer;
       setPlayerIndex(nextPlayer);
       formRefMap.current.forEach((item, i) => {
