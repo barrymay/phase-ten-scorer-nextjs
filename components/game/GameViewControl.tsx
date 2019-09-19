@@ -42,7 +42,9 @@ export interface IPlayerPhaseMap {
 }
 
 const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<'score' | 'remove' | undefined>(
+    undefined,
+  );
   const mainDivRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -57,6 +59,11 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     players.map(item => item.id),
     onReady,
   );
+
+  const hideModal = () => {
+    setShowModal(undefined);
+    mainDivRef.current && mainDivRef.current.focus();
+  };
 
   const winners = useMemo<IWinnerList[]>(() => {
     const playerData = tournament.playerData;
@@ -91,13 +98,13 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
 
   const addScore = () => {
     if (!winners.length) {
-      setShowModal(true);
+      setShowModal('score');
     }
   };
 
   const submitScore = (newRoundScore: IRound) => {
     scoreRound(newRoundScore);
-    setShowModal(false);
+    hideModal();
     nextPhaseMap.current = {};
     mainDivRef.current && mainDivRef.current.focus();
   };
@@ -137,17 +144,21 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     `);
   }, [players.length]);
 
-  const hideModal = () => {
-    setShowModal(false);
-    mainDivRef.current && mainDivRef.current.focus();
-  };
-
   const keyHandlerGame = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.ctrlKey && event.key === 's') {
       event.preventDefault();
       event.stopPropagation();
       addScore();
     }
+  };
+
+  const removeGame = () => {
+    setShowModal('remove');
+  };
+
+  const confirmRemove = () => {
+    removeCurrentTournament();
+    Router.push('/');
   };
 
   const [nextPhase, setNextPhase] = useState<number | undefined>(undefined);
@@ -162,7 +173,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       tabIndex={0}
     >
       <Modal
-        shown={showModal}
+        shown={showModal === 'score'}
         title="Score Round"
         onClick={hideModal}
         onCancel={hideModal}
@@ -173,6 +184,37 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
           nextPhaseMap={nextPhaseMap.current}
         />
       </Modal>
+
+      <Modal
+        shown={showModal === 'remove'}
+        title="Remove Game?"
+        onClick={hideModal}
+        onCancel={hideModal}
+        width={300}
+      >
+        Are you sure you want to remove game &lsquo;{tournament.name}&rsquo;?
+        <div
+          css={css`
+            display: flex;
+            justify-content: center;
+          `}
+        >
+          <P10Button minimal onClick={confirmRemove}>
+            YES
+          </P10Button>
+          <P10Button
+            minimal
+            css={css`
+              color: red;
+              margin-left: 10px;
+            `}
+            onClick={hideModal}
+          >
+            NO
+          </P10Button>
+        </div>
+      </Modal>
+
       <div
         css={css`
           padding: 4px;
@@ -196,8 +238,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
             color="red"
             title="Remove Game"
             onClick={() => {
-              removeCurrentTournament();
-              Router.push('/');
+              removeGame();
             }}
           >
             REMOVE GAME
