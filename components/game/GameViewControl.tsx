@@ -63,7 +63,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     if (!playerData) {
       return [];
     }
-    return tournament.playerIds.reduce<
+    const winnersList = tournament.playerIds.reduce<
       Array<{ player: IPlayer; score: number }>
     >((result, next) => {
       const nextPlayerData = playerData[next];
@@ -78,6 +78,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       }
       return result;
     }, []);
+    return winnersList;
   }, [players, tournament.playerData, tournament.playerIds]);
 
   const nextPhaseMap = useRef<IPlayerPhaseMap>({});
@@ -124,6 +125,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         }
         .player-data {
           display: flex;
+          align-items: center;
           justify-content: center;
         }
         .player-total {

@@ -1,20 +1,25 @@
 import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
 import uuid from 'uuid';
+import { to } from 'react-spring';
 
-export interface IPlayerMap {
-  [key: string]: IPlayer;
+interface IPlayerMapFormat<T> {
+  [key: string]: T;
 }
 
-export interface IPlayer {
+export type IPlayerMap = IPlayerMapFormat<IPlayer>;
+
+export interface IPlayerLegacy2 {
   id: string;
   name: string;
   wins: number;
   losses: number;
 }
 
-export interface ILegacyPlayer {
+export interface IPlayer {
   id: string;
   name: string;
+  wins: string[];
+  losses: string[];
 }
 
 interface PlayersContextState {
@@ -36,7 +41,18 @@ interface IPlayerSetAction {
   type: 'SET';
   players: IPlayerMap;
 }
-type PlayerAction = IPlayerAddAction | IPlayerRemoveAction | IPlayerSetAction;
+
+interface IPlayerWinLossAction {
+  type: 'ADD_WIN' | 'ADD_LOSS';
+  playerId: string;
+  gameId: string;
+}
+
+type PlayerAction =
+  | IPlayerAddAction
+  | IPlayerRemoveAction
+  | IPlayerSetAction
+  | IPlayerWinLossAction;
 export type InternalPlayersState = 'loading' | { [key: string]: IPlayer };
 export type PlayersState = Exclude<InternalPlayersState, 'loading'>;
 
@@ -44,7 +60,8 @@ export const PlayersContext = React.createContext<PlayersContextState | null>(
   null,
 );
 const INIT_STATE: InternalPlayersState = 'loading';
-const PLAYER_STORAGE_KEY = 'player_storage_2';
+const PLAYER_STORAGE_KEY = 'player_storage_3';
+const PLAYER_STORAGE_KEY_2 = 'player_storage_2';
 
 export function isPlayerNameValid(
   map: IPlayerMap,
@@ -76,7 +93,12 @@ function playerReducer(
         playerCache.clear();
         return {
           ...newState,
-          [newKey]: { id: newKey, name: action.playerName, losses: 0, wins: 0 },
+          [newKey]: {
+            id: newKey,
+            name: action.playerName,
+            losses: [],
+            wins: [],
+          },
         };
       } else {
         return state;
@@ -85,6 +107,29 @@ function playerReducer(
       delete newState[action.playerId];
       playerCache.clear();
       return newState;
+    case 'ADD_WIN':
+    case 'ADD_LOSS': {
+      const isWin = action.type === 'ADD_WIN';
+      const gameId = action.gameId;
+      const player = { ...newState[action.playerId] };
+      const toAdd = isWin ? player.wins : player.losses;
+      const toRemove = isWin ? player.losses : player.wins;
+      if (toAdd.includes(gameId) && !toRemove.includes(gameId)) {
+        return state;
+      } else {
+        player.wins = isWin
+          ? player.wins.concat(gameId)
+          : player.wins.filter(item => item !== gameId);
+        player.losses = !isWin
+          ? player.losses.concat(gameId)
+          : player.losses.filter(item => item !== gameId);
+
+        return {
+          ...newState,
+          [action.playerId]: player,
+        };
+      }
+    }
     case 'SET':
       playerCache.clear();
       return { ...action.players };
@@ -98,9 +143,29 @@ interface IOwnProps {
 }
 
 const getPlayerStorage = (): IPlayerMap => {
+  let result: IPlayerMap = {};
   const latestStoredValue = window.localStorage.getItem(PLAYER_STORAGE_KEY);
-  return latestStoredValue ? (JSON.parse(latestStoredValue) as IPlayerMap) : {};
+  if (!latestStoredValue) {
+    const storedValue_2 = window.localStorage.getItem(PLAYER_STORAGE_KEY_2);
+    if (storedValue_2) {
+      const value_2 = JSON.parse(storedValue_2) as IPlayerMapFormat<
+        IPlayerLegacy2
+      >;
+      result = Object.values(value_2).reduce<IPlayerMap>((result, next) => {
+        result[next.id] = {
+          ...next,
+          wins: [],
+          losses: [],
+        };
+        return result;
+      }, {});
+    }
+  } else {
+    result = JSON.parse(latestStoredValue) as IPlayerMap;
+  }
+  return result;
 };
+
 export const PlayersProvider: React.FC<IOwnProps> = ({
   children,
   testValue,
