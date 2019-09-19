@@ -1173,10 +1173,10 @@
   resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.24.tgz#e7be36e18b2af0d56cd2211b05b7b17a0fbfa6b7"
   integrity sha512-IPBT/1LdUVQpHcqdrh8uI2/86Fbu7933hkA/HweiCmP5QgF/8PecFM00gYvykxf0RZud8bg8zu+YfggDFUc1Kw==
 
-"@fortawesome/fontawesome-pro@^5.11.1":
+"@fortawesome/fontawesome-free@^5.11.1":
   version "5.11.1"
-  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-pro/-/fontawesome-pro-5.11.1.tgz#504dbd56610dd4255ec328d67803bc04f9c8044d"
-  integrity sha512-Ri4dye6pY3/ORaDuSj6BHPIyN7FJP98FzhgwHnL1AGTMr+1ipUULpzChZ/jK8sNKual/utfPkp4yp5JTT3ZrwQ==
+  resolved "https://npm.fontawesome.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.11.1.tgz#cef685a74708cf57b367c32d9f36a931c5a4e894"
+  integrity sha512-DtXLVYAkDU0ce1cFUgLvZaMd1R2J/LviBYih9xr4ZLhQMrgvYX7w2vOxlpKLRALfIj5GyC5zoVrcACOkLcFgvg==
 
 "@fortawesome/fontawesome-svg-core@^1.2.24":
   version "1.2.24"
@@ -1185,10 +1185,10 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.24"
 
-"@fortawesome/pro-regular-svg-icons@^5.11.1":
+"@fortawesome/free-solid-svg-icons@^5.11.1":
   version "5.11.1"
-  resolved "https://npm.fontawesome.com/@fortawesome/pro-regular-svg-icons/-/pro-regular-svg-icons-5.11.1.tgz#39cd4eae330a35f28dc225b88c736e2bc63a3858"
-  integrity sha512-hh46Ta/xBizPPPxzTBy7FAsiA0SQ0czwDMyCxTsQINdNvgViITrbL9B5OFcFYiZ2W5x6o8+Ye1vk3IAYi/D2Sw==
+  resolved "https://npm.fontawesome.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.11.1.tgz#1290696252b2f8af75d32d7416d8181df2ba50e3"
+  integrity sha512-bB3hXON1K6mVOetTTg5VXZ4CAHg866p7MqenDkJ/eVcbWbGQRE45ojHEwkf37tWx3E8z6lcEameRwU9r5tGwjg==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.24"
 
@@ -4147,7 +4147,7 @@ eslint-plugin-emotion@^10.0.14:
   resolved "https://registry.yarnpkg.com/eslint-plugin-emotion/-/eslint-plugin-emotion-10.0.14.tgz#c643ff2f34f85ae77a65b2056915e939cf7e8129"
   integrity sha512-kI0hTPA5oo7MAc2YcdF1JcT36TZ1Ci0S5sbA9aojZ3leEPyCH34YBB76/8NQ3/9gybqrekIEuEhr8MP6JZf95Q==
 
-eslint-plugin-prettier@^3.1.1:
+eslint-plugin-prettier@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.1.tgz#507b8562410d02a03f0ddc949c616f877852f2ba"
   integrity sha512-A+TZuHZ0KU0cnn56/9mfR7/KjUJ9QNVXUhwvRFSR7PGPe0zQR6PTkmyqg1AtUUEOzTqeRsUwyKFh0oVZKVCrtA==
@@ -7923,10 +7923,10 @@ react-error-overlay@5.1.6:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
 
-react-hook-form@3.23.8:
-  version "3.23.8"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-3.23.8.tgz#165f4a388ae4f438b3ef7640dba12f4783296b13"
-  integrity sha512-xFKxPfZSU0SwBpbSzPni7yuNJU2n6S8D7JJ/70fIKb2nwzo0zrrACIqirL+zTsSKNv/Mz9eN/OxYgXUgWLWKpg==
+react-hook-form@3.23.9:
+  version "3.23.9"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-3.23.9.tgz#e9b9ba8df02b3262d461a24147fced5d41a54af8"
+  integrity sha512-iwdjFxdNDbW6RIRYseswXvaFltiXLotJPDczCZNEasMVEQUM/oJAEsG7imQFK7vn7A5OOuFD+M5Yp5d88ZNiXg==
 
 react-is@16.8.6:
   version "16.8.6"
