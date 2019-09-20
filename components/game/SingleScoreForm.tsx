@@ -114,7 +114,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
           <ValidatedInput
             name="score"
             type="number"
-            pattern="\d*"
+            // pattern="\d*"
             autoComplete="off"
             onInput={restrictInput}
             errors={errors}
