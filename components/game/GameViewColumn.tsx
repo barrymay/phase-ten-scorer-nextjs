@@ -5,6 +5,8 @@ import { useTournamentCurrentContext } from '../context/TournamentCurrentContext
 import PhaseScorer from './PhaseScorer';
 import Totaler from './Totaler';
 import { IPlayer } from '../context/PlayersContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignLanguage } from '@fortawesome/pro-regular-svg-icons';
 
 const GameViewColumn: React.FC<{
   player: IPlayer;
@@ -23,6 +25,14 @@ const GameViewColumn: React.FC<{
         `}
         className="player-data"
       >
+        {isShuffler && (
+          <FontAwesomeIcon
+            css={css`
+              padding-right: 2px;
+            `}
+            icon={faSignLanguage}
+          />
+        )}
         {player.name}{' '}
         <span
           css={css`
