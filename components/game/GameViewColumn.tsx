@@ -10,12 +10,19 @@ const GameViewColumn: React.FC<{
   player: IPlayer;
   onReady: VoidFunction;
   updateMarkedPhase: (phase: number | undefined) => void;
-}> = ({ onReady, player, updateMarkedPhase }) => {
+  isShuffler: boolean;
+}> = ({ onReady, player, updateMarkedPhase, isShuffler }) => {
   const { tournament, roundNum } = useTournamentCurrentContext();
 
   return (
     <div className="column">
-      <div className="player-data">
+      <div
+        css={css`
+          background-color: ${isShuffler ? 'black' : 'white'};
+          color: ${isShuffler ? 'white' : 'black'};
+        `}
+        className="player-data"
+      >
         {player.name}{' '}
         <span
           css={css`

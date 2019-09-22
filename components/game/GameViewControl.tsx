@@ -246,7 +246,9 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         `}
       >
         <div className="header">
-          <div className="name">Game: {tournament.name}</div>
+          <div className="name">
+            Game: {tournament.name} - Round {roundNum}
+          </div>
           <P10Button
             minimal
             color="red"
@@ -259,10 +261,11 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
           </P10Button>
         </div>
         <GameBoard>
-          {players.map(player => (
+          {players.map((player, index) => (
             <GameViewColumn
               key={player.id}
               player={player}
+              isShuffler={(roundNum - 1) % players.length === index}
               onReady={() => {
                 playerReady(player.id);
               }}
