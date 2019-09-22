@@ -97,6 +97,10 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   );
 
   const addScore = () => {
+    const hiddentInput = document.querySelector("input[name='hiddenInput']");
+    if (hiddentInput) {
+      (hiddentInput as HTMLInputElement).focus();
+    }
     if (!winners.length) {
       setShowModal('score');
     }
@@ -172,6 +176,16 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       onKeyDown={keyHandlerGame}
       tabIndex={0}
     >
+      <input
+        css={css`
+          position: absolute;
+          left: -1000px;
+          top: -1000px;
+        `}
+        readOnly
+        name="hiddenInput"
+      ></input>
+
       <Modal
         shown={showModal === 'score'}
         title="Score Round"

@@ -83,6 +83,10 @@ const ScoringWizard: React.FC<{
   );
 
   const moveNext = useCallback(() => {
+    const hiddentInput = document.querySelector("input[name='hiddenInput']");
+    if (hiddentInput) {
+      (hiddentInput as HTMLInputElement).focus();
+    }
     const formRef = getOrCreateRef(playerIndex);
     formRef.current && formRef.current.performSubmit();
   }, [getOrCreateRef, playerIndex]);
