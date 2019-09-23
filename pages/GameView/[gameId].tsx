@@ -6,6 +6,7 @@ import GameViewControl from '../../components/game/GameViewControl';
 import ProviderWrapper from '../../components/game/ProviderWrapper';
 import Spinner from '../../components/common/Spinner';
 import { useState, Fragment } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 const style = css`
   position: relative;
@@ -30,6 +31,13 @@ const GameView = ({
   className: string;
 }) => {
   const [showSpinner, setShowSpinner] = useState(true);
+  const gameViewFloatIn = useSpring({
+    config: {
+      friction: 50,
+    },
+    opacity: showSpinner ? 0 : 1,
+    top: showSpinner ? 500 : 0,
+  });
   return (
     <Fragment>
       <Head>
@@ -43,13 +51,13 @@ const GameView = ({
         ) : null}
         <ProviderWrapper>
           <TournamentCurrentProvider tournamentId={gameId}>
-            <div className="container">
+            <animated.div style={gameViewFloatIn} className="container">
               <GameViewControl
                 onReady={() => {
                   setShowSpinner(false);
                 }}
               />
-            </div>
+            </animated.div>
           </TournamentCurrentProvider>
         </ProviderWrapper>
       </div>
