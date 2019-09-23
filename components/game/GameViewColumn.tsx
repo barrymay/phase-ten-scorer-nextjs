@@ -7,6 +7,7 @@ import Totaler from './Totaler';
 import { IPlayer } from '../context/PlayersContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignLanguage } from '@fortawesome/pro-regular-svg-icons';
+import { useSpring, animated } from 'react-spring';
 
 const GameViewColumn: React.FC<{
   player: IPlayer;
@@ -15,16 +16,14 @@ const GameViewColumn: React.FC<{
   isShuffler: boolean;
 }> = ({ onReady, player, updateMarkedPhase, isShuffler }) => {
   const { tournament, roundNum } = useTournamentCurrentContext();
+  const nameHighlight = useSpring({
+    color: isShuffler ? 'white' : 'black',
+    backgroundColor: isShuffler ? 'black' : 'white',
+  });
 
   return (
     <div className="column">
-      <div
-        css={css`
-          background-color: ${isShuffler ? 'black' : 'white'};
-          color: ${isShuffler ? 'white' : 'black'};
-        `}
-        className="player-data"
-      >
+      <animated.div style={nameHighlight} className="player-data">
         {isShuffler && (
           <FontAwesomeIcon
             css={css`
@@ -42,7 +41,7 @@ const GameViewColumn: React.FC<{
         >
           ({player.wins.length}-{player.losses.length})
         </span>
-      </div>
+      </animated.div>
       <div className="player-total">
         <Totaler playerId={player.id} rounds={tournament.rounds} />
       </div>
