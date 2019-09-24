@@ -42,7 +42,10 @@ export interface IPlayerPhaseMap {
   [player: string]: number | undefined;
 }
 
-const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
+const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
+  onReady,
+  divSpring,
+}) => {
   const [showModal, setShowModal] = useState<'score' | 'remove' | undefined>(
     undefined,
   );
@@ -163,8 +166,6 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
     Router.push('/');
   };
 
-  const [nextPhase, setNextPhase] = useState<number | undefined>(undefined);
-
   return (
     <div
       css={css`
@@ -253,6 +254,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
         <GameBoard>
           {players.map((player, index) => (
             <GameViewColumn
+              divSpring={divSpring}
               key={player.id}
               player={player}
               isShuffler={(roundNum - 1) % players.length === index}

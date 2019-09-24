@@ -14,7 +14,8 @@ const GameViewColumn: React.FC<{
   onReady: VoidFunction;
   updateMarkedPhase: (phase: number | undefined) => void;
   isShuffler: boolean;
-}> = ({ onReady, player, updateMarkedPhase, isShuffler }) => {
+  divSpring: any;
+}> = ({ onReady, player, updateMarkedPhase, isShuffler, divSpring }) => {
   const { tournament, roundNum } = useTournamentCurrentContext();
   const nameHighlight = useSpring({
     color: isShuffler ? 'white' : 'black',
@@ -22,7 +23,7 @@ const GameViewColumn: React.FC<{
   });
 
   return (
-    <div className="column">
+    <animated.div style={divSpring} className="column">
       <animated.div style={nameHighlight} className="player-data">
         {isShuffler && (
           <FontAwesomeIcon
@@ -53,7 +54,7 @@ const GameViewColumn: React.FC<{
           onMeasureUpdate={onReady}
         />
       </div>
-    </div>
+    </animated.div>
   );
 };
 
