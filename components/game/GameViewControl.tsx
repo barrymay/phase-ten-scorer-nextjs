@@ -12,6 +12,7 @@ import { useTournamentCurrentContext } from '../context/TournamentCurrentContext
 import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
+import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
@@ -97,10 +98,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
   );
 
   const addScore = () => {
-    const hiddentInput = document.querySelector("input[name='hiddenInput']");
-    if (hiddentInput) {
-      (hiddentInput as HTMLInputElement).focus();
-    }
+    focusHiddenInput();
     if (!winners.length) {
       setShowModal('score');
     }
@@ -176,15 +174,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction }> = ({ onReady }) => {
       onKeyDown={keyHandlerGame}
       tabIndex={0}
     >
-      <input
-        css={css`
-          position: absolute;
-          left: -1000px;
-          top: -1000px;
-        `}
-        readOnly
-        name="hiddenInput"
-      ></input>
+      <HiddenInput />
 
       <Modal
         shown={showModal === 'score'}

@@ -22,6 +22,7 @@ import { useTournamentCurrentContext } from '../context/TournamentCurrentContext
 import DivAnimator from './DivAnimator';
 import SingleScoreForm from './SingleScoreForm';
 import { IPlayerPhaseMap } from './GameViewControl';
+import { focusHiddenInput } from '../common/IosFocusHiddenInput';
 
 export interface ISingleScoreFormFuncs {
   performSubmit: () => void;
@@ -82,10 +83,7 @@ const ScoringWizard: React.FC<{
   );
 
   const moveNext = useCallback(() => {
-    const hiddentInput = document.querySelector("input[name='hiddenInput']");
-    if (hiddentInput) {
-      (hiddentInput as HTMLInputElement).focus();
-    }
+    focusHiddenInput();
     const formRef = getOrCreateRef(playerIndex);
     formRef.current && formRef.current.performSubmit();
   }, [getOrCreateRef, playerIndex]);
