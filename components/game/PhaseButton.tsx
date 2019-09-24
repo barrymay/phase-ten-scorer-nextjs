@@ -17,7 +17,6 @@ import { Merge } from '../../ts-common/merge';
 import useMeasure from '../common/useMeasure';
 
 interface IPhaseButtonSpring {
-  transformStyle: string;
   transform: string;
 }
 
@@ -32,12 +31,10 @@ const getStateColors = (value: PhaseState) => {
     case 'complete':
     case 'new-complete':
       return {
-        transformStyle: 'preserve-3d',
         transform: 'rotateX(180deg)',
       };
     default:
       return {
-        transformStyle: 'preserve-3d',
         transform: 'rotateX(0deg)',
       };
   }
@@ -106,15 +103,15 @@ function useAnimatedCardFlip(
     );
   }, [completedState]);
 
-  const [propsFlip, setFlip] = useSpring<IPhaseButtonSpring>(() => {
+  const [propsFlip, setPropsFlip] = useSpring<IPhaseButtonSpring>(() => {
     return {
       ...getStateColors(completedState),
     };
   });
 
   useEffect(() => {
-    setFlip(getStateColors(completedState));
-  }, [completedState, setFlip]);
+    setPropsFlip(getStateColors(completedState));
+  }, [completedState, setPropsFlip]);
 
   return [propsFlip, phaseStyle];
 }
@@ -144,6 +141,7 @@ const PhaseButton: React.FC<
         className="card"
         style={propsFlip}
         css={css`
+          transform-style: preserve-3d;
           min-height: ${buttonHeight}px;
         `}
       >
