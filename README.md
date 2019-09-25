@@ -71,6 +71,12 @@ FA_PRO_AUTH=
 - If you're building for now.sh These same variables should be set to secrets on now.sh
 - **FA_PRO_AUTH** should be set to a secret on Github if using Github Actions
 
+### Start the build!
+
+At this point you should be able to run `yarn dev`
+
+This will run `now dev` to run a localhost dev instance of the now.sh framework.
+
 ### (optional) Setup for Auth0 integration
 
 If you want to build for Auth0 integration, create a free account on auth0.com and change the variables in .env as follows:
