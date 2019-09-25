@@ -31,7 +31,7 @@
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "cypress": "^3.4.1",
-    "date-fns": "^2.2.1",
+    "date-fns": "^2.3.0",
     "dotenv": "^8.0.0",
     "dotenv-webpack": "^1.7.0",
     "emotion": "^10.0.17",
