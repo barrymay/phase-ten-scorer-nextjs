@@ -3,6 +3,7 @@ import cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 import Router from 'next/router';
 import { NextPageContext } from 'next';
+import { isAuth0Registered } from './auth0Utils';
 
 export const logout = () => {
   cookie.remove('token');
@@ -27,6 +28,10 @@ const withAuth = (WrappedComponent: any) =>
       let componentProps: any =
         WrappedComponent.getInitialProps &&
         (await WrappedComponent.getInitialProps(wrapperContext));
+
+      if (!isAuth0Registered()) {
+        return { ...componentProps };
+      }
 
       componentProps = componentProps || {};
 

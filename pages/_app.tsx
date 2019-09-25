@@ -5,6 +5,7 @@ import NavBar from '../components/main/NavBar';
 import config from '../auth.config';
 import withAuth from '../components/common/auth/withAuth';
 import { Fragment } from 'react';
+import { isAuth0Registered } from '../components/common/auth/auth0Utils';
 
 // A function that routes the user to the right place
 // after login
@@ -34,7 +35,7 @@ class MyApp extends App<{ user?: any }> {
             height: 100vh;
           `}
         >
-          <NavBar user={this.user} />
+          <NavBar user={this.user} isAuthAllowed={isAuth0Registered()} />
           <div
             css={css`
               flex: 1 1 auto;
