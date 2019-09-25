@@ -1,5 +1,11 @@
 # phase-ten-scorer-nextjs
 
+**IMPORTANT!!** If you have just cloned this repo for playing around with from github, _please immediately checkout the **free-images** branch and build that_. The master/default folder is set up for publishing to now.sh and requires AUTH0 keys and FontAwesomePro.
+
+- If now.sh changes their process to allow a non-default auto-push, I'll change this so the default is buildable. Other suggestion are welcome! :)
+
+## Overview and Tech Stack
+
 Phase 10 Scorer is a simple scoring app for the [Phase 10 Card Game](https://en.wikipedia.org/wiki/phase_10), demonstrating several recent libraries revolving around modern JS libraries.
 
 - Note that this game scorer allows the winner to win their phases in any order - unlike the original rules where you must win the game in direct order.
@@ -35,43 +41,52 @@ The app is in active development and showcases several modern tech features arou
 
 And last but definitely not least, [TypeScript](https://www.typescriptlang.org) all around!
 
-## Environment variables
+## Building the App
+
+### Setting your build environment (to be automated)
 
 Create an .env file in the root folder to be used as environment variables
 
-- These same variables should be set to secrets on now.sh
-- FA_PRO_AUTH should be set to a secret on Github if using Github Actions
+Copy the following file contents into it:
 
-```
+```sh
 # ./.env
 
 ROOT_DOMAIN="http://localhost:3000"
+AUTH0_CLIENT_SECRET=
+AUTH0_CALLBACK_URL=
+AUTH0_DOMAIN=
+AUTH0_CLIENT=
+FA_PRO_AUTH=
+```
+
+- If you're building for now.sh These same variables should be set to secrets on now.sh
+- **FA_PRO_AUTH** should be set to a secret on Github if using Github Actions
+
+If you want to build for AUTH0 integration, create a free account on auth0.com and change the variables in .env as follows:
+
+```
 AUTH0_CLIENT_SECRET="<AUTH0_CLIENT_SECRET>"
 AUTH0_CALLBACK_URL="http://localhost:3000"
 AUTH0_DOMAIN="<AUTH0_DOMAIN>"
 AUTH0_CLIENT="<AUTH0_CLIENT_KEY>"
-FA_PRO_AUTH="<FONT_AWESOME_PRO_KEY>" (if purchased)
 ```
 
-## Building the App
+### _For master branch only: yarn install and Font Awesome Pro_
 
-Run the following when doing yarn install (if you need FA Pro) so that variables get set
+If you're using Font Awesome Pro, set a environment variable FA_PRO_AUTH with your key.
+
+Alternatively, set the FA_PRO_AUTH in .env and then run the following.
 
 ```
 export $(grep -v '^#' .env | xargs) && yarn install
-```
-
-Even if you're not running yarn install, you will likely need
-
-```
-export $(grep -v '^#' .env | xargs)
 ```
 
 to set up your build environment
 
 (Improvement ideas to this are welcome!)
 
-### Development
+### Now.sh dependencies
 
 The project is currently dependent on now for deployment, and that's where it's set is easiest (using now.json), but currently 'now dev' does not work well with Cypress on CI (Continuous Integration) by default, due to now dev's automatic HMR internals.
 
@@ -109,8 +124,10 @@ This project uses the currently beta Github Actions platform for Cloud-based CI,
 
 People and Libraries I've gotten help and/or ideas from, along with the many excellent OSS packages mentioned above:
 
-- User robmadole from Font Awesome, who helped me confirm my expectations of how the npm system works.
+- User [robmadole](https://github.com/robmadole) from Font Awesome, who helped me confirm my expectations of how the npm system works.
+  - Pro Tip: If you ever find yourself needing .npmrc (in my case for Font Awesome Pro), avoid putting it in your home dir because it'll confuse you when you **don't** want it around
 - https://github.com/bahmutov/next-and-cypress-example - Superb example of using cypress on top of nextjs, with support for nyc/istanbul for code coverage!
+  - Thanks to [Gleb Bahmutov](https://glebbahmutov.com) for additional pointers over mail!
 - https://github.com/awb305/Auth0-Nextjs-Serverless - Great example of integrating auth0 into a serverless nextjs example
 
 ## Other stuff
