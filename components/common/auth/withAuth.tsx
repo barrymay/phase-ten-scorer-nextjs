@@ -28,7 +28,7 @@ const withAuth = (WrappedComponent: any) =>
       let componentProps: any =
         WrappedComponent.getInitialProps &&
         (await WrappedComponent.getInitialProps(wrapperContext));
-      const enableAuth0 = isAuth0Registered();
+      const enableAuth0 = isAuth0Registered(req);
       if (!enableAuth0) {
         return { ...componentProps, enableAuth0 };
       }
