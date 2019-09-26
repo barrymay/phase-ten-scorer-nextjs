@@ -39,10 +39,10 @@
   resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.24.tgz#3ce939cb127fb8aaa3ffc1e90dff9b8af9f2e3dc"
   integrity sha512-8GqG48m1XqyXh4mIZrtB5xOhUwSsh1WsrrsaZQOEYYql3YN9DEu9OOSg0ILzXHZo/h2Q74777YE4YzlArQzQEQ==
 
-"@auth0/auth0-spa-js@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.2.3.tgz#ca903c388cb6704790cb6e5f55a7d64ee19579ae"
-  integrity sha512-8rk6z6Z7dFItggQFv4JdojlHPQ0xqpBXSA1DKALnqifFEn5qkWv/eiFnxtCDQhVRz723xysdup8xgLTvtopndg==
+"@auth0/auth0-spa-js@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.2.4.tgz#7ed5ae0676e13f7a91ffbdab91c75bd494395e6b"
+  integrity sha512-UdP2ec/yGw2xkrZQS+0PufaNXakpdtPy1wQ0z/pTKhWvN2tpsGG4xRVYAwwwrjzw90seqqzIg6xaqZFFOfYoWw==
   dependencies:
     core-js "^3.2.1"
     es-cookie "^1.2.0"
