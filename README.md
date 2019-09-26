@@ -1,5 +1,8 @@
 # Phase 10 Game Scorer (NextJS/Now edition)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fbarrymay%2Fphase-ten-scorer-nextjs%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/barrymay/phase-ten-scorer-nextjs/goto?ref=master)
+
 ## QuickStart
 
 If you have cloned this repo for playing around with this from github (hi there! :wave:), you can run this project as follows:
