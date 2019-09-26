@@ -11,7 +11,7 @@
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@fortawesome/fontawesome-pro": "^5.11.2",
-    "@fortawesome/fontawesome-svg-core": "^1.2.24",
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/pro-regular-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
