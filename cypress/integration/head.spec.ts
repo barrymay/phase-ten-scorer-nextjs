@@ -11,16 +11,16 @@ describe('Index page', () => {
    * Header section
    */
   it('should have a logo', () => {
-    cy.getByText('Player Setup').should('exist');
-    cy.getByText('Player Setup').should('exist');
-    cy.getByText('Create a Tournament').should('exist');
-    cy.getByText('No Tournaments Created').should('exist');
-    cy.getAllByText('Phase 10 Scorer').should('exist');
+    cy.findByText('Player Setup').should('exist');
+    cy.findByText('Player Setup').should('exist');
+    cy.findByText('Create a Tournament').should('exist');
+    cy.findByText('No Tournaments Created').should('exist');
+    cy.findAllByText('Phase 10 Scorer').should('exist');
 
-    cy.getByText('Create a Tournament').click();
+    cy.findByText('Create a Tournament').click();
 
-    cy.getByText('Tournament Manager').should('exist');
-    cy.getByText('Tournament Name:').should('exist');
-    cy.getByText('Selected Players:').should('exist');
+    cy.findByText('Tournament Manager').should('exist');
+    cy.findByText('Tournament Name:').should('exist');
+    cy.findByText('Selected Players:').should('exist');
   });
 });
