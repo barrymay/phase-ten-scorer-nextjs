@@ -1,5 +1,8 @@
 # phase-ten-scorer-nextjs
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fbarrymay%2Fphase-ten-scorer-nextjs%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/barrymay/phase-ten-scorer-nextjs/goto?ref=master)
+
 **IMPORTANT!!** If you have just cloned this repo for playing around with from github, _please immediately checkout the **free-images** branch and build that_. The master/default folder is set up for publishing to now.sh and requires AUTH0 keys and FontAwesomePro.
 
 - If now.sh changes their process to allow a non-default auto-push, I'll change this so the default is buildable. Other suggestion are welcome! :)
