@@ -5,6 +5,7 @@ const nowConfig = JSON.parse(fs.readFileSync('now.json', 'utf8'));
 const writeFile = (fileName: string, fileConfigLocation: object) => {
   try {
     fs.accessSync(fileName, fs.constants.R_OK);
+    // eslint-disable-next-line no-console
     console.log(`NOT WRITING! ${fileName}`);
   } catch (e) {
     const output = Object.keys(fileConfigLocation)
