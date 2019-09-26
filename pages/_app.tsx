@@ -19,7 +19,7 @@ const onRedirectCallback = (appState: any) => {
   );
 };
 
-class MyApp extends App<{ user?: any }> {
+class MyApp extends App<{ user?: any; enableAuth0: boolean }> {
   private user: any = undefined;
   render() {
     if (this.props.user) {
@@ -35,7 +35,7 @@ class MyApp extends App<{ user?: any }> {
             height: 100vh;
           `}
         >
-          <NavBar user={this.user} isAuthAllowed={isAuth0Registered()} />
+          <NavBar user={this.user} isAuthAllowed={this.props.enableAuth0} />
           <div
             css={css`
               flex: 1 1 auto;
