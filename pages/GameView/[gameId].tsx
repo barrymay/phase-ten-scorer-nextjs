@@ -44,6 +44,9 @@ const GameView = ({
   const cardFlipRef = useRef<SpringHandle>(null);
   const cardFlip = useSpring<{ transform: string }>({
     ref: cardFlipRef,
+    config: {
+      friction: 70,
+    },
     from: {
       transform: `rotateY(89.5deg)`,
     },

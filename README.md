@@ -1,8 +1,19 @@
 # phase-ten-scorer-nextjs
 
-**IMPORTANT!!** If you have just cloned this repo for playing around with from github, _please immediately checkout the **free-images** branch and build that_. The master/default folder is set up for publishing to now.sh and requires AUTH0 keys and FontAwesomePro.
+## QuickStart
 
-- If now.sh changes their process to allow a non-default auto-push, I'll change this so the default is buildable. Other suggestion are welcome! :)
+If you have cloned this repo for playing around with this from github (hi there! :wave:), you can run this project as follows:
+
+```
+git checkout free-images
+yarn dev
+```
+
+The `master` branch is set up to run with FontAwesomePro, Auth0 and other services. Since your public clone may not want this setup, use the above to run the website without these other dependencies.
+
+- If now.sh changes their process to allow a non-default auto-push, I'll change this so the default is buildable. Suggestion are welcome! :)
+
+If you want to use these other services or want to learn more, please read on!
 
 ## Overview and Tech Stack
 
@@ -44,7 +55,7 @@ And last but definitely not least, [TypeScript](https://www.typescriptlang.org) 
 
 ## Building the App
 
-### Setting your build environment (to be automated)
+### Setting your build environment
 
 Create two files: .env and .env.build in the root folder to be used as environment variable stores
 
@@ -90,11 +101,11 @@ AUTH0_DOMAIN="<AUTH0_DOMAIN>"
 AUTH0_CLIENT="<AUTH0_CLIENT_KEY>"
 ```
 
-### _For master branch only: yarn install and Font Awesome Pro_
+### (optional) yarn install and Font Awesome Pro\_
 
 If you're using Font Awesome Pro, set a environment variable FA_PRO_AUTH with your key.
 
-Alternatively, set the FA_PRO_AUTH in .env and then run the following.
+Alternatively, set the FA_PRO_AUTH in .env.build and then run the following.
 
 ```
 export $(grep -v '^#' .env | xargs) && yarn install
