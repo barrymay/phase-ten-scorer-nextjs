@@ -2,7 +2,6 @@
 import { css, jsx } from '@emotion/core';
 import {
   IPlayer,
-  IPlayerMap,
   usePlayersDispatch,
   usePlayersState,
 } from '../context/PlayersContext';
@@ -58,7 +57,7 @@ const WinnerDisplay: React.FC<{ winners: IWinnerList[] }> = ({ winners }) => {
         .sort((a, b) => b.score - a.score)
         .map(item => (
           <div key={item.player.id}>
-            {item.player.name} with {item.score} points
+            🍾 {item.player.name} with {item.score} points 🎉
           </div>
         ))}
     </div>

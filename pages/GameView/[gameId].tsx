@@ -5,7 +5,8 @@ import { TournamentCurrentProvider } from '../../components/context/TournamentCu
 import GameViewControl from '../../components/game/GameViewControl';
 import ProviderWrapper from '../../components/game/ProviderWrapper';
 import Spinner from '../../components/common/Spinner';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useRef } from 'react';
+import { useSpring, animated, SpringHandle, useChain } from 'react-spring';
 
 const style = css`
   position: relative;
@@ -30,6 +31,26 @@ const GameView = ({
   className: string;
 }) => {
   const [showSpinner, setShowSpinner] = useState(true);
+  const [openCards, setOpenCards] = useState(false);
+
+  // TODO - help react-spring get rid of need of null here
+  const floatInRef = useRef<SpringHandle>(null);
+  const gameViewFloatIn = useSpring<{ opacity: number; top: number }>({
+    ref: floatInRef,
+    opacity: showSpinner ? 0 : 1,
+    top: showSpinner ? 500 : 0,
+  });
+
+  const cardFlipRef = useRef<SpringHandle>(null);
+  const cardFlip = useSpring<{ transform: string }>({
+    ref: cardFlipRef,
+    from: {
+      transform: `rotateY(89.5deg)`,
+    },
+    transform: `rotateY(0deg)`,
+  });
+
+  useChain([floatInRef, cardFlipRef], [0, 0.25]);
   return (
     <Fragment>
       <Head>
@@ -43,13 +64,14 @@ const GameView = ({
         ) : null}
         <ProviderWrapper>
           <TournamentCurrentProvider tournamentId={gameId}>
-            <div className="container">
+            <animated.div style={gameViewFloatIn} className="container">
               <GameViewControl
+                divSpring={cardFlip}
                 onReady={() => {
                   setShowSpinner(false);
                 }}
               />
-            </div>
+            </animated.div>
           </TournamentCurrentProvider>
         </ProviderWrapper>
       </div>

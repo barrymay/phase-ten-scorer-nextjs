@@ -25,11 +25,13 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
     updateTournament,
     removeTournament,
   } = useTournamentContext();
-  const [roundNum, setRoundNum] = useState(1);
   const currentTournament = tournaments.find(item => item.id === tournamentId);
   if (!currentTournament) {
     throw new Error('Invalid Tournament Id');
   }
+  const [roundNum, setRoundNum] = useState(() => {
+    return currentTournament.rounds.length + 1;
+  });
 
   function scoreRound(roundScore: IRound): void {
     if (!currentTournament) {
@@ -40,7 +42,7 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
       rounds: currentTournament.rounds.concat(roundScore),
     };
     updateTournament(newValue);
-    setRoundNum(newValue.rounds.length);
+    setRoundNum(newValue.rounds.length + 1);
   }
 
   function removeCurrentTournament(): void {

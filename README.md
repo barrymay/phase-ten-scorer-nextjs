@@ -33,7 +33,8 @@ The app is in active development and showcases several modern tech features arou
   - This may currently cause problems if you don't have a Font Awesome Pro license. Feel free to reach out if this causes you an issue.
   - _IMPORTANT_ If you don't have a pro license, please checkout and use the free-images folder
 - [Auth0](http://auth0.com)
-  - Using the free tier for simplified authentication
+  - Auth0 is a free-to-try IAAS platform for solid plug-and-play authentication integration. If you pay for the full service, you'll get a huge amount of functionality that integrates with almost any auth provider. You can do this yourself, but be ready for a lot of costly effort - good auth is not easy!
+  - This app uses the free tier for simplified authentication, they give a minimal database setup to store the basic info of your users, and then you can store the important stuff in your app's data store
 - [Cypress](https://www.cypress.io)
   - Easily the best e2e JavaScript platform avaialble today. Took a little extra work to get it working with Next (sans Now) but this project can now be built with TypeScript-developed tests including support for Code Coverage (thank you `nyc`!).
 - [Github Actions Beta](https://github.com/features/actions)
@@ -45,25 +46,42 @@ And last but definitely not least, [TypeScript](https://www.typescriptlang.org) 
 
 ### Setting your build environment (to be automated)
 
-Create an .env file in the root folder to be used as environment variables
+Create two files: .env and .env.build in the root folder to be used as environment variable stores
 
-Copy the following file contents into it:
+You can copy the following directly in, per file
+
+**./.env**
 
 ```sh
-# ./.env
-
 ROOT_DOMAIN="http://localhost:3000"
 AUTH0_CLIENT_SECRET=
 AUTH0_CALLBACK_URL=
 AUTH0_DOMAIN=
 AUTH0_CLIENT=
 FA_PRO_AUTH=
+MONGODB_URI=
+```
+
+**./.env.build**
+
+```sh
+FA_PRO_AUTH=
 ```
 
 - If you're building for now.sh These same variables should be set to secrets on now.sh
 - **FA_PRO_AUTH** should be set to a secret on Github if using Github Actions
 
-If you want to build for AUTH0 integration, create a free account on auth0.com and change the variables in .env as follows:
+### Start the build!
+
+At this point you should be able to run `yarn dev`
+
+This will run `now dev` to run a localhost dev instance of the now.sh framework.
+
+### (optional) Setup for Auth0 integration
+
+If you want to build for Auth0 integration, create a free account on auth0.com and change the variables in .env as follows:
+
+- If you don't use Auth0, the app will always default to localhost usage
 
 ```
 AUTH0_CLIENT_SECRET="<AUTH0_CLIENT_SECRET>"

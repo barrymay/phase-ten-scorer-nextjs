@@ -54,10 +54,11 @@ function P10Button<T extends {}>(props: Props<T>) {
       text-decoration: none;
       font-family: inherit;
       font-size: inherit;
-      color: inherit;
+      color: ${color};
       background: none;
       cursor: pointer;
-      padding: 5px;
+      padding: ${minimal ? '2px' : '5px'};
+      margin: ${minimal ? '0px' : '2px 0px'};
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 700;
@@ -80,7 +81,6 @@ function P10Button<T extends {}>(props: Props<T>) {
 
       /* Button 1 */
       &.btn-1 {
-        color: ${color};
         &:focus {
           background-color: lighten(${color}, 40%);
         }
@@ -93,8 +93,6 @@ function P10Button<T extends {}>(props: Props<T>) {
         flex-direction: ${iconRight ? 'row-reverse' : 'row'};
         align-items: center;
         justify-content: center;
-        margin: ${minimal ? '0px' : '2px 0px'};
-        padding: ${minimal ? '2px' : ''};
         height: ${minimal ? '100%' : ''};
       }
     `,

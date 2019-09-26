@@ -5,17 +5,34 @@ import { useTournamentCurrentContext } from '../context/TournamentCurrentContext
 import PhaseScorer from './PhaseScorer';
 import Totaler from './Totaler';
 import { IPlayer } from '../context/PlayersContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignLanguage } from '@fortawesome/free-solid-svg-icons';
+import { useSpring, animated } from 'react-spring';
 
 const GameViewColumn: React.FC<{
   player: IPlayer;
   onReady: VoidFunction;
   updateMarkedPhase: (phase: number | undefined) => void;
-}> = ({ onReady, player, updateMarkedPhase }) => {
+  isShuffler: boolean;
+  divSpring: any;
+}> = ({ onReady, player, updateMarkedPhase, isShuffler, divSpring }) => {
   const { tournament, roundNum } = useTournamentCurrentContext();
+  const nameHighlight = useSpring({
+    color: isShuffler ? 'white' : 'black',
+    backgroundColor: isShuffler ? 'black' : 'white',
+  });
 
   return (
-    <div className="column">
-      <div className="player-data">
+    <animated.div style={divSpring} className="column">
+      <animated.div style={nameHighlight} className="player-data">
+        {isShuffler && (
+          <FontAwesomeIcon
+            css={css`
+              padding-right: 2px;
+            `}
+            icon={faSignLanguage}
+          />
+        )}
         {player.name}{' '}
         <span
           css={css`
@@ -25,7 +42,7 @@ const GameViewColumn: React.FC<{
         >
           ({player.wins.length}-{player.losses.length})
         </span>
-      </div>
+      </animated.div>
       <div className="player-total">
         <Totaler playerId={player.id} rounds={tournament.rounds} />
       </div>
@@ -37,7 +54,7 @@ const GameViewColumn: React.FC<{
           onMeasureUpdate={onReady}
         />
       </div>
-    </div>
+    </animated.div>
   );
 };
 

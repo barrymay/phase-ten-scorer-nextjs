@@ -3,6 +3,7 @@ import cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 import Router from 'next/router';
 import { NextPageContext } from 'next';
+import { isAuth0Registered } from './auth0Utils';
 
 export const logout = () => {
   cookie.remove('token');
@@ -27,8 +28,12 @@ const withAuth = (WrappedComponent: any) =>
       let componentProps: any =
         WrappedComponent.getInitialProps &&
         (await WrappedComponent.getInitialProps(wrapperContext));
+      const enableAuth0 = isAuth0Registered();
+      if (!enableAuth0) {
+        return { ...componentProps, enableAuth0 };
+      }
 
-      componentProps = componentProps || {};
+      componentProps = { ...(componentProps || {}), enableAuth0 };
 
       // On client side find user in __NEXT_DATA__
       if (!req) {
@@ -66,7 +71,7 @@ const withAuth = (WrappedComponent: any) =>
       const userJson = await userData.json();
       const { user } = userJson;
       componentProps.user = user;
-      return { ...componentProps };
+      return { ...componentProps, enableAuth0: true };
     }
 
     // event listen across tabs to sync logout

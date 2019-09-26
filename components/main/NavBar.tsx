@@ -40,7 +40,10 @@ const HeaderLinkStyle = css`
   }
 `;
 
-const NavBar: React.FC<{ user: any }> = ({ children, user }) => {
+const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
+  user,
+  isAuthAllowed,
+}) => {
   const LinkStyle = React.useCallback(
     isMinimal =>
       css`
@@ -97,7 +100,9 @@ const NavBar: React.FC<{ user: any }> = ({ children, user }) => {
             routeKey={key as RouteKeys}
           />
         ))}
-      <LoginButton css={[HeaderLinkStyle, LinkStyle(true)]} user={user} />
+      {isAuthAllowed && (
+        <LoginButton css={[HeaderLinkStyle, LinkStyle(true)]} user={user} />
+      )}
     </Header>
   );
 };

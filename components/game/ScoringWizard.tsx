@@ -22,6 +22,7 @@ import { useTournamentCurrentContext } from '../context/TournamentCurrentContext
 import DivAnimator from './DivAnimator';
 import SingleScoreForm from './SingleScoreForm';
 import { IPlayerPhaseMap } from './GameViewControl';
+import { focusHiddenInput } from '../common/IosFocusHiddenInput';
 
 export interface ISingleScoreFormFuncs {
   performSubmit: () => void;
@@ -34,8 +35,7 @@ const ScoringWizard: React.FC<{
   onComplete: (roundScore: IRound) => void;
 }> = ({ onComplete, nextPhaseMap }) => {
   const players = usePlayersState();
-  const { tournament } = useTournamentCurrentContext();
-  const roundCount = useRef(tournament.rounds.length + 1).current;
+  const { tournament, roundNum } = useTournamentCurrentContext();
 
   const [playerIndex, setPlayerIndex] = useState(0);
   const playerIndexRef = useRef(playerIndex);
@@ -83,6 +83,7 @@ const ScoringWizard: React.FC<{
   );
 
   const moveNext = useCallback(() => {
+    focusHiddenInput();
     const formRef = getOrCreateRef(playerIndex);
     formRef.current && formRef.current.performSubmit();
   }, [getOrCreateRef, playerIndex]);
@@ -177,7 +178,7 @@ const ScoringWizard: React.FC<{
 
   return (
     <div onKeyDown={keyHandler}>
-      <div>Round #{roundCount}</div>
+      <div>Round #{roundNum}</div>
       <div
         ref={refWidthMeasure.ref}
         css={css`
