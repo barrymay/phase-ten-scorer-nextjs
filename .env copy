@@ -1,0 +1,6 @@
+ROOT_DOMAIN="http://localhost:3000"
+AUTH0_DOMAIN="barry-dev.auth0.com"
+AUTH0_CLIENT="Gv2YUowZjtr20c2AgWPpvWNwhmHI1mb0"
+AUTH0_CLIENT_SECRET="N6_XpmTcShIkYFoMyHl0o803czsYMlVwXw9E4qFPQvvG1YPWFtGoNaOPrr2MxCIA"
+AUTH0_CALLBACK_URL="http://localhost:3000"
+MONGODB_URI=mongodb+srv://barry:vKczpazZsEdvTPw9rA@cluster0-brbr4.mongodb.net/test?retryWrites=true
