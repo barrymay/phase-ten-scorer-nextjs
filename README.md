@@ -1,4 +1,4 @@
-# phase-ten-scorer-nextjs
+# Phase 10 Game Scorer (NextJS/Now edition)
 
 ## QuickStart
 
