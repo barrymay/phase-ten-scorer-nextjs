@@ -19,22 +19,22 @@ describe('Player Setup', () => {
     testPlayerSetupLayout(cy);
   });
 
-  // it('add users', () => {
-  //   cy.findAllByLabelText(/^Player Name:/).type(testName1);
-  //   cy.findByTitle('Add Player').click();
+  it('add users', () => {
+    cy.findAllByLabelText(/^Player Name:/).type(testName1);
+    cy.findByTitle('Add Player').click();
 
-  //   cy.findAllByLabelText(/^Player Name:/).type(testName2);
-  //   cy.findByTitle('Add Player').click();
+    cy.findAllByLabelText(/^Player Name:/).type(testName2);
+    cy.findByTitle('Add Player').click();
 
-  //   cy.findAllByLabelText(/^Player Name:/).type(testName3);
-  //   cy.findByTitle('Add Player').click();
+    cy.findAllByLabelText(/^Player Name:/).type(testName3);
+    cy.findByTitle('Add Player').click();
 
-  //   cy.findAllByLabelText(/^Player Name:/).type(testName4);
-  //   cy.findByTitle('Add Player').click();
+    cy.findAllByLabelText(/^Player Name:/).type(testName4);
+    cy.findByTitle('Add Player').click();
 
-  //   cy.findByText(`Player #1: ${testName1} (0-0)`);
-  //   cy.findByText(`Player #2: ${testName2} (0-0)`);
-  //   cy.findByText(`Player #3: ${testName3} (0-0)`);
-  //   cy.findByText(`Player #4: ${testName4} (0-0)`);
-  // });
+    cy.findByText(`Player #1: ${testName1} (0-0)`);
+    cy.findByText(`Player #2: ${testName2} (0-0)`);
+    cy.findByText(`Player #3: ${testName3} (0-0)`);
+    cy.findByText(`Player #4: ${testName4} (0-0)`);
+  });
 });
