@@ -36,7 +36,7 @@ export const PlayerSetupControl: React.FC = () => {
   };
 
   const clearAll = () => {
-    dispatchPlayers({ type: 'SET', players: {} });
+    dispatchPlayers({ type: 'SET', players: [] });
     setName('');
   };
 

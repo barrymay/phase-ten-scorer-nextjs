@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import {
   IPlayer,
   usePlayersDispatch,
-  usePlayersState,
+  usePlayersStateAsMap,
 } from '../context/PlayersContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 
@@ -18,10 +18,10 @@ const WinnerDisplay: React.FC<{ winners: IWinnerList[] }> = ({ winners }) => {
   const useWinnersForUpdate = (winners: IWinnerList[]) => {
     const winnerIds = winners.map(item => item.player.id);
     const gameId = tournament.id;
-    const allPlayers = usePlayersState();
+    const allPlayers = usePlayersStateAsMap();
     const playerDispatch = usePlayersDispatch();
 
-    const updateForPlayers = tournament.playerIds.forEach(playerId => {
+    tournament.playerIds.forEach(playerId => {
       const playerUpdate = allPlayers[playerId];
       if (winnerIds.includes(playerUpdate.id)) {
         playerDispatch({

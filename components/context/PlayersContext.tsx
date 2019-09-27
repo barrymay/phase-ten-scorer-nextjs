@@ -1,6 +1,11 @@
-import React, { Dispatch, useContext, useEffect, useReducer } from 'react';
+import React, {
+  Dispatch,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import uuid from 'uuid';
-import { to } from 'react-spring';
 
 interface IPlayerMapFormat<T> {
   [key: string]: T;
@@ -25,6 +30,7 @@ export interface IPlayer {
 interface PlayersContextState {
   players: InternalPlayersState;
   dispatchPlayers: React.Dispatch<PlayerAction>;
+  playerStateMap: PlayersStateMap;
 }
 
 interface IPlayerAddAction {
@@ -39,7 +45,7 @@ interface IPlayerRemoveAction {
 
 interface IPlayerSetAction {
   type: 'SET';
-  players: IPlayerMap;
+  players: PlayersState;
 }
 
 interface IPlayerWinLossAction {
@@ -53,23 +59,26 @@ type PlayerAction =
   | IPlayerRemoveAction
   | IPlayerSetAction
   | IPlayerWinLossAction;
-export type InternalPlayersState = 'loading' | { [key: string]: IPlayer };
+export type InternalPlayersState = 'loading' | IPlayer[];
 export type PlayersState = Exclude<InternalPlayersState, 'loading'>;
+
+export type PlayersStateMap = { [key: string]: IPlayer };
 
 export const PlayersContext = React.createContext<PlayersContextState | null>(
   null,
 );
 const INIT_STATE: InternalPlayersState = 'loading';
-const PLAYER_STORAGE_KEY = 'player_storage_3';
+const PLAYER_STORAGE_KEY = 'player_storage_4';
+const PLAYER_STORAGE_KEY_3 = 'player_storage_3';
 const PLAYER_STORAGE_KEY_2 = 'player_storage_2';
 
 export function isPlayerNameValid(
-  map: IPlayerMap,
+  state: PlayersState,
   playerName: string,
 ): boolean {
   return (
     !!playerName.length &&
-    !Object.values(map).some(
+    !state.some(
       item =>
         !item.name.localeCompare(playerName, undefined, {
           sensitivity: 'base',
@@ -84,55 +93,54 @@ function playerReducer(
   state: InternalPlayersState,
   action: PlayerAction,
 ): InternalPlayersState {
-  const resultState = typeof state === 'string' ? {} : state;
-  const newState = { ...resultState };
+  const resultState = typeof state === 'string' ? [] : state;
+  const newState = [...resultState];
   switch (action.type) {
     case 'ADD':
       if (isPlayerNameValid(resultState, action.playerName)) {
         const newKey = uuid();
         playerCache.clear();
-        return {
-          ...newState,
-          [newKey]: {
-            id: newKey,
-            name: action.playerName,
-            losses: [],
-            wins: [],
-          },
-        };
+        newState.push({
+          id: newKey,
+          name: action.playerName,
+          losses: [],
+          wins: [],
+        });
+        return newState;
       } else {
         return state;
       }
     case 'REMOVE':
-      delete newState[action.playerId];
       playerCache.clear();
-      return newState;
+      return newState.filter(item => item.id !== action.playerId);
     case 'ADD_WIN':
     case 'ADD_LOSS': {
       const isWin = action.type === 'ADD_WIN';
       const gameId = action.gameId;
-      const player = { ...newState[action.playerId] };
-      const toAdd = isWin ? player.wins : player.losses;
-      const toRemove = isWin ? player.losses : player.wins;
-      if (toAdd.includes(gameId) && !toRemove.includes(gameId)) {
-        return state;
-      } else {
-        player.wins = isWin
-          ? player.wins.concat(gameId)
-          : player.wins.filter(item => item !== gameId);
-        player.losses = !isWin
-          ? player.losses.concat(gameId)
-          : player.losses.filter(item => item !== gameId);
+      const player = newState.find(item => item.id === action.playerId);
+      if (player) {
+        const toAdd = isWin ? player.wins : player.losses;
+        const toRemove = isWin ? player.losses : player.wins;
+        if (toAdd.includes(gameId) && !toRemove.includes(gameId)) {
+          return state;
+        } else {
+          player.wins = isWin
+            ? player.wins.concat(gameId)
+            : player.wins.filter(item => item !== gameId);
+          player.losses = !isWin
+            ? player.losses.concat(gameId)
+            : player.losses.filter(item => item !== gameId);
 
-        return {
-          ...newState,
-          [action.playerId]: player,
-        };
+          return newState;
+        }
+      } else {
+        console.error(`Player ${action.playerId} could not be found`);
+        return state;
       }
     }
     case 'SET':
       playerCache.clear();
-      return { ...action.players };
+      return [...action.players];
     default:
       return state;
   }
@@ -142,27 +150,33 @@ interface IOwnProps {
   testValue?: InternalPlayersState;
 }
 
-const getPlayerStorage = (): IPlayerMap => {
-  let result: IPlayerMap = {};
+const getPlayerStorage = (): InternalPlayersState => {
+  let result: IPlayer[] = [];
   const latestStoredValue = window.localStorage.getItem(PLAYER_STORAGE_KEY);
   if (!latestStoredValue) {
+    const storedValue_3 = window.localStorage.getItem(PLAYER_STORAGE_KEY_3);
     const storedValue_2 = window.localStorage.getItem(PLAYER_STORAGE_KEY_2);
-    if (storedValue_2) {
+    if (storedValue_2 && !storedValue_3) {
       const value_2 = JSON.parse(storedValue_2) as IPlayerMapFormat<
         IPlayerLegacy2
       >;
-      result = Object.values(value_2).reduce<IPlayerMap>((result, next) => {
-        result[next.id] = {
-          ...next,
-          wins: [],
-          losses: [],
-        };
-        return result;
-      }, {});
+      result = Object.values(value_2).map<IPlayer>(item => ({
+        ...item,
+        wins: [],
+        losses: [],
+      }));
+    } else if (storedValue_3) {
+      const value_3 = JSON.parse(storedValue_3) as IPlayerMapFormat<IPlayer>;
+      result = Object.values(value_3).map<IPlayer>(item => ({
+        ...item,
+      }));
     }
   } else {
-    result = JSON.parse(latestStoredValue) as IPlayerMap;
+    result = JSON.parse(latestStoredValue) as IPlayer[];
   }
+  window.localStorage.removeItem(PLAYER_STORAGE_KEY_2);
+  window.localStorage.removeItem(PLAYER_STORAGE_KEY_3);
+
   return result;
 };
 
@@ -179,10 +193,9 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
       INIT_STATE,
       () => {
         try {
-          const resultPlayers = getPlayerStorage();
-          return resultPlayers;
+          return getPlayerStorage();
         } catch (e) {
-          return {};
+          return [];
         }
       },
     );
@@ -190,7 +203,7 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
     useEffect((): VoidFunction => {
       window.localStorage.setItem(
         PLAYER_STORAGE_KEY,
-        JSON.stringify(internalPlayers),
+        JSON.stringify(Object.values(internalPlayers)),
       );
       return () => undefined;
     }, [internalPlayers]);
@@ -199,10 +212,25 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
   };
 
   const [players, playerDispatch] = usePlayerWithUpdate();
+
+  const playerStateMap = useMemo(() => {
+    if (!Array.isArray(players)) {
+      return {};
+    }
+    return players.reduce<PlayersStateMap>((reduceResult, next) => {
+      reduceResult = {
+        ...reduceResult,
+        [next.id]: next,
+      };
+      return reduceResult;
+    }, {});
+  }, [players]);
+
   return (
     <PlayersContext.Provider
       value={{
         players: testValue ? testValue : players,
+        playerStateMap,
         dispatchPlayers: playerDispatch,
       }}
     >
@@ -212,14 +240,25 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
 };
 
 export function usePlayersState(): PlayersState {
-  const players = useContext(PlayersContext);
-  if (players === undefined || players === null) {
+  const playersContext = useContext(PlayersContext);
+  if (playersContext === undefined || playersContext === null) {
     throw new Error(usePlayersState.name + ' must be used in PlayerProvider');
   }
-  if (players.players === 'loading') {
+  if (playersContext.players === 'loading') {
     throw new Error('Player state is not loaded');
   }
-  return players.players;
+  return playersContext.players;
+}
+
+export function usePlayersStateAsMap(): PlayersStateMap {
+  const playersContext = useContext(PlayersContext);
+  if (playersContext === undefined || playersContext === null) {
+    throw new Error(usePlayersState.name + ' must be used in PlayerProvider');
+  }
+  if (playersContext.players === 'loading') {
+    throw new Error('Player state is not loaded');
+  }
+  return playersContext.playerStateMap;
 }
 
 export function usePlayersDispatch(): React.Dispatch<PlayerAction> {

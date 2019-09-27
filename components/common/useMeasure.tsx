@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState, useLayoutEffect } from 'react';
+import { RefObject, useRef, useState, useLayoutEffect } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 export interface IRect {

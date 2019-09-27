@@ -31,7 +31,6 @@ const GameView = ({
   className: string;
 }) => {
   const [showSpinner, setShowSpinner] = useState(true);
-  const [openCards, setOpenCards] = useState(false);
 
   // TODO - help react-spring get rid of need of null here
   const floatInRef = useRef<SpringHandle>(null);
@@ -53,7 +52,7 @@ const GameView = ({
     transform: `rotateY(0deg)`,
   });
 
-  useChain([floatInRef, cardFlipRef], [0, 0.25]);
+  useChain([floatInRef, cardFlipRef]);
   return (
     <Fragment>
       <Head>
