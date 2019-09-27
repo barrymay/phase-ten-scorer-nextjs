@@ -60,7 +60,8 @@ export const PlayersContext = React.createContext<PlayersContextState | null>(
   null,
 );
 const INIT_STATE: InternalPlayersState = 'loading';
-const PLAYER_STORAGE_KEY = 'player_storage_3';
+const PLAYER_STORAGE_KEY = 'player_storage_4';
+const PLAYER_STORAGE_KEY_3 = 'player_storage_3';
 const PLAYER_STORAGE_KEY_2 = 'player_storage_2';
 
 export function isPlayerNameValid(
@@ -142,28 +143,40 @@ interface IOwnProps {
   testValue?: InternalPlayersState;
 }
 
-const getPlayerStorage = (): IPlayerMap => {
-  let result: IPlayerMap = {};
+const getPlayerStorage = (): InternalPlayersState => {
+  let result: IPlayer[] = [];
   const latestStoredValue = window.localStorage.getItem(PLAYER_STORAGE_KEY);
   if (!latestStoredValue) {
+    const storedValue_3 = window.localStorage.getItem(PLAYER_STORAGE_KEY_3);
     const storedValue_2 = window.localStorage.getItem(PLAYER_STORAGE_KEY_2);
-    if (storedValue_2) {
+    if (storedValue_2 && !storedValue_3) {
       const value_2 = JSON.parse(storedValue_2) as IPlayerMapFormat<
         IPlayerLegacy2
       >;
-      result = Object.values(value_2).reduce<IPlayerMap>((result, next) => {
-        result[next.id] = {
-          ...next,
-          wins: [],
-          losses: [],
-        };
-        return result;
-      }, {});
+      result = Object.values(value_2).map<IPlayer>(item => ({
+        ...item,
+        wins: [],
+        losses: [],
+      }));
+    } else if (storedValue_3) {
+      const value_3 = JSON.parse(storedValue_3) as IPlayerMapFormat<IPlayer>;
+      result = Object.values(value_3).map<IPlayer>(item => ({
+        ...item,
+      }));
     }
   } else {
-    result = JSON.parse(latestStoredValue) as IPlayerMap;
+    result = JSON.parse(latestStoredValue) as IPlayer[];
   }
-  return result;
+  window.localStorage.removeItem(PLAYER_STORAGE_KEY_2);
+  window.localStorage.removeItem(PLAYER_STORAGE_KEY_3);
+
+  return result.reduce<PlayersState>((reduceResult, next) => {
+    reduceResult = {
+      ...reduceResult,
+      [next.id]: next,
+    };
+    return reduceResult;
+  }, {});
 };
 
 export const PlayersProvider: React.FC<IOwnProps> = ({
@@ -179,8 +192,7 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
       INIT_STATE,
       () => {
         try {
-          const resultPlayers = getPlayerStorage();
-          return resultPlayers;
+          return getPlayerStorage();
         } catch (e) {
           return {};
         }
@@ -190,7 +202,7 @@ export const PlayersProvider: React.FC<IOwnProps> = ({
     useEffect((): VoidFunction => {
       window.localStorage.setItem(
         PLAYER_STORAGE_KEY,
-        JSON.stringify(internalPlayers),
+        JSON.stringify(Object.values(internalPlayers)),
       );
       return () => undefined;
     }, [internalPlayers]);
