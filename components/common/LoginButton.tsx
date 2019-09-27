@@ -3,7 +3,10 @@ import { jsx, css } from '@emotion/core';
 import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 import P10Button from './button/P10Button';
-import { faSignOut, faSignIn } from '@fortawesome/free-regular-svg-icons';
+import {
+  faSignInAlt as faSignIn,
+  faSignOutAlt as faSignOut,
+} from '@fortawesome/free-solid-svg-icons';
 
 const LoginStyles = styled.div`
   display: flex;
