@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';

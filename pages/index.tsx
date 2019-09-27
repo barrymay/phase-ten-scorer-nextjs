@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { MainMenu } from '../components/main/MainMenu';
-import withAuth from '../components/common/auth/withAuth';
 import { Fragment } from 'react';
 
 const Start: React.FC<{ user: any; className: string }> = ({

@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from 'react';
 import uuid from 'uuid';
-import { usePlayersState } from './PlayersContext';
+import { usePlayersStateAsMap } from './PlayersContext';
 
 export interface IRoundPlayerData {
   score: number;
@@ -102,7 +102,7 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   children,
   testValue,
 }) => {
-  const playersState = usePlayersState();
+  const playersState = usePlayersStateAsMap();
   const playerIds = useMemo(() => Object.keys(playersState), [playersState]);
 
   const [tournaments, setTournaments] = useState<InternalTournamentState>(

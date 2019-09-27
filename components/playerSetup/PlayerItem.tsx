@@ -5,9 +5,6 @@ import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
 import P10Button from '../common/button/P10Button';
 import { usePlayersDispatch, IPlayer } from '../context/PlayersContext';
 
-interface IOwnProps {
-  players: IPlayer[];
-}
 interface Props {
   player: IPlayer;
   index: number;

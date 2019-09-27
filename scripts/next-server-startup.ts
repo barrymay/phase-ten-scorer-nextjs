@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
 import next from 'next';
-import auth from '../auth/auth';
 import proxyMiddleware from 'http-proxy-middleware';
 import dotenv from 'dotenv';
 import { IncomingMessage, ServerResponse } from 'http';

@@ -14,7 +14,6 @@ import {
 } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
-import useMeasure from '../common/useMeasure';
 
 interface IPhaseButtonSpring {
   transform: string;

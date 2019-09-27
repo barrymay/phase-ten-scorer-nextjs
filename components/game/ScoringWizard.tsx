@@ -11,18 +11,14 @@ import React, {
   useState,
 } from 'react';
 import P10Button from '../common/button/P10Button';
+import { focusHiddenInput } from '../common/IosFocusHiddenInput';
 import useMeasure, { IRect } from '../common/useMeasure';
-import { usePlayersState } from '../context/PlayersContext';
-import {
-  IRound,
-  IRoundPlayerData,
-  IRoundPartial,
-} from '../context/TournamentContext';
+import { usePlayersStateAsMap } from '../context/PlayersContext';
+import { IRound, IRoundPlayerData } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import DivAnimator from './DivAnimator';
-import SingleScoreForm from './SingleScoreForm';
 import { IPlayerPhaseMap } from './GameViewControl';
-import { focusHiddenInput } from '../common/IosFocusHiddenInput';
+import SingleScoreForm from './SingleScoreForm';
 
 export interface ISingleScoreFormFuncs {
   performSubmit: () => void;
@@ -34,7 +30,7 @@ const ScoringWizard: React.FC<{
   nextPhaseMap: IPlayerPhaseMap;
   onComplete: (roundScore: IRound) => void;
 }> = ({ onComplete, nextPhaseMap }) => {
-  const players = usePlayersState();
+  const players = usePlayersStateAsMap();
   const { tournament, roundNum } = useTournamentCurrentContext();
 
   const [playerIndex, setPlayerIndex] = useState(0);

@@ -1,11 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useState } from 'react';
-import {
-  IPlayer,
-  IPlayerMap,
-  usePlayersState,
-} from '../context/PlayersContext';
+import { IPlayer, usePlayersState } from '../context/PlayersContext';
 const PlayerSelector: React.FC<{
   onChange: (newValue: string[]) => void;
 }> = ({ onChange }) => {
@@ -16,7 +12,7 @@ const PlayerSelector: React.FC<{
     e.preventDefault();
 
     const targetValue = e.currentTarget.value;
-    const isValueInPlayers = players[targetValue];
+    const isValueInPlayers = players.find(item => item.id === targetValue);
     if (!isValueInPlayers) {
       return;
     }
@@ -29,11 +25,13 @@ const PlayerSelector: React.FC<{
     onChange(newValue);
   };
 
-  const getSortedPlayers = useCallback((playerMap: IPlayerMap): IPlayer[] => {
-    return Object.values(playerMap).sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
-  }, []);
+  const getSortedPlayers = useCallback(
+    (playerMap: IPlayer[]): IPlayer[] =>
+      players.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      }),
+    [players],
+  );
 
   return (
     <div
@@ -63,7 +61,7 @@ const PlayerSelector: React.FC<{
             value={item.id}
             onClick={selectPlayer}
           >
-            {item.name}
+            {item.name} ({item.wins.length}-{item.losses.length})
           </button>
         );
       })}

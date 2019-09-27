@@ -2,14 +2,10 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import PlayerItem from './PlayerItem';
-import { IPlayer, IPlayerMap } from '../context/PlayersContext';
-import { useCallback } from 'react';
+import { PlayersState } from '../context/PlayersContext';
 
-interface IOwnProps {
-  players: IPlayer[];
-}
 interface IStateProps {
-  players: IPlayerMap;
+  players: PlayersState;
 }
 type Props = IStateProps;
 
@@ -19,15 +15,9 @@ const List = styled.div({
 });
 
 const PlayerList: React.FC<Props> = ({ players }) => {
-  const getPlayerList = useCallback((playerMap: IPlayerMap): IPlayer[] => {
-    return Object.values(playerMap).sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
-  }, []);
-
   return (
     <List>
-      {getPlayerList(players).map((item, index) => (
+      {players.map((item, index) => (
         <PlayerItem key={item.id} index={index} player={item} />
       ))}
     </List>
