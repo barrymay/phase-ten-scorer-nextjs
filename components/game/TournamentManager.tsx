@@ -83,7 +83,7 @@ const TournamentManager: React.FC = () => {
                   {item.name}: ({playerCount})
                 </div>
                 <P10Button
-                  title="Remove Item"
+                  title="Remove Game"
                   faIconDef={faTimesCircle}
                   minimal
                   onClick={() => {
