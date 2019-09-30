@@ -72,23 +72,24 @@ const Modal: React.FC<{
     return modalRoot;
   }, []);
 
-  const transitions = useTransition(show, null, {
+  useEffect(() => {
+    const mainDiv = mainDivRef.current;
+    return () => {
+      const modalRoot = getModalRoot();
+      if (
+        modalRoot &&
+        mainDiv &&
+        Array.from(modalRoot.childNodes).includes(mainDiv)
+      ) {
+        modalRoot.removeChild(mainDiv);
+      }
+    };
+  }, [getModalRoot, shown]);
+
+  const transitions = useTransition(show, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    onDestroyed: isDestroyed => {
-      if (isDestroyed && !shown) {
-        const mainDiv = mainDivRef.current;
-        const modalRoot = getModalRoot();
-        if (
-          modalRoot &&
-          mainDiv &&
-          Array.from(modalRoot.childNodes).includes(mainDiv)
-        ) {
-          modalRoot.removeChild(mainDiv);
-        }
-      }
-    },
   });
 
   useEffect(() => {
@@ -112,11 +113,10 @@ const Modal: React.FC<{
       onCancel();
     }
   };
-  const modalBody = transitions.map(
-    ({ item, key, props }) =>
+  const modalBody = transitions(
+    (props, item) =>
       item && (
         <animated.div
-          key={key}
           style={props}
           ref={parentDiv}
           css={modalStyle}
