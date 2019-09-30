@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useContext, useState } from 'react';
 import { IRound, ITournament, useTournamentContext } from './TournamentContext';
+import Router from 'next/router';
 
 interface ITournamentCurrentContext {
   tournament: ITournament;
@@ -27,7 +28,11 @@ export const TournamentCurrentProvider: React.FC<IOwnProps> = ({
   } = useTournamentContext();
   const currentTournament = tournaments.find(item => item.id === tournamentId);
   if (!currentTournament) {
-    throw new Error('Invalid Tournament Id');
+    console.error(
+      `Passed Game Id ${tournamentId} does not existing in tournament storage.  Defaulting to Main Menu`,
+    );
+    Router.push('/');
+    return null;
   }
   const [roundNum, setRoundNum] = useState(() => {
     return currentTournament.rounds.length + 1;
