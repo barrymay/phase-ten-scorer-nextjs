@@ -59,7 +59,7 @@
     "raw-loader": "^3.0.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-hook-form": "3.23.12",
+    "react-hook-form": "3.23.16",
     "react-spring": "9.0.0-beta.34",
     "resize-observer-polyfill": "^1.5.1",
     "source-map-support": "^0.5.13",
