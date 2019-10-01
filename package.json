@@ -60,7 +60,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-hook-form": "3.23.12",
-    "react-spring": "^9.0.0-canary.809.2.49361198",
+    "react-spring": "^9.0.0-canary.809.3.a66b280",
     "resize-observer-polyfill": "^1.5.1",
     "source-map-support": "^0.5.13",
     "start-server-and-test": "^1.10.2",

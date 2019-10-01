@@ -72,24 +72,26 @@ const Modal: React.FC<{
     return modalRoot;
   }, []);
 
-  useEffect(() => {
-    const mainDiv = mainDivRef.current;
-    return () => {
-      const modalRoot = getModalRoot();
-      if (
-        modalRoot &&
-        mainDiv &&
-        Array.from(modalRoot.childNodes).includes(mainDiv)
-      ) {
-        modalRoot.removeChild(mainDiv);
-      }
-    };
-  }, [getModalRoot, shown]);
-
-  const transitions = useTransition(show, {
+  const transition = useTransition(show, {
+    config: {
+      friction: 70,
+    },
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
+    // onDestroyed: (isDestroyed: any) => {
+    //   if (isDestroyed && !shown) {
+    //     const mainDiv = mainDivRef.current;
+    //     const modalRoot = getModalRoot();
+    //     if (
+    //       modalRoot &&
+    //       mainDiv &&
+    //       Array.from(modalRoot.childNodes).includes(mainDiv)
+    //     ) {
+    //       modalRoot.removeChild(mainDiv);
+    //     }
+    //   }
+    // },
   });
 
   useEffect(() => {
@@ -113,8 +115,9 @@ const Modal: React.FC<{
       onCancel();
     }
   };
-  const modalBody = transitions(
-    (props, item) =>
+  const modalBody = transition((props, item) => {
+    console.log('RUN TRANS');
+    return (
       item && (
         <animated.div
           style={props}
@@ -133,8 +136,9 @@ const Modal: React.FC<{
             <div className="modalBody">{children}</div>
           </div>
         </animated.div>
-      ),
-  );
+      )
+    );
+  });
 
   return createPortal(modalBody, mainDivRef.current);
 };
