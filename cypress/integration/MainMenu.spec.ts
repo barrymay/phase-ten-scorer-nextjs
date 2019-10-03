@@ -1,4 +1,5 @@
 import { testPlayerSetupLayout } from './PlayerSetup.common';
+import { testCreateTournamentLayout } from './CreateTournament.common';
 
 describe('Main Menu Layout', () => {
   /*
@@ -22,9 +23,7 @@ describe('Main Menu Layout', () => {
 
     cy.findByText('Create a Tournament').click();
 
-    cy.findByText('Tournament Manager').should('exist');
-    cy.findByText('Tournament Name:').should('exist');
-    cy.findByText('Selected Players:').should('exist');
+    testCreateTournamentLayout(cy);
   });
 
   it('navigate to Player Setup', () => {
