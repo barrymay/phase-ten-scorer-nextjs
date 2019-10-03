@@ -1,12 +1,12 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import Head from 'next/head';
+import { Fragment, useState } from 'react';
+import { animated, useSpring } from 'react-spring';
+import Spinner from '../../components/common/Spinner';
 import { TournamentCurrentProvider } from '../../components/context/TournamentCurrentContext';
 import GameViewControl from '../../components/game/GameViewControl';
 import ProviderWrapper from '../../components/game/ProviderWrapper';
-import Spinner from '../../components/common/Spinner';
-import { useState, Fragment, useRef } from 'react';
-import { useSpring, animated, SpringHandle, useChain } from 'react-spring';
 
 const style = css`
   position: relative;
@@ -31,28 +31,29 @@ const GameView = ({
   className: string;
 }) => {
   const [showSpinner, setShowSpinner] = useState(true);
+  const [showCard, setShowCard] = useState(false);
 
   // TODO - help react-spring get rid of need of null here
-  const floatInRef = useRef<SpringHandle>(null);
   const gameViewFloatIn = useSpring<{ opacity: number; top: number }>({
-    ref: floatInRef,
     opacity: showSpinner ? 0 : 1,
     top: showSpinner ? 500 : 0,
+    onFrame: frame => {
+      if ((frame as any).top < 100) {
+        setShowCard(true);
+      }
+    },
   });
 
-  const cardFlipRef = useRef<SpringHandle>(null);
   const cardFlip = useSpring<{ transform: string }>({
-    ref: cardFlipRef,
     config: {
       friction: 70,
     },
     from: {
       transform: `rotateY(89.5deg)`,
     },
-    transform: `rotateY(0deg)`,
+    transform: showCard ? `rotateY(0deg)` : `rotateY(89.5deg)`,
   });
 
-  useChain([floatInRef, cardFlipRef]);
   return (
     <Fragment>
       <Head>

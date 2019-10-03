@@ -32,7 +32,7 @@ export const PlayerItem: React.FC<Props> = ({ player, index }) => {
         {player.losses.length})
       </PlayerName>
       <P10Button
-        title="Remove Item"
+        title="Remove Player"
         faIconDef={faTimesCircle}
         minimal
         onClick={() => {
