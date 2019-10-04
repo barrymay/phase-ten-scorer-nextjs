@@ -8,7 +8,7 @@
     "@babel/core": "^7.6.2",
     "@babel/preset-typescript": "^7.6.0",
     "@cypress/code-coverage": "^1.10.1",
-    "@emotion/core": "^10.0.17",
+    "@emotion/core": "^10.0.20",
     "@emotion/styled": "^10.0.17",
     "@fortawesome/fontawesome-pro": "^5.11.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
