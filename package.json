@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.2.4",
-    "@babel/core": "^7.6.2",
+    "@babel/core": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
     "@cypress/code-coverage": "^1.10.1",
     "@emotion/core": "^10.0.21",
