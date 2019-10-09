@@ -64,7 +64,7 @@
     "start-server-and-test": "^1.10.3",
     "styled-jsx": "^3.2.2",
     "ts-node": "^8.4.1",
-    "typescript": "3.5.3",
+    "typescript": "3.6.3",
     "uuid": "^3.3.2",
     "webpack": "^4.41.0"
   },
