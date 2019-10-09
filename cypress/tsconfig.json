@@ -3,7 +3,7 @@
     "strict": true,
     "baseUrl": "../node_modules",
     "target": "es5",
-    "lib": ["esnext", "dom"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["cypress", "@testing-library/cypress"]
   },
   "include": ["**/*.ts"]
