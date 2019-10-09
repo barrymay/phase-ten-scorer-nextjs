@@ -247,7 +247,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
               removeGame();
             }}
           >
-            REMOVE GAME
+            Remove Game
           </P10Button>
         </div>
         <GameBoard>

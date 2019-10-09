@@ -82,9 +82,6 @@ const Modal: React.FC<{
   });
 
   const transition = useTransition(shown, {
-    config: {
-      friction: 70,
-    },
     expires: 0,
     from: { opacity: 0 },
     enter: { opacity: 1 },
