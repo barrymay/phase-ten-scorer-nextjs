@@ -15,10 +15,6 @@ import {
 import { animated, useSpring } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
 
-interface IPhaseButtonSpring {
-  transform: string;
-}
-
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
   color: string;
@@ -102,7 +98,7 @@ function useAnimatedCardFlip(
     );
   }, [completedState]);
 
-  const [propsFlip, setPropsFlip] = useSpring<IPhaseButtonSpring>(() => {
+  const [propsFlip, setPropsFlip] = useSpring(() => {
     return {
       ...getStateColors(completedState),
     };

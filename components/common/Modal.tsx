@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import { animated, useTransition } from 'react-spring';
 import P10Button from './button/P10Button';
@@ -41,6 +41,25 @@ const modalStyle = css`
   }
 `;
 
+const ModalBody: React.FC = ({ children }) => {
+  const modalRootRef = useRef(document.getElementById('modal-root'));
+  const mainDivRef = useRef(document.createElement('div'));
+
+  useEffect(() => {
+    const modalRoot = modalRootRef.current;
+    if (!modalRoot) {
+      throw new Error('No modal-root exists!');
+    }
+    const mainDiv = mainDivRef.current;
+    modalRoot.appendChild(mainDiv);
+    return () => {
+      modalRoot.removeChild(mainDiv);
+    };
+  }, []);
+
+  return createPortal(children, mainDivRef.current);
+};
+
 const Modal: React.FC<{
   shown: boolean;
   title: string;
@@ -50,60 +69,24 @@ const Modal: React.FC<{
   onCancel: () => void;
 }> = ({ children, title, onClick, onCancel, width, height, shown }) => {
   const parentDiv = useRef<HTMLDivElement>(null);
-  const appended = useRef(false);
-  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (shown && parentDiv.current) {
+      parentDiv.current.focus();
+    }
+  }, [shown]);
 
   const sizeOverride = css({
     width,
     height,
   });
 
-  const modalRootRef = useRef<HTMLElement | null>(
-    document.getElementById('modal-root'),
-  );
-
-  const mainDivRef = useRef<HTMLDivElement>(document.createElement('div'));
-
-  const getModalRoot = useCallback(() => {
-    const modalRoot = modalRootRef.current;
-    if (!modalRoot) {
-      throw new Error('No modal-root exists!');
-    }
-    return modalRoot;
-  }, []);
-
-  const transitions = useTransition(show, null, {
+  const transition = useTransition(shown, {
+    expires: 0,
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    onDestroyed: isDestroyed => {
-      if (isDestroyed && !shown) {
-        const mainDiv = mainDivRef.current;
-        const modalRoot = getModalRoot();
-        if (
-          modalRoot &&
-          mainDiv &&
-          Array.from(modalRoot.childNodes).includes(mainDiv)
-        ) {
-          modalRoot.removeChild(mainDiv);
-        }
-      }
-    },
   });
-
-  useEffect(() => {
-    if (shown) {
-      const mainDiv = mainDivRef.current;
-      const modalRoot = getModalRoot();
-      modalRoot.appendChild(mainDiv);
-      appended.current = true;
-      setShow(true);
-      parentDiv.current && parentDiv.current.focus();
-      return () => {
-        setShow(false);
-      };
-    }
-  }, [getModalRoot, shown]);
 
   const keyHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (shown && event.key === 'Escape') {
@@ -112,31 +95,40 @@ const Modal: React.FC<{
       onCancel();
     }
   };
-  const modalBody = transitions.map(
-    ({ item, key, props }) =>
-      item && (
-        <animated.div
-          key={key}
-          style={props}
-          ref={parentDiv}
-          css={modalStyle}
-          onKeyDown={keyHandler}
-          tabIndex={0}
-        >
-          <div className="modalPage" css={sizeOverride}>
-            <div className="modalHeader">
-              <div className="title">{title}</div>
-              <div className="controls">
-                <P10Button minimal faIconDef={faTimes} onClick={onClick} />
-              </div>
-            </div>
-            <div className="modalBody">{children}</div>
-          </div>
-        </animated.div>
-      ),
-  );
 
-  return createPortal(modalBody, mainDivRef.current);
+  return (
+    <Fragment>
+      {transition((props, item) => {
+        return (
+          item && (
+            <ModalBody>
+              <animated.div
+                style={props}
+                ref={parentDiv}
+                css={modalStyle}
+                onKeyDown={keyHandler}
+                tabIndex={0}
+              >
+                <div className="modalPage" css={sizeOverride}>
+                  <div className="modalHeader">
+                    <div className="title">{title}</div>
+                    <div className="controls">
+                      <P10Button
+                        minimal
+                        faIconDef={faTimes}
+                        onClick={onClick}
+                      />
+                    </div>
+                  </div>
+                  <div className="modalBody">{children}</div>
+                </div>
+              </animated.div>
+            </ModalBody>
+          )
+        );
+      })}
+    </Fragment>
+  );
 };
 
 export default Modal;
