@@ -37,7 +37,7 @@
     "emotion": "^10.0.17",
     "engines": "^0.4.0",
     "express": "^4.17.1",
-    "express-session": "^1.16.2",
+    "express-session": "^1.17.0",
     "graphql": "^14.5.8",
     "helmet": "^3.21.1",
     "http-proxy-middleware": "^0.20.0",
