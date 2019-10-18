@@ -12,7 +12,7 @@ import {
   RefObject,
   isValidElement,
 } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring, UseSpringProps } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
@@ -74,8 +74,7 @@ const baseButtonStyles = css`
 
 function useAnimatedCardFlip(
   completedState: PhaseState,
-  // @ts-ignore - SpringValues would be an ideal result to represent the uninterpolated and interpolated props, but it's not exposed
-): [SpringValues<ISpringType>, SerializedStyles] {
+): [UseSpringProps<ISpringType>, SerializedStyles] {
   const lastState = useRef<PhaseState | null>('default');
   const lastBgColor = useRef<string>('whtie');
 

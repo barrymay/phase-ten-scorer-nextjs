@@ -5,7 +5,6 @@ const istanbul = require('istanbul-lib-coverage');
 const map = istanbul.createCoverageMap({});
 
 Cypress.on('window:before:unload', e => {
-  // @ts-ignore
   const coverage = e.currentTarget.__coverage__;
 
   if (coverage) {
