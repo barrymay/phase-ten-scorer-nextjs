@@ -61,7 +61,7 @@
     "react-spring": "^9.0.0-canary.808.8.4a87fcb",
     "resize-observer-polyfill": "^1.5.1",
     "source-map-support": "^0.5.13",
-    "start-server-and-test": "^1.10.5",
+    "start-server-and-test": "^1.10.6",
     "styled-jsx": "^3.2.2",
     "ts-node": "^8.4.1",
     "typescript": "3.6.4",
