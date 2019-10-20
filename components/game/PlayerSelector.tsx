@@ -2,9 +2,11 @@
 import { jsx } from '@emotion/core';
 import { useCallback, useState } from 'react';
 import { IPlayer, usePlayersState } from '../context/PlayersContext';
+import { useAppTheme } from '../theming/AppThemeProvider';
 const PlayerSelector: React.FC<{
   onChange: (newValue: string[]) => void;
 }> = ({ onChange }) => {
+  const theme = useAppTheme();
   const [listState, setListState] = useState<string[]>([]);
   const players = usePlayersState();
 
@@ -52,8 +54,12 @@ const PlayerSelector: React.FC<{
               cursor: 'pointer',
               display: 'flex',
               justifyContent: 'flex-start',
-              color: isSelected ? 'white' : 'black',
-              backgroundColor: isSelected ? 'black' : 'white',
+              color: isSelected
+                ? theme.default.primaryBg
+                : theme.default.primary,
+              backgroundColor: isSelected
+                ? theme.default.primary
+                : theme.default.primaryBg,
               ':focus': {
                 outline: 'none',
               },

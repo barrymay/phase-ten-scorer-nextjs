@@ -5,8 +5,10 @@ import Router from 'next/router';
 import React from 'react';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
 const TournamentManager: React.FC = () => {
+  const theme = useAppTheme();
   const { tournaments, removeTournament } = useTournamentContext();
   function openGame(gameId: string): void {
     Router.push(`/GameView/${gameId}`);
@@ -28,7 +30,7 @@ const TournamentManager: React.FC = () => {
         .list {
           display: flex;
           flex-direction: column;
-          border: 1px solid #cccccc;
+          border: 1px solid ${theme.default.border};
           border-radius: 4px;
 
           .tournament-button {
@@ -45,8 +47,8 @@ const TournamentManager: React.FC = () => {
             transition: color 100ms ease-in-out,
               background-color 100ms ease-in-out;
             &:hover {
-              background-color: #006699;
-              color: white;
+              background-color: ${theme.default.primaryBg};
+              color: ${theme.default.primary};
             }
             .tournamentName {
               display: flex;
