@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { faUserPlus, faUserSlash } from '@fortawesome/pro-regular-svg-icons';
 import React, { useEffect, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';
-import { CardContainer } from '../common/styles/basic';
+import CardContainer from '../common/styles/basic';
 import { usePlayersDispatch, usePlayersState } from '../context/PlayersContext';
 import PlayerList from './PlayerList';
 

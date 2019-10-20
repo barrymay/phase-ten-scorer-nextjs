@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { faScroll, faMoon } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { lighten, rgba } from 'polished';
+import { rgba } from 'polished';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
@@ -13,14 +13,15 @@ import P10Button from '../common/button/P10Button';
 
 function useHeader() {
   const theme = useAppTheme();
+
   return styled.div`
     display: flex;
     justify-content: center;
     font-size: 2em;
     background-image: linear-gradient(
       to right,
-      ${theme.navbar.accentBg},
-      ${theme.navbar.primaryBg}
+      ${theme.navbar.primaryBg},
+      ${theme.navbar.primaryBgAlt}
     );
     border-bottom: 1px solid black;
     .nav-main {
@@ -40,10 +41,10 @@ function useHeaderLinkStyle() {
     text-transform: none;
     font-weight: none;
     &:hover {
-      color: ${lighten(0.1, theme.navbar.primary)};
+      color: ${theme.navbar.primaryAlt};
     }
     &:active {
-      color: ${lighten(0.2, theme.navbar.primary)};
+      color: ${theme.navbar.primaryAlt};
     }
   `;
 }
@@ -77,16 +78,16 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
             }
           }
           &:hover {
-            color: ${lighten(0.5, theme.navbar.primary)};
+            color: ${theme.navbar.primaryAlt};
             background: ${rgba(theme.navbar.primary, 0.2)};
           }
           &:active {
-            color: ${lighten(0.6, theme.navbar.primary)};
+            color: ${theme.navbar.primaryAlt};
             background: ${rgba(theme.navbar.primary, 0.3)};
           }
         }
       `,
-    [theme.navbar.primary],
+    [theme.navbar.primary, theme.navbar.primaryAlt],
   );
 
   return (

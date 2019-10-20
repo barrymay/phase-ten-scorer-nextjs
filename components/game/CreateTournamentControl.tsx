@@ -6,7 +6,7 @@ import useForm from 'react-hook-form';
 import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
-import { CardContainer } from '../common/styles/basic';
+import CardContainer from '../common/styles/basic';
 
 interface IFormData {
   tourneyName: string;
