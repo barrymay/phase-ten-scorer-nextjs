@@ -13,6 +13,7 @@ import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
 import { useAppTheme } from '../theming/AppThemeProvider';
+import { AppTheme } from '../theming/themes';
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
@@ -41,6 +42,45 @@ function useTrueWhenEmpty<T>(
 export interface IPlayerPhaseMap {
   [player: string]: number | undefined;
 }
+
+interface IGameBoardProps {
+  players: IPlayer[];
+  theme: AppTheme;
+}
+
+const GameBoard = styled.div<IGameBoardProps>`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  @media (min-width: 650px) {
+    grid-template-columns: ${(props: IGameBoardProps) =>
+      new Array(props.players.length)
+        .fill(100 / props.players.length + '%')
+        .join(' ')};
+  }
+  .header {
+    display: flex;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid ${(props: IGameBoardProps) => props.theme.default.border};
+    align-content: center;
+    > div:not(:last-child) {
+      border-bottom: 1px solid
+        ${(props: IGameBoardProps) => props.theme.default.border};
+    }
+    .player-data {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-total {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+`;
 
 const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
   onReady,
@@ -114,41 +154,6 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
     nextPhaseMap.current = {};
     mainDivRef.current && mainDivRef.current.focus();
   };
-
-  const GameBoard = useMemo(() => {
-    const arr = new Array(players.length)
-      .fill(100 / players.length + '%')
-      .join(' ');
-    return styled.div(css`
-      display: grid;
-      grid-template-columns: 50% 50%;
-      @media (min-width: 650px) {
-        grid-template-columns: ${arr};
-      }
-      .header {
-        display: flex;
-      }
-      .column {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid ${theme.default.border};
-        align-content: center;
-        > div:not(:last-child) {
-          border-bottom: 1px solid ${theme.default.border};
-        }
-        .player-data {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .player-total {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    `);
-  }, [players.length, theme.default.border]);
 
   const keyHandlerGame = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.ctrlKey && event.key === 's') {
@@ -252,7 +257,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
             Remove Game
           </P10Button>
         </div>
-        <GameBoard>
+        <GameBoard players={players} theme={theme}>
           {players.map((player, index) => (
             <GameViewColumn
               divSpring={divSpring}

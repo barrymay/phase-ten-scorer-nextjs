@@ -10,31 +10,34 @@ import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 import LoginButton from '../common/LoginButton';
 import { useThemeToggle, useAppTheme } from '../theming/AppThemeProvider';
 import P10Button from '../common/button/P10Button';
+import { AppTheme } from '../theming/themes';
 
-function useHeader() {
-  const theme = useAppTheme();
-
-  return styled.div`
-    display: flex;
-    justify-content: center;
-    font-size: 2em;
-    background-image: linear-gradient(
-      to right,
-      ${theme.navbar.primaryBg},
-      ${theme.navbar.primaryBgAlt}
-    );
-    border-bottom: 1px solid black;
-    .nav-main {
-      display: flex;
-      flex: 1 1 auto;
-    }
-  `;
+interface IHeaderProps {
+  theme: AppTheme;
 }
+const Header = styled.div<IHeaderProps>`
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  background-image: linear-gradient(
+    to right,
+    ${(props: IHeaderProps) => props.theme.navbar.primaryBg},
+    ${(props: IHeaderProps) => props.theme.navbar.primaryBgAlt}
+  );
+  border-bottom: 1px solid black;
+  .nav-main {
+    display: flex;
+    flex: 1 1 auto;
+  }
+`;
 
-function useHeaderLinkStyle() {
+const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
+  user,
+  isAuthAllowed,
+}) => {
   const theme = useAppTheme();
 
-  return css`
+  const HeaderLinkStyle = css`
     display: flex;
     text-decoration: none;
     user-select: none;
@@ -49,16 +52,7 @@ function useHeaderLinkStyle() {
       color: ${theme.navbar.primaryAlt};
     }
   `;
-}
 
-const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
-  user,
-  isAuthAllowed,
-}) => {
-  const theme = useAppTheme();
-
-  const Header = useHeader();
-  const HeaderLinkStyle = useHeaderLinkStyle();
   const themeToggle = useThemeToggle();
   const LinkStyle = React.useCallback(
     isMinimal =>
@@ -93,7 +87,7 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
   );
 
   return (
-    <Header>
+    <Header theme={theme}>
       <div className="nav-main">
         <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
           <FontAwesomeIcon

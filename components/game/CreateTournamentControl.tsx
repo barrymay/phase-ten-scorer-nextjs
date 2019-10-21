@@ -6,7 +6,8 @@ import useForm from 'react-hook-form';
 import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
-import CardContainer from '../common/styles/basic';
+import { CardContainer } from '../common/styles/basic';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
 interface IFormData {
   tourneyName: string;
@@ -27,6 +28,8 @@ const CreateTournamentControl: React.FC = () => {
       players: [],
     },
   });
+  const theme = useAppTheme();
+
   const { tournaments, addTournament } = useTournamentContext();
   const tournamentNames = tournaments.map(item => item.name);
 
@@ -80,7 +83,7 @@ const CreateTournamentControl: React.FC = () => {
       `}
     >
       <div className="header">Tournament Manager</div>
-      <CardContainer>
+      <CardContainer theme={theme}>
         <form
           css={{
             width: 280,

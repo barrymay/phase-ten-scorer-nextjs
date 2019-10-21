@@ -15,6 +15,7 @@ import {
 import { animated, useSpring, UseSpringProps } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
 import { useAppTheme } from '../theming/AppThemeProvider';
+import { AppTheme } from '../theming/themes';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
@@ -36,8 +37,7 @@ const getStateColors = (value: PhaseState) => {
   }
 };
 
-function useBaseButtonStyles() {
-  const theme = useAppTheme();
+function getBaseButtonStyles(theme: AppTheme) {
   return css`
     min-width: 65px;
     border: 0px solid ${theme.default.border};
@@ -79,7 +79,8 @@ function useBaseButtonStyles() {
 function useAnimatedCardFlip(
   completedState: PhaseState,
 ): [UseSpringProps<ISpringType>, SerializedStyles] {
-  const baseButtonStyles = useBaseButtonStyles();
+  const theme = useAppTheme();
+  const baseButtonStyles = getBaseButtonStyles(theme);
   const lastState = useRef<PhaseState | null>('default');
   const lastBgColor = useRef<string>('whtie');
 

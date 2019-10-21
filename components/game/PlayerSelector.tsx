@@ -7,6 +7,7 @@ const PlayerSelector: React.FC<{
   onChange: (newValue: string[]) => void;
 }> = ({ onChange }) => {
   const theme = useAppTheme();
+
   const [listState, setListState] = useState<string[]>([]);
   const players = usePlayersState();
 
