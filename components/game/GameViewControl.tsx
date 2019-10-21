@@ -14,6 +14,7 @@ import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import { AppTheme } from '../theming/themes';
+import ConfirmModal from '../common/ConfirmModal';
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
@@ -196,35 +197,13 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
         />
       </Modal>
 
-      <Modal
-        shown={showModal === 'remove'}
-        title="Remove Game?"
-        onClick={hideModal}
-        onCancel={hideModal}
-        width={300}
+      <ConfirmModal
+        isShown={showModal === 'remove'}
+        onCloseModal={hideModal}
+        onConfirmModal={confirmRemove}
       >
         Are you sure you want to remove game &lsquo;{tournament.name}&rsquo;?
-        <div
-          css={css`
-            display: flex;
-            justify-content: center;
-          `}
-        >
-          <P10Button minimal onClick={confirmRemove}>
-            YES
-          </P10Button>
-          <P10Button
-            minimal
-            css={css`
-              color: red;
-              margin-left: 10px;
-            `}
-            onClick={hideModal}
-          >
-            NO
-          </P10Button>
-        </div>
-      </Modal>
+      </ConfirmModal>
 
       <div
         css={css`
