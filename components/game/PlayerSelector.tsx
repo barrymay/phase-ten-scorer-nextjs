@@ -28,10 +28,11 @@ const PlayerSelector: React.FC<{
   };
 
   const getSortedPlayers = useCallback(
-    (playerMap: IPlayer[]): IPlayer[] =>
-      players.sort((a, b) => {
+    (playerMap: IPlayer[]): IPlayer[] => {
+      return players.sort((a, b) => {
         return a.name.localeCompare(b.name);
-      }),
+      });
+    },
     [players],
   );
 
@@ -44,22 +45,24 @@ const PlayerSelector: React.FC<{
     >
       {getSortedPlayers(players).map(item => {
         const isSelected = listState.includes(item.id);
+        const color = isSelected
+          ? theme.default.primaryBg
+          : theme.default.primary;
+        const backgroundColor = isSelected
+          ? theme.default.primary
+          : theme.default.primaryBg;
         return (
           <button
             key={item.id}
             type="button"
             css={{
               padding: 2,
-              border: '1px solid black',
+              border: `1px solid ${theme.default.border}`,
               cursor: 'pointer',
               display: 'flex',
               justifyContent: 'flex-start',
-              color: isSelected
-                ? theme.default.primaryBg
-                : theme.default.primary,
-              backgroundColor: isSelected
-                ? theme.default.primary
-                : theme.default.primaryBg,
+              color,
+              backgroundColor,
               ':focus': {
                 outline: 'none',
               },

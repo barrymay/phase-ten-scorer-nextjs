@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { animated, useSpring, UseSpringProps } from 'react-spring';
 import { Merge } from '../../ts-common/merge';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
@@ -35,46 +36,50 @@ const getStateColors = (value: PhaseState) => {
   }
 };
 
-const baseButtonStyles = css`
-  min-width: 65px;
-  border: 0px solid black;
-  outline: none;
-  background: inherit;
-  color: inherit;
-  padding: 2px;
-  cursor: pointer;
-  &.complete {
-    cursor: default;
-  }
-  .card {
-    border: 1px solid black;
-    border-radius: 0.25em;
-    position: relative;
-    box-sizing: content-box;
+function useBaseButtonStyles() {
+  const theme = useAppTheme();
+  return css`
+    min-width: 65px;
+    border: 0px solid ${theme.default.border};
+    outline: none;
+    background: inherit;
+    color: inherit;
+    padding: 2px;
+    cursor: pointer;
+    &.complete {
+      cursor: default;
+    }
+    .card {
+      border: 1px solid ${theme.default.border};
+      border-radius: 0.25em;
+      position: relative;
+      box-sizing: content-box;
 
-    .front,
-    .back {
-      backface-visibility: hidden;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      .front,
+      .back {
+        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .front {
+        z-index: 2;
+        transform: rotateY(0deg);
+      }
+      .back {
+        color: white;
+        transform: rotateY(180deg) rotateZ(180deg);
+      }
     }
-    .front {
-      z-index: 2;
-      transform: rotateY(0deg);
-    }
-    .back {
-      color: white;
-      transform: rotateY(180deg) rotateZ(180deg);
-    }
-  }
-`;
+  `;
+}
 
 function useAnimatedCardFlip(
   completedState: PhaseState,
 ): [UseSpringProps<ISpringType>, SerializedStyles] {
+  const baseButtonStyles = useBaseButtonStyles();
   const lastState = useRef<PhaseState | null>('default');
   const lastBgColor = useRef<string>('whtie');
 
@@ -95,7 +100,7 @@ function useAnimatedCardFlip(
         }
       `,
     );
-  }, [completedState]);
+  }, [baseButtonStyles, completedState]);
 
   const [propsFlip, setPropsFlip] = useSpring(() => {
     return {

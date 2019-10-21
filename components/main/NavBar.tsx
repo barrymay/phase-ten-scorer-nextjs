@@ -40,6 +40,8 @@ function useHeaderLinkStyle() {
     user-select: none;
     text-transform: none;
     font-weight: none;
+    color: ${theme.navbar};
+
     &:hover {
       color: ${theme.navbar.primaryAlt};
     }

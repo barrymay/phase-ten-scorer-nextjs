@@ -12,6 +12,7 @@ import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
@@ -45,6 +46,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
   onReady,
   divSpring,
 }) => {
+  const theme = useAppTheme();
   const [showModal, setShowModal] = useState<'score' | 'remove' | undefined>(
     undefined,
   );
@@ -129,10 +131,10 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
       .column {
         display: flex;
         flex-direction: column;
-        border: 1px solid black;
+        border: 1px solid ${theme.default.border};
         align-content: center;
         > div:not(:last-child) {
-          border-bottom: 1px solid black;
+          border-bottom: 1px solid ${theme.default.border};
         }
         .player-data {
           display: flex;
@@ -146,7 +148,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
         }
       }
     `);
-  }, [players.length]);
+  }, [players.length, theme.default.border]);
 
   const keyHandlerGame = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.ctrlKey && event.key === 's') {

@@ -1,11 +1,10 @@
-import { darken, lighten } from 'polished';
+import { darken, lighten, rgb } from 'polished';
 
 interface Palette {
   primary: string;
   primaryAlt?: string;
   primaryBg: string;
   primaryBgAlt?: string;
-  primaryCardBg?: string;
   accent?: string;
   accentBg?: string;
   border?: string;
@@ -21,10 +20,10 @@ export const lightTheme: AppTheme = {
     primary: 'black',
     primaryBg: 'white',
     primaryBgAlt: darken(0.1, 'white'),
-    border: '#cccccc',
+    border: '#333333',
   },
   navbar: {
-    primary: darken(0.1, '#006699'),
+    primary: darken(0.05, '#006699'),
     primaryAlt: lighten(0.2, '#006699'),
     primaryBg: lighten(0.1, '#006699'),
     primaryBgAlt: 'white',
@@ -34,9 +33,9 @@ export const lightTheme: AppTheme = {
 export const darkTheme: AppTheme = {
   default: {
     primary: 'white',
-    primaryBg: 'black',
-    primaryBgAlt: lighten(0.1, 'black'),
-    border: '#333333',
+    primaryBg: rgb(21, 32, 43),
+    primaryBgAlt: lighten(0.1, rgb(21, 32, 43)),
+    border: '#DDDDDD',
   },
   navbar: {
     primary: 'white',
