@@ -35,6 +35,16 @@ export const useAppTheme: () => AppTheme = () => {
   return useTheme();
 };
 
+export const useThemeState: () => IThemeState = () => {
+  const themeState = useContext(ThemeStateContext);
+  if (!themeState) {
+    throw new Error(
+      'ThemeDispatchContext must be used within the AppThemeProvider',
+    );
+  }
+  return themeState;
+};
+
 export const useThemeToggle: () => VoidFunction = () => {
   const themeToggle = useContext(ThemeDispatchContext);
   if (!themeToggle) {

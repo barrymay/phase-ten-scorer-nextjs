@@ -104,6 +104,7 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
         css={[HeaderLinkStyle, LinkStyle(false)]}
         onClick={() => themeToggle()}
         minimal
+        title="Toggle Night Mode"
       >
         <FontAwesomeIcon
           css={css`
