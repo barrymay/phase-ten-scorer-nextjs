@@ -5,41 +5,46 @@ import { useEffect, useRef, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 import { animated, useTransition } from 'react-spring';
 import P10Button from './button/P10Button';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
-const modalStyle = css`
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .modalPage {
-    border: 1px solid black;
-    border-radius: 4px;
-    background: white;
-    .modalHeader {
-      display: flex;
-      align-items: center;
-      padding: 4px;
-      border-bottom: 1px solid black;
-      .title {
+function useModalStyle() {
+  const theme = useAppTheme();
+  const modalStyle = css`
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .modalPage {
+      border: 1px solid ${theme.default.border};
+      border-radius: 4px;
+      background: white;
+      .modalHeader {
         display: flex;
-        flex: 1 1 auto;
-        font-size: 1.2em;
+        align-items: center;
+        padding: 4px;
+        border-bottom: 1px solid ${theme.default.border};
+        .title {
+          display: flex;
+          flex: 1 1 auto;
+          font-size: 1.2em;
+        }
+        .controls {
+          display: flex;
+          flex: none;
+        }
       }
-      .controls {
-        display: flex;
-        flex: none;
+      .modalBody {
+        padding: 4px;
       }
     }
-    .modalBody {
-      padding: 4px;
-    }
-  }
-`;
+  `;
+  return modalStyle;
+}
 
 const ModalBody: React.FC = ({ children }) => {
   const modalRootRef = useRef(document.getElementById('modal-root'));
@@ -69,6 +74,7 @@ const Modal: React.FC<{
   onCancel: () => void;
 }> = ({ children, title, onClick, onCancel, width, height, shown }) => {
   const parentDiv = useRef<HTMLDivElement>(null);
+  const modalStyle = useModalStyle();
 
   useEffect(() => {
     if (shown && parentDiv.current) {

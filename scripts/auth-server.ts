@@ -1,3 +1,3 @@
-import auth from '../auth/auth';
+import auth from '../server/auth/auth';
 
 auth.listen(3001);

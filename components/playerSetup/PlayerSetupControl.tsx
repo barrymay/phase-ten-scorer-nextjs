@@ -7,6 +7,7 @@ import P10Button from '../common/button/P10Button';
 import { CardContainer } from '../common/styles/basic';
 import { usePlayersDispatch, usePlayersState } from '../context/PlayersContext';
 import PlayerList from './PlayerList';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
 const PlayerNameInput = styled.input`
   max-width: 200px;
@@ -19,12 +20,12 @@ const PlayerEntry = styled.div({
 });
 
 export const PlayerSetupControl: React.FC = () => {
+  const theme = useAppTheme();
   const dispatchPlayers = usePlayersDispatch();
   const players = usePlayersState();
   const [name, setName] = useState('');
   const [triggerFocus, setTriggerFocus] = useState(false);
   const textRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-
   const addPlayer = (name: string) => {
     dispatchPlayers({ type: 'ADD', playerName: name.trim() });
     setName('');
@@ -77,7 +78,7 @@ export const PlayerSetupControl: React.FC = () => {
       `}
     >
       <div className="header">Player Setup</div>
-      <CardContainer>
+      <CardContainer theme={theme}>
         <div
           css={css`
             display: grid;
