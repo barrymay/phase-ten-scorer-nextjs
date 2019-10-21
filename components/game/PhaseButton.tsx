@@ -69,7 +69,7 @@ function getBaseButtonStyles(theme: AppTheme) {
         transform: rotateY(0deg);
       }
       .back {
-        color: white;
+        color: ${theme.default.primaryBg};
         transform: rotateY(180deg) rotateZ(180deg);
       }
     }
@@ -86,7 +86,7 @@ function useAnimatedCardFlip(
 
   const phaseStyle = useMemo(() => {
     const desiredBackgroundColor =
-      completedState === 'new-complete' ? 'green' : 'black';
+      completedState === 'new-complete' ? 'green' : theme.default.primary;
 
     if (lastState.current === 'default' || completedState === 'complete') {
       lastBgColor.current = desiredBackgroundColor;
@@ -101,7 +101,7 @@ function useAnimatedCardFlip(
         }
       `,
     );
-  }, [baseButtonStyles, completedState]);
+  }, [baseButtonStyles, completedState, theme.default.primary]);
 
   const [propsFlip, setPropsFlip] = useSpring(() => {
     return {
