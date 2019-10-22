@@ -4,14 +4,15 @@ import P10Button from './button/P10Button';
 import Modal from './Modal';
 
 const ConfirmModal: React.FC<{
+  modalTitle: string;
   isShown: boolean;
   onConfirmModal: VoidFunction;
   onCloseModal: VoidFunction;
-}> = ({ isShown, onConfirmModal, onCloseModal, children }) => {
+}> = ({ modalTitle, isShown, onConfirmModal, onCloseModal, children }) => {
   return (
     <Modal
       shown={isShown}
-      title="Remove Game?"
+      title={modalTitle}
       onClick={onCloseModal}
       onCancel={onCloseModal}
       width={300}

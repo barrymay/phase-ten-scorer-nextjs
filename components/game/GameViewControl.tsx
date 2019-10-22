@@ -198,6 +198,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
       </Modal>
 
       <ConfirmModal
+        modalTitle="Remove Game?"
         isShown={showModal === 'remove'}
         onCloseModal={hideModal}
         onConfirmModal={confirmRemove}

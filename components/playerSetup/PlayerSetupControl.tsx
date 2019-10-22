@@ -92,6 +92,7 @@ export const PlayerSetupControl: React.FC = () => {
       `}
     >
       <ConfirmModal
+        modalTitle="Clear All Players?"
         isShown={showModal === 'removeAll'}
         onCloseModal={hideModal}
         onConfirmModal={confirmClearAll}
