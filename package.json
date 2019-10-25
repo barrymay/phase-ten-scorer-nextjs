@@ -47,7 +47,7 @@
     "js-cookie": "^2.2.1",
     "mongodb": "^3.3.3",
     "next": "^9.1.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "normalize.css": "^8.0.1",
     "now": "^16.4.0",
     "nyc": "^14.1.1",
