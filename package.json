@@ -49,7 +49,7 @@
     "next": "^9.1.1",
     "node-sass": "^4.13.0",
     "normalize.css": "^8.0.1",
-    "now": "^16.4.0",
+    "now": "^16.4.3",
     "nyc": "^14.1.1",
     "passport": "^0.4.0",
     "passport-auth0": "^1.2.1",
