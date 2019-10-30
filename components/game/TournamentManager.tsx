@@ -5,8 +5,11 @@ import Router from 'next/router';
 import React from 'react';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
+import { useAppTheme } from '../theming/AppThemeProvider';
+import { darken } from 'polished';
 
 const TournamentManager: React.FC = () => {
+  const theme = useAppTheme();
   const { tournaments, removeTournament } = useTournamentContext();
   function openGame(gameId: string): void {
     Router.push(`/GameView/${gameId}`);
@@ -28,7 +31,7 @@ const TournamentManager: React.FC = () => {
         .list {
           display: flex;
           flex-direction: column;
-          border: 1px solid #cccccc;
+          border: 1px solid ${theme.default.border};
           border-radius: 4px;
 
           .tournament-button {
@@ -44,10 +47,6 @@ const TournamentManager: React.FC = () => {
             }
             transition: color 100ms ease-in-out,
               background-color 100ms ease-in-out;
-            &:hover {
-              background-color: #006699;
-              color: white;
-            }
             .tournamentName {
               display: flex;
               flex: 1 1 auto;
@@ -66,12 +65,18 @@ const TournamentManager: React.FC = () => {
             const playerCount = `${item.playerIds.length} Player${
               item.playerIds.length !== 1 ? 's' : ''
             }`;
+            const bgColor: string =
+              index % 2 ? theme.default.primaryBgAlt : theme.default.primaryBg;
+            const bgColorHover = darken(0.1, bgColor);
             return (
               <div
                 key={item.id}
                 className="tournament-button"
                 css={css`
-                  background: ${index % 2 ? '#eee' : 'white'};
+                  background-color: ${bgColor};
+                  &:hover {
+                    background-color: ${bgColorHover};
+                  }
                 `}
               >
                 <div

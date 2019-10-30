@@ -110,24 +110,36 @@ export const TournamentProvider: React.FC<IOwnProps> = ({
   );
 
   const resolveTournament = useCallback(
-    (tournamentData: ITournament): ITournament => {
+    (tournamentData: ITournament): ITournament | null => {
       const tournament = {
         ...tournamentData,
         playerIds: tournamentData.playerIds.filter(item =>
           playerIds.includes(item),
         ),
       };
-      return {
-        ...tournament,
-        playerData: getRemainingPhases(tournament),
-      };
+      if (tournament.playerIds.length) {
+        return {
+          ...tournament,
+          playerData: getRemainingPhases(tournament),
+        };
+      } else {
+        return null;
+      }
     },
     [playerIds],
   );
 
   const updateTournaments = useCallback(
     (tournaments: ITournament[]) => {
-      setTournaments(tournaments.map(item => resolveTournament(item)));
+      setTournaments(
+        tournaments.reduce<ITournament[]>((result, next) => {
+          const tournament = resolveTournament(next);
+          if (tournament) {
+            result.push(tournament);
+          }
+          return result;
+        }, []),
+      );
     },
     [resolveTournament],
   );

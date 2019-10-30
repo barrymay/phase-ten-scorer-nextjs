@@ -12,6 +12,9 @@ import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
 import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
+import { useAppTheme } from '../theming/AppThemeProvider';
+import { AppTheme } from '../theming/themes';
+import ConfirmModal from '../common/ConfirmModal';
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
@@ -41,10 +44,50 @@ export interface IPlayerPhaseMap {
   [player: string]: number | undefined;
 }
 
+interface IGameBoardProps {
+  players: IPlayer[];
+  theme: AppTheme;
+}
+
+const GameBoard = styled.div<IGameBoardProps>`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  @media (min-width: 650px) {
+    grid-template-columns: ${(props: IGameBoardProps) =>
+      new Array(props.players.length)
+        .fill(100 / props.players.length + '%')
+        .join(' ')};
+  }
+  .header {
+    display: flex;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid ${(props: IGameBoardProps) => props.theme.default.border};
+    align-content: center;
+    > div:not(:last-child) {
+      border-bottom: 1px solid
+        ${(props: IGameBoardProps) => props.theme.default.border};
+    }
+    .player-data {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-total {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+`;
+
 const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
   onReady,
   divSpring,
 }) => {
+  const theme = useAppTheme();
   const [showModal, setShowModal] = useState<'score' | 'remove' | undefined>(
     undefined,
   );
@@ -113,41 +156,6 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
     mainDivRef.current && mainDivRef.current.focus();
   };
 
-  const GameBoard = useMemo(() => {
-    const arr = new Array(players.length)
-      .fill(100 / players.length + '%')
-      .join(' ');
-    return styled.div(css`
-      display: grid;
-      grid-template-columns: 50% 50%;
-      @media (min-width: 650px) {
-        grid-template-columns: ${arr};
-      }
-      .header {
-        display: flex;
-      }
-      .column {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid black;
-        align-content: center;
-        > div:not(:last-child) {
-          border-bottom: 1px solid black;
-        }
-        .player-data {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .player-total {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-    `);
-  }, [players.length]);
-
   const keyHandlerGame = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.ctrlKey && event.key === 's') {
       event.preventDefault();
@@ -189,35 +197,14 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
         />
       </Modal>
 
-      <Modal
-        shown={showModal === 'remove'}
-        title="Remove Game?"
-        onClick={hideModal}
-        onCancel={hideModal}
-        width={300}
+      <ConfirmModal
+        modalTitle="Remove Game?"
+        isShown={showModal === 'remove'}
+        onCloseModal={hideModal}
+        onConfirmModal={confirmRemove}
       >
         Are you sure you want to remove game &lsquo;{tournament.name}&rsquo;?
-        <div
-          css={css`
-            display: flex;
-            justify-content: center;
-          `}
-        >
-          <P10Button minimal onClick={confirmRemove}>
-            YES
-          </P10Button>
-          <P10Button
-            minimal
-            css={css`
-              color: red;
-              margin-left: 10px;
-            `}
-            onClick={hideModal}
-          >
-            NO
-          </P10Button>
-        </div>
-      </Modal>
+      </ConfirmModal>
 
       <div
         css={css`
@@ -250,7 +237,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
             Remove Game
           </P10Button>
         </div>
-        <GameBoard>
+        <GameBoard players={players} theme={theme}>
           {players.map((player, index) => (
             <GameViewColumn
               divSpring={divSpring}

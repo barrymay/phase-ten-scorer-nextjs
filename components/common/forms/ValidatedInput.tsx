@@ -4,6 +4,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types';
+import { useAppTheme } from '../../theming/AppThemeProvider';
 
 interface OwnProps
   extends React.DetailedHTMLProps<
@@ -20,6 +21,7 @@ const ValidatedInput: React.FC<OwnProps> = ({
   errors,
   ...inputProps
 }) => {
+  const theme = useAppTheme();
   if (!name) {
     throw new Error(`${ValidatedInput.name} requires name attribute`);
   }
@@ -29,7 +31,7 @@ const ValidatedInput: React.FC<OwnProps> = ({
       css={css`
         display: flex;
         align-items: center;
-        border: 1px solid black;
+        border: 1px solid ${theme.default.border};
         > input {
           &:focus,
           &:hover,

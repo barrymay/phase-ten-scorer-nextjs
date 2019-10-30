@@ -7,6 +7,8 @@ import P10Button from '../common/button/P10Button';
 import { CardContainer } from '../common/styles/basic';
 import { usePlayersDispatch, usePlayersState } from '../context/PlayersContext';
 import PlayerList from './PlayerList';
+import { useAppTheme } from '../theming/AppThemeProvider';
+import ConfirmModal from '../common/ConfirmModal';
 
 const PlayerNameInput = styled.input`
   max-width: 200px;
@@ -19,11 +21,19 @@ const PlayerEntry = styled.div({
 });
 
 export const PlayerSetupControl: React.FC = () => {
+  const theme = useAppTheme();
+  const [showModal, setShowModal] = useState<'removeAll' | undefined>(
+    undefined,
+  );
   const dispatchPlayers = usePlayersDispatch();
   const players = usePlayersState();
   const [name, setName] = useState('');
   const [triggerFocus, setTriggerFocus] = useState(false);
   const textRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
+
+  const hideModal = () => {
+    setShowModal(undefined);
+  };
 
   const addPlayer = (name: string) => {
     dispatchPlayers({ type: 'ADD', playerName: name.trim() });
@@ -36,8 +46,13 @@ export const PlayerSetupControl: React.FC = () => {
   };
 
   const clearAll = () => {
+    setShowModal('removeAll');
+  };
+
+  const confirmClearAll = () => {
     dispatchPlayers({ type: 'SET', players: [] });
     setName('');
+    setShowModal(undefined);
   };
 
   const keyHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -76,8 +91,17 @@ export const PlayerSetupControl: React.FC = () => {
         }
       `}
     >
+      <ConfirmModal
+        modalTitle="Clear All Players?"
+        isShown={showModal === 'removeAll'}
+        onCloseModal={hideModal}
+        onConfirmModal={confirmClearAll}
+      >
+        Are you sure you want to clear all players?
+      </ConfirmModal>
+
       <div className="header">Player Setup</div>
-      <CardContainer>
+      <CardContainer theme={theme}>
         <div
           css={css`
             display: grid;
@@ -129,7 +153,18 @@ export const PlayerSetupControl: React.FC = () => {
           </div>
           <div>
             <label data-testid="player-counter">Players:</label>
-            <PlayerList players={players} />
+            {players.length ? (
+              <PlayerList players={players} />
+            ) : (
+              <div
+                css={css`
+                  display: flex;
+                  justify-content: center;
+                `}
+              >
+                No Players Defined
+              </div>
+            )}
           </div>
           <div
             css={css`

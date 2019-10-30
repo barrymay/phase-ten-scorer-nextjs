@@ -2,9 +2,12 @@
 import { jsx } from '@emotion/core';
 import { useCallback, useState } from 'react';
 import { IPlayer, usePlayersState } from '../context/PlayersContext';
+import { useAppTheme } from '../theming/AppThemeProvider';
 const PlayerSelector: React.FC<{
   onChange: (newValue: string[]) => void;
 }> = ({ onChange }) => {
+  const theme = useAppTheme();
+
   const [listState, setListState] = useState<string[]>([]);
   const players = usePlayersState();
 
@@ -26,10 +29,11 @@ const PlayerSelector: React.FC<{
   };
 
   const getSortedPlayers = useCallback(
-    (playerMap: IPlayer[]): IPlayer[] =>
-      players.sort((a, b) => {
+    (playerMap: IPlayer[]): IPlayer[] => {
+      return players.sort((a, b) => {
         return a.name.localeCompare(b.name);
-      }),
+      });
+    },
     [players],
   );
 
@@ -42,18 +46,24 @@ const PlayerSelector: React.FC<{
     >
       {getSortedPlayers(players).map(item => {
         const isSelected = listState.includes(item.id);
+        const color = isSelected
+          ? theme.default.primaryBg
+          : theme.default.primary;
+        const backgroundColor = isSelected
+          ? theme.default.primary
+          : theme.default.primaryBg;
         return (
           <button
             key={item.id}
             type="button"
             css={{
               padding: 2,
-              border: '1px solid black',
+              border: `1px solid ${theme.default.border}`,
               cursor: 'pointer',
               display: 'flex',
               justifyContent: 'flex-start',
-              color: isSelected ? 'white' : 'black',
-              backgroundColor: isSelected ? 'black' : 'white',
+              color,
+              backgroundColor,
               ':focus': {
                 outline: 'none',
               },

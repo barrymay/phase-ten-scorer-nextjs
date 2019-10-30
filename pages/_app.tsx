@@ -1,11 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { withTheme } from 'emotion-theming';
 import App from 'next/app';
-import { Fragment } from 'react';
 import withAuth from '../components/common/auth/withAuth';
 import NavBar from '../components/main/NavBar';
-
-class MyApp extends App<{ user?: any; enableAuth0: boolean }> {
+import AppThemeProvider from '../components/theming/AppThemeProvider';
+import { AppTheme } from '../components/theming/themes';
+import AppBody from './AppBody';
+class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
   private user: any = undefined;
   render() {
     if (this.props.user) {
@@ -13,7 +15,7 @@ class MyApp extends App<{ user?: any; enableAuth0: boolean }> {
     }
     const { Component, pageProps } = this.props;
     return (
-      <Fragment>
+      <AppThemeProvider>
         <div
           css={css`
             display: flex;
@@ -22,18 +24,14 @@ class MyApp extends App<{ user?: any; enableAuth0: boolean }> {
           `}
         >
           <NavBar user={this.user} isAuthAllowed={this.props.enableAuth0} />
-          <div
-            css={css`
-              flex: 1 1 auto;
-            `}
-          >
+          <AppBody>
             <Component {...pageProps} />
-          </div>
+          </AppBody>
           <div id="modal-root"></div>
         </div>
-      </Fragment>
+      </AppThemeProvider>
     );
   }
 }
 
-export default withAuth(MyApp);
+export default withAuth(withTheme(MyApp));

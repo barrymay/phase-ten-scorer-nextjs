@@ -8,6 +8,7 @@ import { IPlayer } from '../context/PlayersContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignLanguage } from '@fortawesome/free-solid-svg-icons';
 import { useSpring, animated } from 'react-spring';
+import { useAppTheme } from '../theming/AppThemeProvider';
 
 const GameViewColumn: React.FC<{
   player: IPlayer;
@@ -16,10 +17,13 @@ const GameViewColumn: React.FC<{
   isShuffler: boolean;
   divSpring: any;
 }> = ({ onReady, player, updateMarkedPhase, isShuffler, divSpring }) => {
+  const theme = useAppTheme();
   const { tournament, roundNum } = useTournamentCurrentContext();
   const nameHighlight = useSpring({
-    color: isShuffler ? 'white' : 'black',
-    backgroundColor: isShuffler ? 'black' : 'white',
+    color: isShuffler ? theme.default.primaryBg : theme.default.primary,
+    backgroundColor: isShuffler
+      ? theme.default.primary
+      : theme.default.primaryBg,
   });
 
   return (

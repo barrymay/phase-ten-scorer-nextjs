@@ -1,23 +1,28 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { faScroll } from '@fortawesome/free-solid-svg-icons';
+import { faScroll, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { darken, lighten, rgba } from 'polished';
+import { rgba } from 'polished';
 import React from 'react';
 import LinkButton from '../common/button/LinkButton';
 import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 import LoginButton from '../common/LoginButton';
+import { useThemeToggle, useAppTheme } from '../theming/AppThemeProvider';
+import P10Button from '../common/button/P10Button';
+import { AppTheme } from '../theming/themes';
 
-const linkTextColor = darken(0.1, '#006699');
-const Header = styled.div`
+interface IHeaderProps {
+  theme: AppTheme;
+}
+const Header = styled.div<IHeaderProps>`
   display: flex;
   justify-content: center;
   font-size: 2em;
   background-image: linear-gradient(
     to right,
-    ${lighten('0.5', '#006699')},
-    #006699
+    ${(props: IHeaderProps) => props.theme.navbar.primaryBg},
+    ${(props: IHeaderProps) => props.theme.navbar.primaryBgAlt}
   );
   border-bottom: 1px solid black;
   .nav-main {
@@ -26,31 +31,36 @@ const Header = styled.div`
   }
 `;
 
-const HeaderLinkStyle = css`
-  display: flex;
-  text-decoration: none;
-  user-select: none;
-  text-transform: none;
-  font-weight: none;
-  &:hover {
-    color: ${lighten(0.1, linkTextColor)};
-  }
-  &:active {
-    color: ${lighten(0.2, linkTextColor)};
-  }
-`;
-
 const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
   user,
   isAuthAllowed,
 }) => {
+  const theme = useAppTheme();
+
+  const HeaderLinkStyle = css`
+    display: flex;
+    text-decoration: none;
+    user-select: none;
+    text-transform: none;
+    font-weight: none;
+    color: ${theme.navbar};
+
+    &:hover {
+      color: ${theme.navbar.primaryAlt};
+    }
+    &:active {
+      color: ${theme.navbar.primaryAlt};
+    }
+  `;
+
+  const themeToggle = useThemeToggle();
   const LinkStyle = React.useCallback(
     isMinimal =>
       css`
         &.btn-1 {
           font-size: 0.8em;
           padding: ${isMinimal ? '0px 10px' : '0px 10px'};
-          color: ${linkTextColor};
+          color: ${theme.navbar.primary};
           font-weight: normal;
           height: unset;
           label {
@@ -64,20 +74,20 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
             }
           }
           &:hover {
-            color: ${lighten(0.5, linkTextColor)};
-            background: ${rgba(linkTextColor, 0.2)};
+            color: ${theme.navbar.primaryAlt};
+            background: ${rgba(theme.navbar.primary, 0.2)};
           }
           &:active {
-            color: ${lighten(0.6, linkTextColor)};
-            background: ${rgba(linkTextColor, 0.3)};
+            color: ${theme.navbar.primaryAlt};
+            background: ${rgba(theme.navbar.primary, 0.3)};
           }
         }
       `,
-    [],
+    [theme.navbar.primary, theme.navbar.primaryAlt],
   );
 
   return (
-    <Header>
+    <Header theme={theme}>
       <div className="nav-main">
         <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
           <FontAwesomeIcon
@@ -90,6 +100,20 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
           <label>Phase 10 Scorer</label>
         </LinkButton>
       </div>
+      <P10Button
+        css={[HeaderLinkStyle, LinkStyle(false)]}
+        onClick={() => themeToggle()}
+        minimal
+        title="Toggle Night Mode"
+      >
+        <FontAwesomeIcon
+          css={css`
+            padding-right: 4;
+            font-size: 0.8em;
+          `}
+          icon={faMoon}
+        />
+      </P10Button>
       {Object.entries(RouteDefinitions)
         .filter(([, value]) => !value.hideFromNavBar)
         .map(([key, value]) => (

@@ -19,26 +19,26 @@
       "use": "@now/next"
     },
     {
-      "src": "auth/**/*.js",
+      "src": "server/auth/**/*.js",
       "use": "@now/node"
     }
   ],
   "routes": [
     {
       "src": "/login",
-      "dest": "/auth/auth.js"
+      "dest": "/server/auth/auth.js"
     },
     {
       "src": "/callback",
-      "dest": "/auth/auth.js"
+      "dest": "/server/auth/auth.js"
     },
     {
       "src": "/logout",
-      "dest": "/auth/auth.js"
+      "dest": "/server/auth/auth.js"
     },
     {
       "src": "/user",
-      "dest": "/auth/auth.js"
+      "dest": "/server/auth/auth.js"
     }
   ]
 }
