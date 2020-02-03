@@ -75,7 +75,7 @@
     "@types/faker": "^4.1.7",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/js-cookie": "^2.2.4",
-    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.6.0",
     "cypress": "^3.5.0",
     "eslint": "^6.6.0",
