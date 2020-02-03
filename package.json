@@ -24,7 +24,7 @@
     "@types/react-dom": "16.9.3",
     "@types/styled-jsx": "^2.2.8",
     "@types/testing-library__cypress": "^5.0.1",
-    "@types/uuid": "^3.4.4",
+    "@types/uuid": "^3.4.7",
     "apollo-server-micro": "^2.9.7",
     "babel-loader": "^8.0.6",
     "babel-plugin-istanbul": "^5.2.0",
