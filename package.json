@@ -58,7 +58,7 @@
     "raw-loader": "^3.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-hook-form": "3.26.2",
+    "react-hook-form": "6.13.1",
     "react-spring": "^9.0.0-canary.808.8.4a87fcb",
     "resize-observer-polyfill": "^1.5.1",
     "source-map-support": "^0.5.16",
