@@ -56,7 +56,7 @@ const TournamentManager: React.FC = () => {
         }
       `}
     >
-      <div className="header">Active Tournaments:</div>
+      <div className="header">Active Tournaments ({tournaments.length}):</div>
       {!tournaments.length ? (
         <div className="no-value">No Tournaments Created</div>
       ) : (
