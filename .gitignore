@@ -8,3 +8,4 @@ cypress/**/*.mp4
 cypress/**/*.png
 coverage
 .nyc_output
+.vercel
