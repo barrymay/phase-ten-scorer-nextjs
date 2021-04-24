@@ -7,7 +7,7 @@ import Totaler from './Totaler';
 import { IPlayer } from '../context/PlayersContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignLanguage } from '@fortawesome/pro-regular-svg-icons';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated } from '@react-spring/web';
 import { useAppTheme } from '../theming/AppThemeProvider';
 
 const GameViewColumn: React.FC<{

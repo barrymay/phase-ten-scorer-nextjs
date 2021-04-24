@@ -43,7 +43,7 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
     user-select: none;
     text-transform: none;
     font-weight: none;
-    color: ${theme.navbar};
+    color: ${theme.navbar.primary};
 
     &:hover {
       color: ${theme.navbar.primaryAlt};

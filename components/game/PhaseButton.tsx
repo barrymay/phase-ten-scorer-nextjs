@@ -12,7 +12,7 @@ import {
   RefObject,
   isValidElement,
 } from 'react';
-import { animated, useSpring, UseSpringProps } from 'react-spring';
+import { animated, useSpring, UseSpringProps } from '@react-spring/web';
 import { Merge } from '../../ts-common/merge';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import { AppTheme } from '../theming/themes';
@@ -103,29 +103,27 @@ function useAnimatedCardFlip(
     );
   }, [baseButtonStyles, completedState, theme.default.primary]);
 
-  const [propsFlip, setPropsFlip] = useSpring(() => {
+  const [propsFlip, api] = useSpring(() => {
     return {
       ...getStateColors(completedState),
     };
   });
 
   useEffect(() => {
-    setPropsFlip(getStateColors(completedState));
-  }, [completedState, setPropsFlip]);
+    api.start(getStateColors(completedState));
+  }, [completedState, api]);
 
   return [propsFlip, phaseStyle];
 }
 
-const PhaseButton: React.FC<
-  Merge<
-    ButtonHTMLAttributes<HTMLElement>,
-    {
-      completedState: PhaseState;
-      buttonHeight: number;
-      measureRef?: RefObject<HTMLElement>;
-    }
-  >
-> = props => {
+const PhaseButton: React.FC<Merge<
+  ButtonHTMLAttributes<HTMLElement>,
+  {
+    completedState: PhaseState;
+    buttonHeight: number;
+    measureRef?: RefObject<HTMLElement>;
+  }
+>> = props => {
   const {
     completedState,
     children,
@@ -139,6 +137,7 @@ const PhaseButton: React.FC<
     <button className={completedState} css={[phaseStyle]} {...nonChildProps}>
       <animated.div
         className="card"
+        // @ts-expect-error - React-spring not resolving propsFlip typing properly
         style={propsFlip}
         css={css`
           transform-style: preserve-3d;

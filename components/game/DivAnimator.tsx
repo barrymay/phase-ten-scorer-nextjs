@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React, { useEffect, useRef } from 'react';
-import { animated, useSprings } from 'react-spring';
+import { animated, useSprings } from '@react-spring/web';
 
 export interface CarouselSpringProps {
   x: number;

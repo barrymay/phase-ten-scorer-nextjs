@@ -25,8 +25,10 @@ export default function useMeasure<T extends HTMLElement>(): [
   });
   const [ro] = useState(
     () =>
-      new ResizeObserver(([entry]) => {
-        set(entry.contentRect);
+      new ResizeObserver((entries: ResizeObserverEntry[]) => {
+        if (entries.length > 0) {
+          set(entries[0].contentRect);
+        }
       }),
   );
 

@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import Head from 'next/head';
 import { Fragment, useState } from 'react';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring } from '@react-spring/web';
 import Spinner from '../../components/common/Spinner';
 import { TournamentCurrentProvider } from '../../components/context/TournamentCurrentContext';
 import GameViewControl from '../../components/game/GameViewControl';
@@ -33,12 +33,12 @@ const GameView = ({
   const [showSpinner, setShowSpinner] = useState(true);
   const [showCard, setShowCard] = useState(false);
 
-  // TODO - help react-spring get rid of need of null here
   const gameViewFloatIn = useSpring<{ opacity: number; top: number }>({
     opacity: showSpinner ? 0 : 1,
     top: showSpinner ? 500 : 0,
-    onFrame: frame => {
-      if ((frame as any).top < 100) {
+    onChange: ({ value }) => {
+      // TODO can this be typed?
+      if ((value as any).top < 100) {
         setShowCard(true);
       }
     },
