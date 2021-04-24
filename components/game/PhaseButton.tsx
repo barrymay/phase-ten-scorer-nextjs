@@ -1,7 +1,4 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { CSSProperties, SerializedStyles } from '@emotion/serialize';
-
 import {
   ButtonHTMLAttributes,
   useEffect,
@@ -11,11 +8,13 @@ import {
   Children,
   RefObject,
   isValidElement,
+  CSSProperties,
 } from 'react';
 import { animated, useSpring, UseSpringProps } from '@react-spring/web';
 import { Merge } from '../../ts-common/merge';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import { AppTheme } from '../theming/themes';
+import { jsx, css, SerializedStyles } from '@emotion/react';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {

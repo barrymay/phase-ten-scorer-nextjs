@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css } from '@emotion/react';
 import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
 import Router from 'next/router';
 import React from 'react';

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import React, {
   FormEvent,
   forwardRef,
@@ -33,13 +33,13 @@ const formStyle = css`
   }
 `;
 
-const SingleScoreForm: React.ForwardRefExoticComponent<
-  React.RefAttributes<ISingleScoreFormFuncs> & {
-    player: IPlayer;
-    onSubmitScore: (playerId: string, result: IRoundPlayerData) => void;
-    inputPhase?: number;
-  }
-> = forwardRef(({ onSubmitScore, inputPhase, player }, ref) => {
+const SingleScoreForm: React.ForwardRefExoticComponent<React.RefAttributes<
+  ISingleScoreFormFuncs
+> & {
+  player: IPlayer;
+  onSubmitScore: (playerId: string, result: IRoundPlayerData) => void;
+  inputPhase?: number;
+}> = forwardRef(({ onSubmitScore, inputPhase, player }, ref) => {
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
 

@@ -1,5 +1,5 @@
 import normalizeCss from '!!raw-loader!normalize.css';
-import { css, Global } from '@emotion/core';
+import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 
 const Meta = () => (

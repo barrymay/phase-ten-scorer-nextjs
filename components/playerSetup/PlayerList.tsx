@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import PlayerItem from './PlayerItem';
 import { PlayersState } from '../context/PlayersContext';

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
 import P10Button from '../common/button/P10Button';

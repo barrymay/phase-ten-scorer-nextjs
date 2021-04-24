@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
 import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 import P10Button from './button/P10Button';

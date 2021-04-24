@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import { transparentize } from 'polished';
 import React from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types';

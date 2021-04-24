@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+/* @jsx jsx */
+import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { faScroll, faMoon } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

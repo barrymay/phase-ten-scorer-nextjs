@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { useEffect, useRef } from 'react';
 import { animated, useSprings } from '@react-spring/web';

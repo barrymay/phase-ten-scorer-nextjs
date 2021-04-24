@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import Document, { Main, NextScript, Html, Head } from 'next/document';
 import FontAwesomeSetup from '../components/common/font-awesome/FontAwesomeSetup';
 import Meta from '../components/Meta';

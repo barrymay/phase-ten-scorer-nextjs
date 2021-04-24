@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import { useCallback, useEffect, useRef, useState, MouseEvent } from 'react';
 import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IRound } from '../context/TournamentContext';

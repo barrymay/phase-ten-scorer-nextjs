@@ -1,8 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+/* @jsx jsx */
+import { jsx, css } from '@emotion/react';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Color } from 'csstype';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { ILinkButtonProps } from './LinkButton';

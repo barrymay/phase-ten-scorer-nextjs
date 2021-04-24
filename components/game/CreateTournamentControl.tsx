@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/react';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import useForm from 'react-hook-form';

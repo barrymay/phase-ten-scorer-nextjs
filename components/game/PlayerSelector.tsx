@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx } from '@emotion/react';
 import { useCallback, useState } from 'react';
 import { IPlayer, usePlayersState } from '../context/PlayersContext';
 import { useAppTheme } from '../theming/AppThemeProvider';

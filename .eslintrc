@@ -1,10 +1,9 @@
 {
-  "plugins": ["emotion", "@typescript-eslint", "react", "react-hooks"],
+  "plugins": ["@emotion", "@typescript-eslint", "react", "react-hooks"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "rules": {

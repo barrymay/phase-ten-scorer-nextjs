@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { withTheme } from 'emotion-theming';
+/* @jsx jsx */
+import { jsx, css, withTheme } from '@emotion/react';
 import App from 'next/app';
 import withAuth from '../components/common/auth/withAuth';
 import NavBar from '../components/main/NavBar';

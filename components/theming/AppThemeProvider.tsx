@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { ThemeProvider, useTheme } from 'emotion-theming';
+import { ThemeProvider, useTheme } from '@emotion/react';
 import { darkTheme, lightTheme, AppTheme } from './themes';
 
 interface IThemeState {
