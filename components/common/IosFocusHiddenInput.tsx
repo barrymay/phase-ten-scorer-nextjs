@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 const hiddenInputId = 'hiddenInput_' + uuid();
 

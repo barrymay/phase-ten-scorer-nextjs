@@ -5,7 +5,7 @@ import React, {
   useState,
   useMemo,
 } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { usePlayersStateAsMap } from './PlayersContext';
 
 export interface IRoundPlayerData {

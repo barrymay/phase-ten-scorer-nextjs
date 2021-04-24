@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useReducer,
 } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 interface IPlayerMapFormat<T> {
   [key: string]: T;

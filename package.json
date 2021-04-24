@@ -49,7 +49,6 @@
     "next": "^9.1.2",
     "node-sass": "^4.13.0",
     "normalize.css": "^8.0.1",
-    "now": "^21.0.1",
     "nyc": "^14.1.1",
     "passport": "^0.4.0",
     "passport-auth0": "^1.2.1",
@@ -64,9 +63,10 @@
     "source-map-support": "^0.5.16",
     "start-server-and-test": "^1.10.6",
     "styled-jsx": "^3.2.3",
-    "ts-node": "^8.4.1",
-    "typescript": "3.6.4",
-    "uuid": "^3.3.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4",
+    "uuid": "^8.3.2",
+    "vercel": "^22.0.1",
     "webpack": "^4.41.2"
   },
   "devDependencies": {
@@ -92,7 +92,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "yarn copy-env-files && now dev",
+    "dev": "yarn copy-env-files && vercel dev",
     "pre-dev-ci": "ts-node --project tsconfig-node.json ./github-setup.ts",
     "dev-ci": "yarn pre-dev-ci && concurrently --kill-others 'npm:ci-auth-server' 'npm:ci-next-server'",
     "copy-env-files": "ts-node --project tsconfig-node.json ./scripts/copy-env-files.ts",
@@ -104,7 +104,7 @@
     "e2e:open": "yarn pree2e && start-test dev-ci 3000 cy:open",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
     "build": "next build",
-    "publish": "now",
+    "publish": "vercel",
     "check-coverage-limits": "nyc report --reporter=text-summary --check-coverage --statements 100"
   },
   "resolutions": {
