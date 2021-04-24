@@ -23,22 +23,22 @@
       "use": "@now/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/login",
-      "dest": "/server/auth/auth.js"
+      "source": "/login",
+      "destination": "/server/auth/auth.js"
     },
     {
-      "src": "/callback",
-      "dest": "/server/auth/auth.js"
+      "source": "/callback",
+      "destination": "/server/auth/auth.js"
     },
     {
-      "src": "/logout",
-      "dest": "/server/auth/auth.js"
+      "source": "/logout",
+      "destination": "/server/auth/auth.js"
     },
     {
-      "src": "/user",
-      "dest": "/server/auth/auth.js"
+      "source": "/user",
+      "destination": "/server/auth/auth.js"
     }
   ]
 }
