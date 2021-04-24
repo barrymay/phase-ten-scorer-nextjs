@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const nowConfig = JSON.parse(fs.readFileSync('now.json', 'utf8'));
+const vercelConfig = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
 
 const writeFile = (fileName: string, fileConfigLocation: object) => {
   try {
@@ -16,5 +16,5 @@ const writeFile = (fileName: string, fileConfigLocation: object) => {
   }
 };
 
-writeFile('.env', nowConfig.env);
-writeFile('.env.build', nowConfig.build.env);
+writeFile('.env', vercelConfig.env);
+writeFile('.env.build', vercelConfig.build.env);
