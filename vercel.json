@@ -16,11 +16,11 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@now/next"
+      "use": "@vercel/next"
     },
     {
       "src": "server/auth/**/*.js",
-      "use": "@now/node"
+      "use": "@vercel/node"
     }
   ],
   "rewrites": [
