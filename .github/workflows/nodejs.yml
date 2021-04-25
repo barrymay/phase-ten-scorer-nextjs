@@ -28,7 +28,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 60
-      - run: echo ${{steps.waitFor200.outputs.url}}
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          config: pageLoadTimeout=100000,baseUrl=${{steps.waitFor200.outputs.url}}
       # - name: yarn e2e
       #   run: |
       #     yarn e2e
