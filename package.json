@@ -100,7 +100,7 @@
     "ci-next-server": "ts-node --project tsconfig-node.json ./scripts/next-server-startup.ts",
     "ci-auth-server": "ts-node --project tsconfig-node.json ./scripts/auth-server.ts",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --headless",
+    "cy:run": "cypress run --browser chrome --headless",
     "e2e": "start-test dev-ci 3000 cy:run",
     "e2e:open": "yarn pree2e && start-test dev-ci 3000 cy:open",
     "pree2e": "rm -rf .nyc_output coverage .next || true",
