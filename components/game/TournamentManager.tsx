@@ -8,7 +8,7 @@ import { useTournamentContext } from '../context/TournamentContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import { darken } from 'polished';
 
-const TournamentManager: React.FC = () => {
+const TournamentManager: React.FC<{ className?: string }> = ({ className }) => {
   const theme = useAppTheme();
   const { tournaments, removeTournament } = useTournamentContext();
   function openGame(gameId: string): void {
@@ -17,6 +17,7 @@ const TournamentManager: React.FC = () => {
 
   return (
     <div
+      className={className}
       css={css`
         .header {
           display: flex;

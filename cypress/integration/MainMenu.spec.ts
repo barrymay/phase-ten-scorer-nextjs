@@ -31,6 +31,6 @@ describe('Main Menu Layout', () => {
 
     cy.findByText('Player Setup').click();
 
-    //testPlayerSetupLayout(cy);
+    testPlayerSetupLayout(cy);
   });
 });

@@ -21,7 +21,7 @@ const AppThemeProvider: React.FC = props => {
   return (
     <ThemeStateContext.Provider value={theme}>
       <ThemeDispatchContext.Provider value={toggleTheme}>
-        <ThemeProvider<AppTheme>
+        <ThemeProvider
           theme={theme.themeMode === 'light' ? lightTheme : darkTheme}
         >
           {props.children}
@@ -32,7 +32,7 @@ const AppThemeProvider: React.FC = props => {
 };
 
 export const useAppTheme: () => AppTheme = () => {
-  return useTheme();
+  return useTheme() as AppTheme;
 };
 
 export const useThemeState: () => IThemeState = () => {

@@ -1,5 +1,5 @@
-/* @jsx jsx */
-import { jsx, css } from '@emotion/react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ export interface ExtraP10ButtonProps
   iconRight?: boolean;
   minimal?: boolean;
   faIconDef?: IconDefinition;
-  color?: Color;
+  color?: string;
 }
 
 const buttonColor = '#0e83cd';
@@ -31,7 +31,9 @@ type Props<T extends ButtonProps | LinkProps> = T &
   ExtraP10ButtonProps &
   Partial<ILinkButtonProps> & { renderAs?: string } & T;
 
-function P10Button<T extends {}>(props: Props<T>) {
+function P10Button<T extends Record<string, unknown>>(
+  props: Props<T>,
+): JSX.Element {
   const {
     children,
     className,
@@ -98,7 +100,7 @@ function P10Button<T extends {}>(props: Props<T>) {
     [color, iconRight, minimal],
   );
 
-  const content = (Tag: string) => {
+  const content = (Tag: 'button' | 'a'): JSX.Element => {
     return (
       <Tag
         css={[topLevelStyle]}
