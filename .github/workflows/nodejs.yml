@@ -22,13 +22,21 @@ jobs:
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - name: yarn e2e
-        run: |
-          yarn e2e
-        env:
-          CI: true
-          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - uses: actions/upload-artifact@master
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@master
+        id: waitFor200
         with:
-          name: coverage-report
-          path: coverage/lcov-report
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 60
+        # access preview url
+      - run: echo ${{steps.waitFor200.outputs.url}}
+      # - name: yarn e2e
+      #   run: |
+      #     yarn e2e
+      #   env:
+      #     CI: true
+      #     FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
+      # - uses: actions/upload-artifact@master
+      #   with:
+      #     name: coverage-report
+      #     path: coverage/lcov-report
