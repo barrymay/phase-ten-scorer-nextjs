@@ -69,11 +69,11 @@ describe('Create Tournament', () => {
 
     cy.findByText('At least one player must be selected');
 
-    cy.findByText(`${testNames[0]} (0-0)`).click();
-    cy.findByText(`${testNames[4]} (0-0)`).click();
+    // cy.findByText(`${testNames[0]} (0-0)`).click();
+    // cy.findByText(`${testNames[4]} (0-0)`).click();
 
-    cy.findByText('Submit').click();
+    // cy.findByText('Submit').click();
 
-    testGameViewLayout(cy, gameName);
+    // testGameViewLayout(cy, gameName);
   });
 });
