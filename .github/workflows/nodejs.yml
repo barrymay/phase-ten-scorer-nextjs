@@ -22,12 +22,9 @@ jobs:
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: yarn dev-ci 3000
-          browser: chrome
-          headless: true
+      - name: yarn e2e
+        run: |
+          yarn e2e
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
