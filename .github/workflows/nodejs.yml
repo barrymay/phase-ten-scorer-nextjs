@@ -11,7 +11,7 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -22,9 +22,12 @@ jobs:
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - name: yarn e2e
-        run: |
-          yarn e2e
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn dev-ci 3000
+          browser: chrome
+          headless: true
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
