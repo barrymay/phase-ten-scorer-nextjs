@@ -23,12 +23,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 60
-      - name: yarn install
-        run: |
-          yarn install
-        env:
-          CI: true
-          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
