@@ -30,13 +30,3 @@ jobs:
         env:
           CI: true
           FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      # - name: yarn e2e
-      #   run: |
-      #     yarn e2e
-      #   env:
-      #     CI: true
-      #     FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      # - uses: actions/upload-artifact@master
-      #   with:
-      #     name: coverage-report
-      #     path: coverage/lcov-report
