@@ -1,7 +1,7 @@
 # Phase 10 Game Scorer (NextJS/Now edition)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fbarrymay%2Fphase-ten-scorer-nextjs%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/barrymay/phase-ten-scorer-nextjs/goto?ref=master)
+[![Node CI](https://github.com/barrymay/phase-ten-scorer-nextjs/actions/workflows/nodejs.yml/badge.svg)](https://github.com/barrymay/phase-ten-scorer-nextjs/actions/workflows/nodejs.yml)
 [![Strict TypeScript Checked](https://badgen.net/badge/TypeScript/Strict?icon=typescript&label&labelColor=blue&color=555555 'Strict TypeScript Checked')](https://www.typescriptlang.org)
 [![Packaged by Yarn](https://badgen.net/badge/Packager/yarn 'Packaged by Yarn')](https://www.yarnpkg.io)
 
