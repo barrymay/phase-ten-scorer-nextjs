@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import express from 'express';
-import next from 'next';
-import proxyMiddleware from 'http-proxy-middleware';
 import dotenv from 'dotenv';
+import express from 'express';
 import { IncomingMessage, ServerResponse } from 'http';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import next from 'next';
 
 dotenv.config();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
@@ -45,7 +45,7 @@ app
     // Set up the proxy.
     if (dev && devProxy) {
       Object.entries(devProxy).forEach(([key, value]) => {
-        server.use(proxyMiddleware(key, value));
+        server.use(createProxyMiddleware(key, value));
       });
     }
 
@@ -61,7 +61,7 @@ app
       console.log(`> Ready on port ${port} [${env}]`);
     });
   })
-  .catch(err => {
+  .catch((err) => {
     console.log('An error occurred, unable to start the server');
     console.log(err);
   });
