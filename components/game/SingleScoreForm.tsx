@@ -110,36 +110,42 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
     setValue(e.currentTarget.name as keyof IFormData, newValue);
   };
 
+  const scoreId = `score-${player.id}`;
   return (
     <React.Fragment>
-      <form css={formStyle} ref={formRef} onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          Score:
-          <ValidatedInput
-            name="score"
-            type="number"
-            pattern="\d*"
-            autoComplete="off"
-            onInput={restrictInput}
-            errors={errors}
-            tabIndex={tabIndex}
-            inputRef={(registerRef) => {
-              register('score', {
-                required: 'Score is required',
-                validate: (inputScore: string | null) => {
-                  if (inputScore) {
-                    const value = +inputScore;
-                    return (
-                      (value >= 0 && value <= 500) ||
-                      'Score must be between 0 and 500'
-                    );
-                  }
-                },
-              });
-              scoreRef.current = registerRef;
-            }}
-          />
-        </label>
+      <form
+        data-testid={`playerForm-${player.name}`}
+        css={formStyle}
+        ref={formRef}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <label htmlFor={scoreId}>Score:</label>
+        <ValidatedInput
+          name="score"
+          id={scoreId}
+          type="number"
+          pattern="\d*"
+          autoComplete="off"
+          onInput={restrictInput}
+          errors={errors}
+          tabIndex={tabIndex}
+          inputRef={(registerRef) => {
+            register('score', {
+              required: 'Score is required',
+              validate: (inputScore: string | null) => {
+                if (inputScore) {
+                  const value = +inputScore;
+                  return (
+                    (value >= 0 && value <= 500) ||
+                    'Score must be between 0 and 500'
+                  );
+                }
+              },
+            });
+            scoreRef.current = registerRef;
+          }}
+        />
+
         <label>
           Completed Phase:
           <PhaseScorer

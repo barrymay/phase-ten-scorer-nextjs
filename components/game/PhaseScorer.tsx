@@ -173,6 +173,7 @@ const PhaseScorer: React.FC<{
           <PhaseButton
             tabIndex={-1}
             key={`phase-${phase.id}`}
+            data-testid={`phaseButton-${phase.id}`}
             completedState={phaseStates[index]}
             title={phase.rule}
             onClick={(e) => {
