@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
 import { ThemeProvider, useTheme } from '@emotion/react';
-import { darkTheme, lightTheme, AppTheme } from './themes';
+import React, { useContext, useState } from 'react';
+import { AppTheme, darkTheme, lightTheme } from './themes';
 
 interface IThemeState {
   themeMode: 'dark' | 'light';
@@ -13,7 +13,7 @@ const ThemeDispatchContext = React.createContext<(() => void) | undefined>(
   undefined,
 );
 
-const AppThemeProvider: React.FC = props => {
+const AppThemeProvider: React.FC = (props) => {
   const [theme, setTheme] = useState<IThemeState>({ themeMode: 'light' });
   const toggleTheme = () => {
     setTheme({ themeMode: theme.themeMode === 'light' ? 'dark' : 'light' });

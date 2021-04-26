@@ -52,14 +52,15 @@ const ScoringWizard: React.FC<{
     height: 0,
   });
 
-  const getOrCreateRef = useCallback((playerIndex: number): React.RefObject<
-    ISingleScoreFormFuncs
-  > => {
-    if (!formRefMap.current[playerIndex]) {
-      formRefMap.current[playerIndex] = createRef();
-    }
-    return formRefMap.current[playerIndex];
-  }, []);
+  const getOrCreateRef = useCallback(
+    (playerIndex: number): React.RefObject<ISingleScoreFormFuncs> => {
+      if (!formRefMap.current[playerIndex]) {
+        formRefMap.current[playerIndex] = createRef();
+      }
+      return formRefMap.current[playerIndex];
+    },
+    [],
+  );
 
   const updatePlayerIndex = useCallback(
     (nextPlayer: number) => {

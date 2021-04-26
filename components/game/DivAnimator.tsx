@@ -61,7 +61,7 @@ const DivAnimator: React.FC<{
 
   useEffect(() => {
     fromBoundsRef.current = Array.from(new Array(childArr.length).keys()).map(
-      item => ({
+      (item) => ({
         x: item * boundsWidth,
       }),
     );
@@ -90,7 +90,7 @@ const DivAnimator: React.FC<{
         <animated.div
           key={i}
           style={{
-            transform: x.to(x => `translate3d(${x}px,0,0)`),
+            transform: x.to((x) => `translate3d(${x}px,0,0)`),
           }}
         >
           <div>{childArr[i]}</div>

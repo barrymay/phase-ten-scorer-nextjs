@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
-import { useCallback, useEffect, useRef, useState, MouseEvent } from 'react';
-import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
-import { IRound } from '../context/TournamentContext';
-import PhaseButton, { PhaseState } from './PhaseButton';
 import styled from '@emotion/styled';
-import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IPlayer } from '../context/PlayersContext';
+import { IRound } from '../context/TournamentContext';
+import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
+import PhaseButton, { PhaseState } from './PhaseButton';
 interface IPhase {
   id: number;
   shortRule: string;
@@ -175,7 +175,7 @@ const PhaseScorer: React.FC<{
             key={`phase-${phase.id}`}
             completedState={phaseStates[index]}
             title={phase.rule}
-            onClick={e => {
+            onClick={(e) => {
               setPhase(e, index);
             }}
             buttonHeight={sizer.height}
