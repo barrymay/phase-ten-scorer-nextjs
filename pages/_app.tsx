@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import '../styles/globals.css';
 import { css, jsx, withTheme } from '@emotion/react';
 import App from 'next/app';
 import withAuth from '../components/common/auth/withAuth';
@@ -6,6 +7,7 @@ import NavBar from '../components/main/NavBar';
 import AppThemeProvider from '../components/theming/AppThemeProvider';
 import { AppTheme } from '../components/theming/themes';
 import AppBody from './AppBody';
+
 class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
   private user: any = undefined;
   render() {
