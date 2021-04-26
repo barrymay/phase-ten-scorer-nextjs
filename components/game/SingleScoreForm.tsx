@@ -9,7 +9,7 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import ValidatedInput from '../common/forms/ValidatedInput';
 import { IRoundPlayerData } from '../context/TournamentContext';
 import { ISingleScoreFormFuncs } from './ScoringWizard';
@@ -43,9 +43,13 @@ const SingleScoreForm: React.ForwardRefExoticComponent<React.RefAttributes<
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
 
-  const { handleSubmit, register, errors, getValues, setValue } = useForm<
-    IFormData
-  >({
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm<IFormData>({
     mode: 'onSubmit',
     defaultValues: {
       score: null,
@@ -58,7 +62,7 @@ const SingleScoreForm: React.ForwardRefExoticComponent<React.RefAttributes<
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    register({ name: 'phaseCompleted' });
+    register('phaseCompleted');
   }, [register]);
 
   useEffect(() => {
@@ -120,12 +124,15 @@ const SingleScoreForm: React.ForwardRefExoticComponent<React.RefAttributes<
             errors={errors}
             tabIndex={tabIndex}
             inputRef={registerRef => {
-              register(registerRef, {
+              register('score', {
                 required: 'Score is required',
-                validate: (inputScore: string) => {
-                  const value = +inputScore;
-                  if (value < 0 || value > 500) {
-                    return 'Score must be between 0 and 500';
+                validate: (inputScore: string | null) => {
+                  if (inputScore) {
+                    const value = +inputScore;
+                    return (
+                      (value >= 0 && value <= 500) ||
+                      'Score must be between 0 and 500'
+                    );
                   }
                 },
               });
