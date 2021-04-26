@@ -58,7 +58,7 @@
     "raw-loader": "^3.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-hook-form": "7.3.3",
+    "react-hook-form": "7.3.4",
     "resize-observer-polyfill": "^1.5.1",
     "source-map-support": "^0.5.16",
     "start-server-and-test": "^1.10.6",
