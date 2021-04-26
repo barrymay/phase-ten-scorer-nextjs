@@ -44,7 +44,7 @@
     "graphql": "^14.5.8",
     "helmet": "^3.21.2",
     "http-proxy-middleware": "^0.20.0",
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^3.0.0",
     "istanbul-lib-coverage": "^2.0.5",
     "js-cookie": "^2.2.1",
     "mongodb": "^3.3.3",
