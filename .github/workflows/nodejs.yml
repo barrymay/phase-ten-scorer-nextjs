@@ -9,8 +9,6 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [14.x]
-        containers: [1, 2, 3]
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -27,7 +25,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          parallel: true
           config: pageLoadTimeout=100000,baseUrl=${{steps.waitFor200.outputs.url}}
         env:
           CI: true
