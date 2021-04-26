@@ -27,7 +27,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          record: true
           parallel: true
           config: pageLoadTimeout=100000,baseUrl=${{steps.waitFor200.outputs.url}}
         env:
