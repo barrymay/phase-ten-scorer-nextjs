@@ -73,7 +73,10 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
     ref,
     () => ({
       performSubmit() {
-        formRef.current && formRef.current.dispatchEvent(new Event('submit'));
+        formRef.current &&
+          formRef.current.dispatchEvent(
+            new Event('submit', { bubbles: true, cancelable: true }),
+          );
       },
       setFocus() {
         setTimeout(() => {
