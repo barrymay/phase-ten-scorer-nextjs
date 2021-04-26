@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/react';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import FormErrors from '../common/forms/FormErrors';
 import { useTournamentContext } from '../context/TournamentContext';
 import PlayerSelector from './PlayerSelector';
@@ -18,10 +18,10 @@ const CreateTournamentControl: React.FC = () => {
   const {
     handleSubmit,
     register,
-    errors,
+    formState: { errors },
     getValues,
     setValue,
-    triggerValidation,
+    trigger,
   } = useForm<IFormData>({
     mode: 'onSubmit',
     defaultValues: {
@@ -34,21 +34,18 @@ const CreateTournamentControl: React.FC = () => {
   const tournamentNames = tournaments.map(item => item.name);
 
   useEffect(() => {
-    register(
-      { name: 'players' },
-      {
-        validate: (inputValue: string[]) => {
-          if (!inputValue || !Array.isArray(inputValue)) {
-            return 'Invalid result from player list';
-          }
-          if (!inputValue.length) {
-            return 'At least one player must be selected';
-          } else if (inputValue.length > 4) {
-            return 'Only 4 players are allowed';
-          }
-        },
+    register('players', {
+      validate: (inputValue: string[]) => {
+        if (!inputValue || !Array.isArray(inputValue)) {
+          return 'Invalid result from player list';
+        }
+        if (!inputValue.length) {
+          return 'At least one player must be selected';
+        } else if (inputValue.length > 4) {
+          return 'Only 4 players are allowed';
+        }
       },
-    );
+    });
   }, [register]);
 
   const onSubmit = (submitVal: any) => {
@@ -60,9 +57,7 @@ const CreateTournamentControl: React.FC = () => {
 
   const onPlayerSelectorChange = (newValue: string[]) => {
     setValue('players', newValue);
-    triggerValidation({
-      name: 'players',
-    });
+    trigger('players');
   };
 
   const styledLabel = css`
@@ -97,9 +92,8 @@ const CreateTournamentControl: React.FC = () => {
                 width: 100%;
               `}
               data-testid="tourneyName"
-              name="tourneyName"
               autoComplete="off"
-              ref={register({
+              {...register('tourneyName', {
                 maxLength: {
                   value: 20,
                   message: 'Tournament Name must be less than 20 characters',

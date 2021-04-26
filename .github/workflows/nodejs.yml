@@ -1,34 +1,31 @@
 name: Node CI
 
-on: [push]
+on: [pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     strategy:
+      fail-fast: false
       matrix:
         node-version: [14.x]
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: yarn install
-        run: |
-          yarn install
-        env:
-          CI: true
-          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - name: yarn e2e
-        run: |
-          yarn e2e
-        env:
-          CI: true
-          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}
-      - uses: actions/upload-artifact@master
+
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@master
+        id: waitFor200
         with:
-          name: coverage-report
-          path: coverage/lcov-report
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 120
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          config: pageLoadTimeout=100000,baseUrl=${{steps.waitFor200.outputs.url}}
+        env:
+          CI: true
+          FA_PRO_AUTH: ${{ secrets.FA_PRO_AUTH }}

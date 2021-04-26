@@ -87,7 +87,6 @@ const getPhaseState = (
 const Container = styled.div`
   width: 100%;
   max-width: 250px;
-  padding: 4px;
   display: grid;
   grid-auto-flow: column;
   grid-gap: 2px;
