@@ -3,18 +3,18 @@ import { css, jsx } from '@emotion/react';
 import React, {
   FormEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
-  useCallback,
 } from 'react';
 import { useForm } from 'react-hook-form';
 import ValidatedInput from '../common/forms/ValidatedInput';
-import { IRoundPlayerData } from '../context/TournamentContext';
-import { ISingleScoreFormFuncs } from './ScoringWizard';
-import PhaseScorer from './PhaseScorer';
 import { IPlayer } from '../context/PlayersContext';
+import { IRoundPlayerData } from '../context/TournamentContext';
+import PhaseScorer from './PhaseScorer';
+import { ISingleScoreFormFuncs } from './ScoringWizard';
 
 // validation will prevent non-numerics
 interface IFormData {
@@ -33,13 +33,13 @@ const formStyle = css`
   }
 `;
 
-const SingleScoreForm: React.ForwardRefExoticComponent<React.RefAttributes<
-  ISingleScoreFormFuncs
-> & {
-  player: IPlayer;
-  onSubmitScore: (playerId: string, result: IRoundPlayerData) => void;
-  inputPhase?: number;
-}> = forwardRef(({ onSubmitScore, inputPhase, player }, ref) => {
+const SingleScoreForm: React.ForwardRefExoticComponent<
+  React.RefAttributes<ISingleScoreFormFuncs> & {
+    player: IPlayer;
+    onSubmitScore: (playerId: string, result: IRoundPlayerData) => void;
+    inputPhase?: number;
+  }
+> = forwardRef(({ onSubmitScore, inputPhase, player }, ref) => {
   const [tabIndex, setTabIndex] = useState(0);
   const scoreRef = useRef<HTMLInputElement | null>(null);
 
@@ -110,36 +110,42 @@ const SingleScoreForm: React.ForwardRefExoticComponent<React.RefAttributes<
     setValue(e.currentTarget.name as keyof IFormData, newValue);
   };
 
+  const scoreId = `score-${player.id}`;
   return (
     <React.Fragment>
-      <form css={formStyle} ref={formRef} onSubmit={handleSubmit(onSubmit)}>
-        <label>
-          Score:
-          <ValidatedInput
-            name="score"
-            type="number"
-            pattern="\d*"
-            autoComplete="off"
-            onInput={restrictInput}
-            errors={errors}
-            tabIndex={tabIndex}
-            inputRef={registerRef => {
-              register('score', {
-                required: 'Score is required',
-                validate: (inputScore: string | null) => {
-                  if (inputScore) {
-                    const value = +inputScore;
-                    return (
-                      (value >= 0 && value <= 500) ||
-                      'Score must be between 0 and 500'
-                    );
-                  }
-                },
-              });
-              scoreRef.current = registerRef;
-            }}
-          />
-        </label>
+      <form
+        data-testid={`playerForm-${player.name}`}
+        css={formStyle}
+        ref={formRef}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <label htmlFor={scoreId}>Score:</label>
+        <ValidatedInput
+          name="score"
+          id={scoreId}
+          type="number"
+          pattern="\d*"
+          autoComplete="off"
+          onInput={restrictInput}
+          errors={errors}
+          tabIndex={tabIndex}
+          inputRef={(registerRef) => {
+            register('score', {
+              required: 'Score is required',
+              validate: (inputScore: string | null) => {
+                if (inputScore) {
+                  const value = +inputScore;
+                  return (
+                    (value >= 0 && value <= 500) ||
+                    'Score must be between 0 and 500'
+                  );
+                }
+              },
+            });
+            scoreRef.current = registerRef;
+          }}
+        />
+
         <label>
           Completed Phase:
           <PhaseScorer

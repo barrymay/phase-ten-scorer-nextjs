@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
+import { animated, useSpring } from '@react-spring/web';
 import Head from 'next/head';
 import { Fragment, useState } from 'react';
-import { animated, useSpring } from '@react-spring/web';
 import Spinner from '../../components/common/Spinner';
 import { TournamentCurrentProvider } from '../../components/context/TournamentCurrentContext';
 import GameViewControl from '../../components/game/GameViewControl';
@@ -29,7 +29,7 @@ const GameView = ({
 }: {
   gameId: string;
   className: string;
-}) => {
+}): React.ReactNode => {
   const [showSpinner, setShowSpinner] = useState(true);
   const [showCard, setShowCard] = useState(false);
 

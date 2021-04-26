@@ -7,7 +7,6 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "comma-dangle": ["error", "always-multiline"],
     "react/react-in-jsx-scope": ["off"],
     "@emotion/jsx-import": "error",
     "@emotion/no-vanilla": "error",

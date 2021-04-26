@@ -1,6 +1,6 @@
 import * as faker from 'faker';
 
-export const testPlayerSetupLayout = (cy: Cypress.cy) => {
+export const testPlayerSetupLayout = (cy: Cypress.cy): void => {
   cy.findByText(/^Players: \d*/).should('exist');
   cy.findAllByLabelText(/^Player Name:/).should('exist');
   cy.findByText(/^Players:$/).should('exist');
@@ -8,9 +8,12 @@ export const testPlayerSetupLayout = (cy: Cypress.cy) => {
   cy.findByTitle('Add Player').should('exist');
 };
 
-export const addPlayers = (cy: Cypress.cy, count: number) => {
+export const addPlayers = (
+  cy: Cypress.cy,
+  count: number,
+): Array<string | null> => {
   let resultArray = new Array(count).fill(null);
-  resultArray = resultArray.map(item => {
+  resultArray = resultArray.map(() => {
     return faker.name.firstName();
   });
   resultArray.forEach((name, index) => {
@@ -20,17 +23,4 @@ export const addPlayers = (cy: Cypress.cy, count: number) => {
   });
 
   return resultArray;
-  // cy.findAllByLabelText(/^Player Name:/).type(testName2);
-  // cy.findByTitle('Add Player').click();
-
-  // cy.findAllByLabelText(/^Player Name:/).type(testName3);
-  // cy.findByTitle('Add Player').click();
-
-  // cy.findAllByLabelText(/^Player Name:/).type(testName4);
-  // cy.findByTitle('Add Player').click();
-
-  // cy.findByText(`Player #1: ${testName1} (0-0)`);
-  // cy.findByText(`Player #2: ${testName2} (0-0)`);
-  // cy.findByText(`Player #3: ${testName3} (0-0)`);
-  // cy.findByText(`Player #4: ${testName4} (0-0)`);
 };

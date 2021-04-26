@@ -2,18 +2,20 @@
   "eslint.validate": [
     "javascript",
     "javascriptreact",
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
+    "typescript",
+    "typescriptreact"
   ],
-  "eslint.enable": true,
   "jest.autoEnable": false,
   "editor.formatOnSave": true,
-  "eslint.autoFixOnSave": true,
   "files.exclude": {
     "**/.next": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
+    "source.fixAll": true,
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
+  },
+  "css.validate": false,
+  "stylelint.enable": true
 }

@@ -1,4 +1,4 @@
-import { RefObject, useRef, useState, useLayoutEffect } from 'react';
+import { RefObject, useLayoutEffect, useRef, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
 export interface IRect {
@@ -27,7 +27,9 @@ export default function useMeasure<T extends HTMLElement>(): [
     () =>
       new ResizeObserver((entries: ResizeObserverEntry[]) => {
         if (entries.length > 0) {
-          set(entries[0].contentRect);
+          requestAnimationFrame(() => {
+            set(entries[0].contentRect);
+          });
         }
       }),
   );
