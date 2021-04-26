@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/react';
 import styled from '@emotion/styled';
-import React, { useEffect, useRef } from 'react';
 import { animated, useSprings } from '@react-spring/web';
+import React, { useEffect, useRef } from 'react';
 
 export interface CarouselSpringProps {
   x: number;
@@ -54,7 +54,7 @@ const DivAnimator: React.FC<{
 
   // Create springs, each corresponds to an item, controlling its transform, scale, etc.
   // Initital state doesn't matter, just a placeholder
-  const [springs, setSprings] = useSprings<CarouselSpringProps>(
+  const [springs, api] = useSprings<CarouselSpringProps>(
     childArr.length,
     () => ({ x: 0 }),
   );
@@ -70,7 +70,7 @@ const DivAnimator: React.FC<{
   useEffect(() => {
     pastSelectionRef.current = currentSelectionRef.current;
     currentSelectionRef.current = currentIndex;
-    setSprings(
+    api.start(
       getProcessFunc(
         boundsWidth,
         fromBoundsRef,
@@ -78,7 +78,7 @@ const DivAnimator: React.FC<{
         pastSelectionRef.current === currentSelectionRef.current,
       ),
     );
-  }, [boundsWidth, setSprings, currentIndex]);
+  }, [boundsWidth, api, currentIndex]);
 
   return (
     <Container

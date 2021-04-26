@@ -1,11 +1,11 @@
 /** @jsx jsx */
+import { css, jsx } from '@emotion/react';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons';
-import { useEffect, useRef, Fragment } from 'react';
-import { createPortal } from 'react-dom';
 import { animated, useTransition } from '@react-spring/web';
-import P10Button from './button/P10Button';
+import { Fragment, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useAppTheme } from '../theming/AppThemeProvider';
-import { jsx, css } from '@emotion/react';
+import P10Button from './button/P10Button';
 
 function useModalStyle() {
   const theme = useAppTheme();

@@ -4,17 +4,17 @@ import styled from '@emotion/styled';
 import Router from 'next/router';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import P10Button from '../common/button/P10Button';
+import ConfirmModal from '../common/ConfirmModal';
+import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
 import Modal from '../common/Modal';
 import { IPlayer, usePlayerInfo } from '../context/PlayersContext';
 import { IRound } from '../context/TournamentContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
+import { useAppTheme } from '../theming/AppThemeProvider';
+import { AppTheme } from '../theming/themes';
 import GameViewColumn from './GameViewColumn';
 import ScoringWizard from './ScoringWizard';
 import WinnerDisplay, { IWinnerList } from './WinnerDisplay';
-import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
-import { useAppTheme } from '../theming/AppThemeProvider';
-import { AppTheme } from '../theming/themes';
-import ConfirmModal from '../common/ConfirmModal';
 
 function useTrueWhenEmpty<T>(
   arrayToEmpty: T[],
