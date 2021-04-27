@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Router from 'next/router';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
@@ -27,7 +26,7 @@ function useTrueWhenEmpty<T>(
 
   const checkCallback = useCallback((checkValue: T) => {
     arrayToEmptyRef.current = arrayToEmptyRef.current.filter(
-      item => item !== checkValue,
+      (item) => item !== checkValue,
     );
     if (!arrayToEmptyRef.current.length) {
       setValid(true);
@@ -102,7 +101,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
   const players = usePlayerInfo(tournament.playerIds);
 
   const [appear, playerReady] = useTrueWhenEmpty(
-    players.map(item => item.id),
+    players.map((item) => item.id),
     onReady,
   );
 
@@ -121,7 +120,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
     >((result, next) => {
       const nextPlayerData = playerData[next];
       if (nextPlayerData && !nextPlayerData.phasesLeft.length) {
-        const player = players.find(item => item.id === next);
+        const player = players.find((item) => item.id === next);
         if (player) {
           result.push({
             player,
@@ -247,7 +246,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
               onReady={() => {
                 playerReady(player.id);
               }}
-              updateMarkedPhase={phase => {
+              updateMarkedPhase={(phase) => {
                 updateMarkedPhase(player.id, phase);
               }}
             ></GameViewColumn>

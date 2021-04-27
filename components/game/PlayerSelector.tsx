@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import { useCallback, useState } from 'react';
 import { IPlayer, usePlayersState } from '../context/PlayersContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
@@ -15,14 +13,14 @@ const PlayerSelector: React.FC<{
     e.preventDefault();
 
     const targetValue = e.currentTarget.value;
-    const isValueInPlayers = players.find(item => item.id === targetValue);
+    const isValueInPlayers = players.find((item) => item.id === targetValue);
     if (!isValueInPlayers) {
       return;
     }
 
     const isValueInList = listState.includes(targetValue);
     const newValue = isValueInList
-      ? listState.filter(item => item !== targetValue)
+      ? listState.filter((item) => item !== targetValue)
       : listState.concat(targetValue);
     setListState(newValue);
     onChange(newValue);
@@ -44,7 +42,7 @@ const PlayerSelector: React.FC<{
         flexDirection: 'column',
       }}
     >
-      {getSortedPlayers(players).map(item => {
+      {getSortedPlayers(players).map((item) => {
         const isSelected = listState.includes(item.id);
         const color = isSelected
           ? theme.default.primaryBg

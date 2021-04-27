@@ -21,7 +21,7 @@ const auth0Strategy = new Auth0Strategy(
       ? 'http://localhost:3000/callback'
       : process.env.AUTH0_CALLBACK_URL,
   },
-  function(accessToken, refreshToken, extraParams, profile, done) {
+  function (profile, done) {
     return done(null, profile);
   },
 );
@@ -76,7 +76,7 @@ app.get('/callback', (req, res, next) => {
     if (!user) return res.redirect('/');
 
     if (user) {
-      req.logIn(user, err => {
+      req.logIn(user, (err) => {
         if (err) return next(err);
         res.redirect('/');
       });

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import { transparentize } from 'polished';
 import React from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types';
@@ -25,8 +23,8 @@ const FormErrors: React.FC<IFormErrorsProps> = ({ errors, className }) => {
     >
       {errors &&
         Object.keys(errors)
-          .filter(item => errors[item] && !!errors[item]!.message)
-          .map(item => (
+          .filter((item) => errors[item] && !!errors[item]!.message)
+          .map((item) => (
             <li data-testid={`formError-${item}`} key={item}>
               <span>{errors[item]!.message}</span>
             </li>

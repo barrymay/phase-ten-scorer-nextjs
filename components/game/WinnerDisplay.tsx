@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import {
   IPlayer,
   usePlayersDispatch,
@@ -16,12 +15,12 @@ const WinnerDisplay: React.FC<{ winners: IWinnerList[] }> = ({ winners }) => {
   const { tournament } = useTournamentCurrentContext();
 
   const useWinnersForUpdate = (winners: IWinnerList[]) => {
-    const winnerIds = winners.map(item => item.player.id);
+    const winnerIds = winners.map((item) => item.player.id);
     const gameId = tournament.id;
     const allPlayers = usePlayersStateAsMap();
     const playerDispatch = usePlayersDispatch();
 
-    tournament.playerIds.forEach(playerId => {
+    tournament.playerIds.forEach((playerId) => {
       const playerUpdate = allPlayers[playerId];
       if (winnerIds.includes(playerUpdate.id)) {
         playerDispatch({
@@ -55,7 +54,7 @@ const WinnerDisplay: React.FC<{ winners: IWinnerList[] }> = ({ winners }) => {
       </div>
       {winners
         .sort((a, b) => b.score - a.score)
-        .map(item => (
+        .map((item) => (
           <div key={item.player.id}>
             🍾 {item.player.name} with {item.score} points 🎉
           </div>

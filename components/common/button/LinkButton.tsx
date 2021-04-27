@@ -1,4 +1,4 @@
-import React from 'react';
+import 'twin.macro';
 import P10Button, { ExtraP10ButtonProps } from './P10Button';
 
 export interface ILinkButtonProps extends ExtraP10ButtonProps {

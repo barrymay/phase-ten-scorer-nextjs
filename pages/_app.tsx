@@ -1,11 +1,10 @@
-/** @jsx jsx */
-import '../styles/globals.css';
-import { css, jsx, withTheme } from '@emotion/react';
+import { withTheme } from '@emotion/react';
 import App from 'next/app';
-import withAuth from '../components/common/auth/withAuth';
+import { css, GlobalStyles } from 'twin.macro';
 import NavBar from '../components/main/NavBar';
 import AppThemeProvider from '../components/theming/AppThemeProvider';
 import { AppTheme } from '../components/theming/themes';
+import '../styles/globals.css';
 import AppBody from './AppBody';
 
 class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
@@ -24,6 +23,7 @@ class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
             height: 100vh;
           `}
         >
+          <GlobalStyles />
           <NavBar user={this.user} isAuthAllowed={this.props.enableAuth0} />
           <AppBody>
             <Component {...pageProps} />
@@ -35,4 +35,5 @@ class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
   }
 }
 
-export default withAuth(withTheme(MyApp));
+//export default withAuth(withTheme(MyApp));
+export default withTheme(MyApp);

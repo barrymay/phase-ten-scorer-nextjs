@@ -1,8 +1,7 @@
-/* @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import { useAppTheme } from '../components/theming/AppThemeProvider';
 
-const AppBody: React.FC = props => {
+const AppBody: React.FC = (props) => {
   const theme = useAppTheme();
   return (
     <div

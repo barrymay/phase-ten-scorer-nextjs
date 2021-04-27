@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import { faArrowLeft, faArrowRight } from '@fortawesome/pro-regular-svg-icons';
 import React, {
   createRef,

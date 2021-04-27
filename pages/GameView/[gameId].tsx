@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import { animated, useSpring } from '@react-spring/web';
 import Head from 'next/head';
 import { Fragment, useState } from 'react';

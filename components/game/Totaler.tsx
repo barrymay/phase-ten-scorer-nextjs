@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import React, { useMemo } from 'react';
 import { IRound } from '../context/TournamentContext';
 

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
-import Router from 'next/router';
+import cookie from 'js-cookie';
 import { NextPageContext } from 'next';
+import Router from 'next/router';
+import React, { Component } from 'react';
 import { isAuth0Registered } from './auth0Utils';
 
-export const logout = () => {
+export const logout = (): void => {
   cookie.remove('token');
   window.localStorage.setItem('logout', '' + Date.now());
   Router.push('/logout');
@@ -17,6 +17,7 @@ const getDisplayName = (
 ) =>
   wrappedComponent.displayName || wrappedComponent.name || 'wrappedComponent';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withAuth = (WrappedComponent: any) =>
   class AuthInnerComponent extends Component {
     static displayName = `withAuth(${getDisplayName(WrappedComponent)})`;

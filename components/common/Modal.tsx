@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { animated, useTransition } from '@react-spring/web';
 import { Fragment, useEffect, useRef } from 'react';

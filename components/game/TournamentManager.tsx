@@ -1,12 +1,11 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
 import Router from 'next/router';
+import { darken } from 'polished';
 import React from 'react';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
-import { darken } from 'polished';
 
 const TournamentManager: React.FC<{ className?: string }> = ({ className }) => {
   const theme = useAppTheme();
