@@ -1,9 +1,8 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
-import React, { Fragment } from 'react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { faSignIn, faSignOut } from '@fortawesome/pro-regular-svg-icons';
+import React, { Fragment } from 'react';
 import P10Button from './button/P10Button';
-import { faSignOut, faSignIn } from '@fortawesome/pro-regular-svg-icons';
 
 const LoginStyles = styled.div`
   display: flex;

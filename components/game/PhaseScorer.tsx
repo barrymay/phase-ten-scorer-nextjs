@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import useMeasure, { IRect, RefContainer } from '../common/useMeasure';

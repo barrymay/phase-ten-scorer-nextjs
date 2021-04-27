@@ -1,4 +1,5 @@
-import React, {
+import {
+  createContext,
   Dispatch,
   useContext,
   useEffect,
@@ -64,9 +65,7 @@ export type PlayersState = Exclude<InternalPlayersState, 'loading'>;
 
 export type PlayersStateMap = { [key: string]: IPlayer };
 
-export const PlayersContext = React.createContext<PlayersContextState | null>(
-  null,
-);
+export const PlayersContext = createContext<PlayersContextState | null>(null);
 const INIT_STATE: InternalPlayersState = 'loading';
 const PLAYER_STORAGE_KEY = 'player_storage_4';
 const PLAYER_STORAGE_KEY_3 = 'player_storage_3';
@@ -79,7 +78,7 @@ export function isPlayerNameValid(
   return (
     !!playerName.length &&
     !state.some(
-      item =>
+      (item) =>
         !item.name.localeCompare(playerName, undefined, {
           sensitivity: 'base',
         }),
@@ -112,12 +111,12 @@ function playerReducer(
       }
     case 'REMOVE':
       playerCache.clear();
-      return newState.filter(item => item.id !== action.playerId);
+      return newState.filter((item) => item.id !== action.playerId);
     case 'ADD_WIN':
     case 'ADD_LOSS': {
       const isWin = action.type === 'ADD_WIN';
       const gameId = action.gameId;
-      const player = newState.find(item => item.id === action.playerId);
+      const player = newState.find((item) => item.id === action.playerId);
       if (player) {
         const toAdd = isWin ? player.wins : player.losses;
         const toRemove = isWin ? player.losses : player.wins;
@@ -126,10 +125,10 @@ function playerReducer(
         } else {
           player.wins = isWin
             ? player.wins.concat(gameId)
-            : player.wins.filter(item => item !== gameId);
+            : player.wins.filter((item) => item !== gameId);
           player.losses = !isWin
             ? player.losses.concat(gameId)
-            : player.losses.filter(item => item !== gameId);
+            : player.losses.filter((item) => item !== gameId);
 
           return newState;
         }
@@ -157,17 +156,17 @@ const getPlayerStorage = (): InternalPlayersState => {
     const storedValue_3 = window.localStorage.getItem(PLAYER_STORAGE_KEY_3);
     const storedValue_2 = window.localStorage.getItem(PLAYER_STORAGE_KEY_2);
     if (storedValue_2 && !storedValue_3) {
-      const value_2 = JSON.parse(storedValue_2) as IPlayerMapFormat<
-        IPlayerLegacy2
-      >;
-      result = Object.values(value_2).map<IPlayer>(item => ({
+      const value_2 = JSON.parse(
+        storedValue_2,
+      ) as IPlayerMapFormat<IPlayerLegacy2>;
+      result = Object.values(value_2).map<IPlayer>((item) => ({
         ...item,
         wins: [],
         losses: [],
       }));
     } else if (storedValue_3) {
       const value_3 = JSON.parse(storedValue_3) as IPlayerMapFormat<IPlayer>;
-      result = Object.values(value_3).map<IPlayer>(item => ({
+      result = Object.values(value_3).map<IPlayer>((item) => ({
         ...item,
       }));
     }
@@ -280,7 +279,7 @@ export function usePlayerInfo(playerIds: string[]): IPlayer[] {
     return potentialValue;
   } else {
     const newValue = playerIds.reduce<IPlayer[]>((result, next) => {
-      const foundPlayer = playersList.find(player => player.id === next);
+      const foundPlayer = playersList.find((player) => player.id === next);
       if (foundPlayer) {
         result.push(foundPlayer);
       }

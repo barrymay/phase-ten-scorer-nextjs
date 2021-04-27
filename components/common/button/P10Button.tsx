@@ -1,9 +1,8 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
+import { css } from 'twin.macro';
 import { ILinkButtonProps } from './LinkButton';
 
 export interface ExtraP10ButtonProps

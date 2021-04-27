@@ -1,16 +1,14 @@
-/* @jsx jsx */
-import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { faScroll, faMoon } from '@fortawesome/pro-regular-svg-icons';
+import { faMoon, faScroll } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { rgba } from 'polished';
 import React from 'react';
+import tw, { css } from 'twin.macro';
 import LinkButton from '../common/button/LinkButton';
-import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
-import LoginButton from '../common/LoginButton';
-import { useThemeToggle, useAppTheme } from '../theming/AppThemeProvider';
 import P10Button from '../common/button/P10Button';
+import { useAppTheme, useThemeToggle } from '../theming/AppThemeProvider';
 import { AppTheme } from '../theming/themes';
+import RouteButton, { RouteDefinitions, RouteKeys } from './RouteButton';
 
 interface IHeaderProps {
   theme: AppTheme;
@@ -38,11 +36,8 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
   const theme = useAppTheme();
 
   const HeaderLinkStyle = css`
-    display: flex;
     text-decoration: none;
     user-select: none;
-    text-transform: none;
-    font-weight: none;
     color: ${theme.navbar.primary};
 
     &:hover {
@@ -55,7 +50,7 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
 
   const themeToggle = useThemeToggle();
   const LinkStyle = React.useCallback(
-    isMinimal =>
+    (isMinimal) =>
       css`
         &.btn-1 {
           font-size: 0.8em;
@@ -89,7 +84,11 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
   return (
     <Header theme={theme}>
       <div className="nav-main">
-        <LinkButton href="/" css={[HeaderLinkStyle, LinkStyle(false)]} minimal>
+        <LinkButton
+          href="/"
+          css={[HeaderLinkStyle, LinkStyle(false), tw`normal-case`]}
+          minimal
+        >
           <FontAwesomeIcon
             css={css`
               padding-right: 4;
@@ -124,9 +123,9 @@ const NavBar: React.FC<{ user: any; isAuthAllowed: boolean }> = ({
             routeKey={key as RouteKeys}
           />
         ))}
-      {isAuthAllowed && (
+      {/* {isAuthAllowed && (
         <LoginButton css={[HeaderLinkStyle, LinkStyle(true)]} user={user} />
-      )}
+      )} */}
     </Header>
   );
 };

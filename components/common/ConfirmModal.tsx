@@ -1,5 +1,4 @@
-/* @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import P10Button from './button/P10Button';
 import Modal from './Modal';
 

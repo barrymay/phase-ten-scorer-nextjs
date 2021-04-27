@@ -1,20 +1,19 @@
-/** @jsx jsx */
+import { css, SerializedStyles } from '@emotion/react';
+import { animated, useSpring, UseSpringProps } from '@react-spring/web';
 import {
   ButtonHTMLAttributes,
+  Children,
+  cloneElement,
+  CSSProperties,
+  isValidElement,
+  RefObject,
   useEffect,
   useMemo,
   useRef,
-  cloneElement,
-  Children,
-  RefObject,
-  isValidElement,
-  CSSProperties,
 } from 'react';
-import { animated, useSpring, UseSpringProps } from '@react-spring/web';
 import { Merge } from '../../ts-common/merge';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import { AppTheme } from '../theming/themes';
-import { jsx, css, SerializedStyles } from '@emotion/react';
 
 export type PhaseState = 'default' | 'complete' | 'new-complete';
 interface ISpringType extends CSSProperties {
@@ -115,14 +114,16 @@ function useAnimatedCardFlip(
   return [propsFlip, phaseStyle];
 }
 
-const PhaseButton: React.FC<Merge<
-  ButtonHTMLAttributes<HTMLElement>,
-  {
-    completedState: PhaseState;
-    buttonHeight: number;
-    measureRef?: RefObject<HTMLElement>;
-  }
->> = props => {
+const PhaseButton: React.FC<
+  Merge<
+    ButtonHTMLAttributes<HTMLElement>,
+    {
+      completedState: PhaseState;
+      buttonHeight: number;
+      measureRef?: RefObject<HTMLElement>;
+    }
+  >
+> = (props) => {
   const {
     completedState,
     children,

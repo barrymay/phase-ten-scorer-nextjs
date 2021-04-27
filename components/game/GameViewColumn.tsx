@@ -1,14 +1,12 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import React from 'react';
+import { css } from '@emotion/react';
+import { faSignLanguage } from '@fortawesome/pro-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { animated, useSpring } from '@react-spring/web';
+import { IPlayer } from '../context/PlayersContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
+import { useAppTheme } from '../theming/AppThemeProvider';
 import PhaseScorer from './PhaseScorer';
 import Totaler from './Totaler';
-import { IPlayer } from '../context/PlayersContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignLanguage } from '@fortawesome/pro-regular-svg-icons';
-import { useSpring, animated } from '@react-spring/web';
-import { useAppTheme } from '../theming/AppThemeProvider';
 
 const GameViewColumn: React.FC<{
   player: IPlayer;

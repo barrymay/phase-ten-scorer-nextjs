@@ -1,13 +1,12 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import FormErrors from '../common/forms/FormErrors';
-import { useTournamentContext } from '../context/TournamentContext';
-import PlayerSelector from './PlayerSelector';
 import { CardContainer } from '../common/styles/basic';
+import { useTournamentContext } from '../context/TournamentContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
+import PlayerSelector from './PlayerSelector';
 
 interface IFormData {
   tourneyName: string;
@@ -31,7 +30,7 @@ const CreateTournamentControl: React.FC = () => {
   const theme = useAppTheme();
 
   const { tournaments, addTournament } = useTournamentContext();
-  const tournamentNames = tournaments.map(item => item.name);
+  const tournamentNames = tournaments.map((item) => item.name);
 
   useEffect(() => {
     register('players', {

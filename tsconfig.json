@@ -14,9 +14,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
-    "types": ["./ts-common"]
+    "jsxImportSource": "@emotion/react", // for the css prop
+    "types": ["./ts-common"],
+    "jsx": "preserve"
   },
+  "files": ["twin.d.ts"],
   "include": ["pages", "components"],
   "exclude": ["node_modules"]
 }
