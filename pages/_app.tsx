@@ -1,7 +1,6 @@
 import { withTheme } from '@emotion/react';
 import App from 'next/app';
 import { css, GlobalStyles } from 'twin.macro';
-import withAuth from '../components/common/auth/withAuth';
 import NavBar from '../components/main/NavBar';
 import AppThemeProvider from '../components/theming/AppThemeProvider';
 import { AppTheme } from '../components/theming/themes';
@@ -36,4 +35,5 @@ class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
   }
 }
 
-export default withAuth(withTheme(MyApp));
+//export default withAuth(withTheme(MyApp));
+export default withTheme(MyApp);
