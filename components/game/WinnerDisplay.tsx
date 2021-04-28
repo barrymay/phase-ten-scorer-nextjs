@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import 'twin.macro';
 import {
   IPlayer,
   usePlayersDispatch,
@@ -41,14 +41,7 @@ const WinnerDisplay: React.FC<{ winners: IWinnerList[] }> = ({ winners }) => {
   useWinnersForUpdate(winners);
 
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        justify-items: column;
-        align-items: center;
-      `}
-    >
+    <div tw="flex flex-col justify-center items-center">
       <div>
         {winners.length === 1 ? 'The winner is' : 'The winners are (in order)'}:
       </div>
