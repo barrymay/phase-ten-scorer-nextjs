@@ -1,23 +1,17 @@
-import { css } from '@emotion/react';
-
+import { SerializedStyles } from '@emotion/react';
+import tw, { css } from 'twin.macro';
 export const getFadeCss = (
   parentSelector: string,
   transitionTimeMs: number,
-) => css`
-  flex: 1;
-  position: relative;
+): SerializedStyles => css`
+  ${tw`flex relative`}
   ${parentSelector} {
     > .page {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      ${tw`absolute top-0 left-0 right-0 bottom-0`}
     }
     &.fade-enter {
       > .page {
-        opacity: 0;
-        z-index: 1;
+        ${tw`opacity-0 z-index[fade]`}
       }
     }
     &.fade-enter.fade-enter-active {
@@ -44,7 +38,7 @@ export const getMoveCss = (
   parentSelector: string,
   transitionTimeMs: number,
   moveLeft = false,
-) => {
+): SerializedStyles => {
   const moveFactor = moveLeft ? 1 : -1;
   return css`
     flex: 1;
@@ -53,11 +47,7 @@ export const getMoveCss = (
 
     ${parentSelector} {
       > .page {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        ${tw`absolute top-0 left-0 right-0 bottom-0`}
         transition: transform ${transitionTimeMs}ms ease;
       }
       &.move-enter {

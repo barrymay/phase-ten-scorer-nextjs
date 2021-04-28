@@ -1,6 +1,5 @@
-import { css } from '@emotion/react';
+import 'twin.macro';
 import { v4 as uuid } from 'uuid';
-
 const hiddenInputId = 'hiddenInput_' + uuid();
 
 /**
@@ -10,11 +9,7 @@ const hiddenInputId = 'hiddenInput_' + uuid();
  */
 export const HiddenInput: React.FC = () => (
   <input
-    css={css`
-      position: absolute;
-      left: -1000px;
-      top: -1000px;
-    `}
+    tw="absolute -left-1000 -top-1000"
     readOnly
     name={hiddenInputId}
   ></input>

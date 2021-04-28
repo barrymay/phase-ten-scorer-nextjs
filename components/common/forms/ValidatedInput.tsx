@@ -3,8 +3,7 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FieldErrors } from 'react-hook-form/dist/types';
-import { useAppTheme } from '../../theming/AppThemeProvider';
-
+import tw from 'twin.macro';
 interface OwnProps
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -20,29 +19,25 @@ const ValidatedInput: React.FC<OwnProps> = ({
   errors,
   ...inputProps
 }) => {
-  const theme = useAppTheme();
   if (!name) {
     throw new Error(`${ValidatedInput.name} requires name attribute`);
   }
-  const error = errors && errors[name];
+  const error = errors?.[name];
   return (
     <div
       css={css`
-        display: flex;
-        align-items: center;
-        border: 1px solid ${theme.default.border};
+        ${tw`flex items-center border-2 border-gray-100`}
+        ${error && tw`border-2 border-red-500`}
         > input {
           &:focus,
           &:hover,
           &:active {
-            outline: none;
+            ${tw`outline-none`}
           }
-          flex: 1 1 auto;
-          border: none;
-          width: 100%;
+          ${tw`flex border-none w-full`}
         }
         > svg {
-          padding-right: 4px;
+          ${tw`pr-1`}
         }
       `}
     >
@@ -51,9 +46,7 @@ const ValidatedInput: React.FC<OwnProps> = ({
         <FontAwesomeIcon
           title={error.message}
           icon={faTimes}
-          css={css`
-            color: red;
-          `}
+          tw="text-red-500"
         />
       )}
     </div>

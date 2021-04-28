@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import 'twin.macro';
 import P10Button from './button/P10Button';
 import Modal from './Modal';
 
@@ -17,23 +17,11 @@ const ConfirmModal: React.FC<{
       width={300}
     >
       {children}
-      <div
-        css={css`
-          display: flex;
-          justify-content: center;
-        `}
-      >
+      <div tw="flex justify-center">
         <P10Button minimal onClick={onConfirmModal}>
           YES
         </P10Button>
-        <P10Button
-          minimal
-          css={css`
-            color: red;
-            margin-left: 10px;
-          `}
-          onClick={onCloseModal}
-        >
+        <P10Button minimal tw="text-red-500 ml-1" onClick={onCloseModal}>
           NO
         </P10Button>
       </div>

@@ -3,42 +3,25 @@ import { faTimes } from '@fortawesome/pro-regular-svg-icons';
 import { animated, useTransition } from '@react-spring/web';
 import { Fragment, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useAppTheme } from '../theming/AppThemeProvider';
+import tw from 'twin.macro';
 import P10Button from './button/P10Button';
 
 function useModalStyle() {
-  const theme = useAppTheme();
   const modalStyle = css`
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    ${tw`bg-black bg-opacity-50 fixed h-full w-full top-0 left-0 flex items-center justify-center`}
     .modalPage {
-      border: 1px solid ${theme.default.border};
-      border-radius: 4px;
-      background: white;
+      ${tw`border-black rounded bg-white`}
       .modalHeader {
-        display: flex;
-        align-items: center;
-        padding: 4px;
-        border-bottom: 1px solid ${theme.default.border};
+        ${tw`flex items-center p-1 border-b-2`}
         .title {
-          display: flex;
-          flex: 1 1 auto;
-          font-size: 1.2em;
+          ${tw`flex-auto text-lg`}
         }
         .controls {
-          display: flex;
-          flex: none;
+          ${tw`flex-none`}
         }
       }
       .modalBody {
-        padding: 4px;
+        ${tw`p-1`}
       }
     }
   `;
