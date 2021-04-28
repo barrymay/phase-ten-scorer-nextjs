@@ -85,7 +85,7 @@
     "@types/js-cookie": "^2.2.4",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
-    "cypress": "^7.1.0",
+    "cypress": "^7.2.0",
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-emotion": "^11.0.0",
