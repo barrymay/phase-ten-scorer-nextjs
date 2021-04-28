@@ -1,4 +1,4 @@
-import { css, SerializedStyles } from '@emotion/react';
+import { SerializedStyles } from '@emotion/react';
 import { animated, useSpring, UseSpringProps } from '@react-spring/web';
 import {
   ButtonHTMLAttributes,
@@ -11,6 +11,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
+import tw, { css, TwStyle } from 'twin.macro';
 import { Merge } from '../../ts-common/merge';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import { AppTheme } from '../theming/themes';
@@ -76,30 +77,34 @@ function getBaseButtonStyles(theme: AppTheme) {
 
 function useAnimatedCardFlip(
   completedState: PhaseState,
+  inPopup: boolean,
 ): [UseSpringProps<ISpringType>, SerializedStyles] {
   const theme = useAppTheme();
   const baseButtonStyles = getBaseButtonStyles(theme);
   const lastState = useRef<PhaseState | null>('default');
-  const lastBgColor = useRef<string>('whtie');
+  const lastBgColor = useRef<TwStyle>();
 
   const phaseStyle = useMemo(() => {
     const desiredBackgroundColor =
-      completedState === 'new-complete' ? 'green' : theme.default.primary;
+      completedState === 'new-complete'
+        ? tw`text-white bg-green-700`
+        : inPopup
+        ? tw`text-white bg-black`
+        : tw`text-white bg-black dark:text-black dark:bg-white`;
 
     if (lastState.current === 'default' || completedState === 'complete') {
       lastBgColor.current = desiredBackgroundColor;
     }
     lastState.current = completedState;
-
     return css(
       baseButtonStyles,
       css`
         .card > .back {
-          background-color: ${lastBgColor.current};
+          ${lastBgColor.current}
         }
       `,
     );
-  }, [baseButtonStyles, completedState, theme.default.primary]);
+  }, [baseButtonStyles, completedState, inPopup]);
 
   const [propsFlip, api] = useSpring(() => {
     return {
@@ -120,6 +125,7 @@ const PhaseButton: React.FC<
     {
       completedState: PhaseState;
       buttonHeight: number;
+      inPopup?: boolean;
       measureRef?: RefObject<HTMLElement>;
     }
   >
@@ -129,18 +135,21 @@ const PhaseButton: React.FC<
     children,
     buttonHeight,
     measureRef,
+    inPopup,
     ...nonChildProps
   } = props;
-  const [propsFlip, phaseStyle] = useAnimatedCardFlip(completedState);
-
+  const [propsFlip, phaseStyle] = useAnimatedCardFlip(
+    completedState,
+    props.inPopup ?? false,
+  );
   return (
     <button className={completedState} css={[phaseStyle]} {...nonChildProps}>
       <animated.div
         className="card"
         // @ts-expect-error - React-spring not resolving propsFlip typing properly
         style={propsFlip}
+        tw="transform-style[preserve-3d]"
         css={css`
-          transform-style: preserve-3d;
           min-height: ${buttonHeight}px;
         `}
       >

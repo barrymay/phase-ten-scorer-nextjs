@@ -119,6 +119,7 @@ const PhaseScorer: React.FC<{
   onMeasureUpdate?: VoidFunction;
   onMarkedPhaseUpdate?: (phaseMarked: number) => void;
   className?: string;
+  inPopup?: boolean;
 }> = ({
   onMeasureUpdate,
   onMarkedPhaseUpdate,
@@ -126,6 +127,7 @@ const PhaseScorer: React.FC<{
   startingPhase,
   roundNum,
   className,
+  inPopup = false,
 }) => {
   const { tournament } = useTournamentCurrentContext();
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
@@ -180,6 +182,7 @@ const PhaseScorer: React.FC<{
             }}
             buttonHeight={sizer.height}
             measureRef={index === 0 ? measureRef.ref : undefined}
+            inPopup={inPopup}
           >
             <div
               css={css`
