@@ -80,7 +80,7 @@
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.6.0",
     "@testing-library/cypress": "^7.0.6",
-    "@types/faker": "^4.1.7",
+    "@types/faker": "^5.5.3",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/js-cookie": "^2.2.4",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
