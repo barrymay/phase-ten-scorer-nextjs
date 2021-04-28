@@ -1,7 +1,8 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Router from 'next/router';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import 'twin.macro';
+import tw, { css } from 'twin.macro';
 import P10Button from '../common/button/P10Button';
 import ConfirmModal from '../common/ConfirmModal';
 import { focusHiddenInput, HiddenInput } from '../common/IosFocusHiddenInput';
@@ -173,14 +174,7 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
   };
 
   return (
-    <div
-      css={css`
-        height: 100%;
-      `}
-      ref={mainDivRef}
-      onKeyDown={keyHandlerGame}
-      tabIndex={0}
-    >
+    <div tw="h-full" ref={mainDivRef} onKeyDown={keyHandlerGame} tabIndex={0}>
       <HiddenInput />
 
       <Modal
@@ -207,14 +201,11 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
 
       <div
         css={css`
-          padding: 4px;
-          display: flex;
-          flex-direction: column;
+          ${tw`p-1 flex flex-col`}
           .header {
-            display: flex;
-            align-items: center;
+            ${tw`flex items-center`}
             .name {
-              flex: 1 1 auto;
+              ${tw`flex-auto`}
             }
           }
           transition: opacity 250ms ease-in-out;
@@ -255,18 +246,10 @@ const GameViewControl: React.FC<{ onReady: VoidFunction; divSpring: any }> = ({
         {winners.length ? (
           <WinnerDisplay winners={winners} />
         ) : (
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-              padding-top: 4px;
-              align-items: center;
-            `}
-          >
+          <div tw="flex flex-col p-1 items-center">
             <P10Button
+              tw="flex rounded"
               css={css`
-                display: flex;
-                border-radius: 4px;
                 &:focus {
                   border-color: #333;
                 }

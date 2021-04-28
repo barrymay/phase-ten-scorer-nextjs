@@ -1,13 +1,15 @@
-import { css } from 'twin.macro';
-import { useAppTheme } from '../components/theming/AppThemeProvider';
+import { css } from '@emotion/react';
+import 'twin.macro';
+import tw from 'twin.macro';
 
 const AppBody: React.FC = (props) => {
-  const theme = useAppTheme();
   return (
     <div
-      tw="flex-auto text-black dark:text-white"
+      tw="flex-auto text-black dark:text-white bg-background-light dark:bg-background-dark"
       css={css`
-        background-color: ${theme.default.primaryBg};
+        input {
+          ${tw`dark:text-black`}
+        }
       `}
     >
       {props.children}

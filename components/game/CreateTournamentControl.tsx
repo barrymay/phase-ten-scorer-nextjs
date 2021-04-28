@@ -1,7 +1,7 @@
-import { css } from '@emotion/react';
 import Router from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import tw, { css } from 'twin.macro';
 import FormErrors from '../common/forms/FormErrors';
 import { CardContainer } from '../common/styles/basic';
 import { useTournamentContext } from '../context/TournamentContext';
@@ -60,19 +60,15 @@ const CreateTournamentControl: React.FC = () => {
   };
 
   const styledLabel = css`
-    padding-bottom: 4px;
+    ${tw`pb-4`}
   `;
 
   return (
     <div
       css={css`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        ${tw`flex flex-col items-center`}
         .header {
-          justify-content: center;
-          padding: 5px 0px 10px 0px;
-          font-weight: 700;
+          ${tw`justify-center pt-1 pb-2 font-weight[700]`}
         }
       `}
     >
@@ -87,9 +83,7 @@ const CreateTournamentControl: React.FC = () => {
           <label css={styledLabel}>
             Tournament Name:
             <input
-              css={css`
-                width: 100%;
-              `}
+              tw="w-full"
               data-testid="tourneyName"
               autoComplete="off"
               {...register('tourneyName', {
@@ -112,9 +106,7 @@ const CreateTournamentControl: React.FC = () => {
             <PlayerSelector onChange={onPlayerSelectorChange} />
           </label>
           <FormErrors css={{ marginTop: 10 }} errors={errors} />
-          <div
-            css={{ display: 'flex', marginTop: 10, justifyContent: 'flex-end' }}
-          >
+          <div tw="flex mt-1" css={{ justifyContent: 'flex-end' }}>
             <button type="submit">Submit</button>
           </div>
         </form>

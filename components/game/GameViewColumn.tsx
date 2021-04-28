@@ -1,7 +1,7 @@
-import { css } from '@emotion/react';
 import { faSignLanguage } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { animated, useSpring } from '@react-spring/web';
+import 'twin.macro';
 import { IPlayer } from '../context/PlayersContext';
 import { useTournamentCurrentContext } from '../context/TournamentCurrentContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
@@ -27,21 +27,9 @@ const GameViewColumn: React.FC<{
   return (
     <animated.div style={divSpring} className="column">
       <animated.div style={nameHighlight} className="player-data">
-        {isShuffler && (
-          <FontAwesomeIcon
-            css={css`
-              padding-right: 2px;
-            `}
-            icon={faSignLanguage}
-          />
-        )}
+        {isShuffler && <FontAwesomeIcon tw="pr-1" icon={faSignLanguage} />}
         {player.name}{' '}
-        <span
-          css={css`
-            padding-left: 4px;
-            font-size: 0.8em;
-          `}
-        >
+        <span tw="pl-1 font-weight[0.8em] ">
           ({player.wins.length}-{player.losses.length})
         </span>
       </animated.div>

@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import React, {
   FormEvent,
   forwardRef,
@@ -9,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
+import { css } from 'twin.macro';
 import ValidatedInput from '../common/forms/ValidatedInput';
 import { IPlayer } from '../context/PlayersContext';
 import { IRoundPlayerData } from '../context/TournamentContext';
@@ -151,12 +151,11 @@ const SingleScoreForm: React.ForwardRefExoticComponent<
         <label>
           Completed Phase:
           <PhaseScorer
-            css={css`
-              max-width: 100%;
-            `}
+            tw="max-w-full"
             player={player}
             startingPhase={inputPhase}
             onMarkedPhaseUpdate={updatePhase}
+            inPopup={true}
           />
         </label>
       </form>

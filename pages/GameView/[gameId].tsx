@@ -2,23 +2,18 @@ import { css } from '@emotion/react';
 import { animated, useSpring } from '@react-spring/web';
 import Head from 'next/head';
 import { Fragment, useState } from 'react';
+import tw from 'twin.macro';
 import Spinner from '../../components/common/Spinner';
 import { TournamentCurrentProvider } from '../../components/context/TournamentCurrentContext';
 import GameViewControl from '../../components/game/GameViewControl';
 import ProviderWrapper from '../../components/game/ProviderWrapper';
 
 const style = css`
-  position: relative;
-
+  ${tw`relative`}
   .container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-
+    ${tw`absolute top-0 left-0 w-full`}
     &.spinner {
-      z-index: 999;
-      height: 100px;
+      ${tw`z-scroll-container h-full`}
     }
   }
 `;

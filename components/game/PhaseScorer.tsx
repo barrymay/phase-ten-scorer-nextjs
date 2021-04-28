@@ -1,6 +1,6 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import tw, { css } from 'twin.macro';
 import useMeasure, { IRect, RefContainer } from '../common/useMeasure';
 import { IPlayer } from '../context/PlayersContext';
 import { IRound } from '../context/TournamentContext';
@@ -119,6 +119,7 @@ const PhaseScorer: React.FC<{
   onMeasureUpdate?: VoidFunction;
   onMarkedPhaseUpdate?: (phaseMarked: number) => void;
   className?: string;
+  inPopup?: boolean;
 }> = ({
   onMeasureUpdate,
   onMarkedPhaseUpdate,
@@ -126,6 +127,7 @@ const PhaseScorer: React.FC<{
   startingPhase,
   roundNum,
   className,
+  inPopup = false,
 }) => {
   const { tournament } = useTournamentCurrentContext();
   const [phaseStates, setPhaseStates] = useState<PhaseState[]>(
@@ -180,19 +182,16 @@ const PhaseScorer: React.FC<{
             }}
             buttonHeight={sizer.height}
             measureRef={index === 0 ? measureRef.ref : undefined}
+            inPopup={inPopup}
           >
             <div
               css={css`
-                display: flex;
-                align-items: center;
-                padding: 0px 4px;
+                ${tw`flex items-center px-1`}
                 .id {
-                  flex: 1 1 auto;
-                  text-align: left;
+                  ${tw`flex-auto text-align[left]`}
                 }
                 .rule {
-                  font-size: 0.8em;
-                  justify-content: flex-end;
+                  ${tw`font-size[0.8em] justify-end`}
                 }
               `}
             >
