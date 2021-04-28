@@ -9,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import 'twin.macro';
 import P10Button from '../common/button/P10Button';
 import { focusHiddenInput } from '../common/IosFocusHiddenInput';
 import useMeasure, { IRect } from '../common/useMeasure';
@@ -177,8 +178,8 @@ const ScoringWizard: React.FC<{
       <div>Round #{roundNum}</div>
       <div
         ref={refWidthMeasure.ref}
+        tw="relative"
         css={css`
-          position: relative;
           height: ${maxHeight}px;
         `}
       >
@@ -193,23 +194,13 @@ const ScoringWizard: React.FC<{
         </div>
       </div>
 
-      <div
-        css={css`
-          padding-top: 4px;
-          display: flex;
-        `}
-      >
+      <div tw="padding-top[4px] flex">
         {playerIndex !== 0 && (
           <P10Button faIconDef={faArrowLeft} minimal onClick={moveBack}>
             Back
           </P10Button>
         )}
-        <div
-          css={css`
-            display: flex;
-            flex: 1 1 auto;
-          `}
-        />
+        <div tw="flex flex-auto" />
         <P10Button
           faIconDef={faArrowRight}
           minimal

@@ -3,6 +3,8 @@ import { faTimesCircle } from '@fortawesome/pro-regular-svg-icons';
 import Router from 'next/router';
 import { darken } from 'polished';
 import React from 'react';
+import 'twin.macro';
+import tw from 'twin.macro';
 import P10Button from '../common/button/P10Button';
 import { useTournamentContext } from '../context/TournamentContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
@@ -19,26 +21,16 @@ const TournamentManager: React.FC<{ className?: string }> = ({ className }) => {
       className={className}
       css={css`
         .header {
-          display: flex;
-          justify-content: center;
-          padding-bottom: 2px;
-          font-weight: 700;
+          ${tw`flex justify-center pb-0.5 font-weight[700]`}
         }
         .no-value {
-          display: flex;
-          justify-content: center;
+          ${tw`flex justify-center`}
         }
         .list {
-          display: flex;
-          flex-direction: column;
+          ${tw`flex flex-col rounded`}
           border: 1px solid ${theme.default.border};
-          border-radius: 4px;
-
           .tournament-button {
-            display: flex;
-            flex-direction: row;
-            flex: 1;
-            padding: 2px;
+            ${tw`flex flex-row flex-1 p-0.5 `}
             &:first-of-type {
               border-radius: 2px 2px 0px 0px;
             }
@@ -48,9 +40,7 @@ const TournamentManager: React.FC<{ className?: string }> = ({ className }) => {
             transition: color 100ms ease-in-out,
               background-color 100ms ease-in-out;
             .tournamentName {
-              display: flex;
-              flex: 1 1 auto;
-              cursor: pointer;
+              ${tw`flex flex-auto cursor-pointer`}
             }
           }
         }

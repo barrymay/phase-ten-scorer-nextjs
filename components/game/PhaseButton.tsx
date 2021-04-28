@@ -56,12 +56,7 @@ function getBaseButtonStyles(theme: AppTheme) {
 
       .front,
       .back {
-        backface-visibility: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        ${tw`backface-visibility[hidden] absolute top-0 left-0 w-full h-full`}
       }
       .front {
         z-index: 2;

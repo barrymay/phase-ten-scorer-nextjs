@@ -54,12 +54,9 @@ const PlayerSelector: React.FC<{
           <button
             key={item.id}
             type="button"
+            tw="p-0.5 cursor-pointer flex justify-start"
             css={{
-              padding: 2,
               border: `1px solid ${theme.default.border}`,
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'flex-start',
               color,
               backgroundColor,
               ':focus': {
