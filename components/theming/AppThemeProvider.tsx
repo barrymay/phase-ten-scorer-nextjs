@@ -1,7 +1,6 @@
 import { ThemeProvider, useTheme } from '@emotion/react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { AppTheme, darkTheme, lightTheme } from './themes';
-
 interface IThemeState {
   themeMode: 'dark' | 'light';
 }
@@ -14,15 +13,49 @@ const ThemeDispatchContext = React.createContext<(() => void) | undefined>(
 );
 
 const AppThemeProvider: React.FC = (props) => {
-  const [theme, setTheme] = useState<IThemeState>({ themeMode: 'light' });
+  const [theme, setTheme] = useState<IThemeState | undefined>(undefined);
+
+  function setToLight() {
+    document.documentElement.classList.remove('dark');
+    setTheme({ themeMode: 'light' });
+  }
+
+  function setToDark() {
+    document.documentElement.classList.add('dark');
+    setTheme({ themeMode: 'dark' });
+  }
+
   const toggleTheme = () => {
-    setTheme({ themeMode: theme.themeMode === 'light' ? 'dark' : 'light' });
+    if (theme?.themeMode === 'light') {
+      setToDark();
+    } else {
+      setToLight();
+    }
   };
+
+  useEffect(() => {
+    if (!theme?.themeMode) {
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? setToDark()
+        : setToLight();
+    }
+  }, [theme?.themeMode]);
+
+  useMemo(() => {
+    if (typeof window !== 'undefined') {
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', (event) => {
+          event.matches ? setToDark() : setToLight();
+        });
+    }
+  }, []);
+
   return (
     <ThemeStateContext.Provider value={theme}>
       <ThemeDispatchContext.Provider value={toggleTheme}>
         <ThemeProvider
-          theme={theme.themeMode === 'light' ? lightTheme : darkTheme}
+          theme={theme?.themeMode === 'light' ? lightTheme : darkTheme}
         >
           {props.children}
         </ThemeProvider>

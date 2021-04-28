@@ -1,6 +1,6 @@
 import { withTheme } from '@emotion/react';
 import App from 'next/app';
-import { css, GlobalStyles } from 'twin.macro';
+import { GlobalStyles } from 'twin.macro';
 import NavBar from '../components/main/NavBar';
 import AppThemeProvider from '../components/theming/AppThemeProvider';
 import { AppTheme } from '../components/theming/themes';
@@ -15,22 +15,17 @@ class MyApp extends App<{ user?: any; enableAuth0: boolean; theme: AppTheme }> {
     }
     const { Component, pageProps } = this.props;
     return (
-      <AppThemeProvider>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-          `}
-        >
-          <GlobalStyles />
+      <div tw="flex flex-col h-screen">
+        <GlobalStyles />
+        <AppThemeProvider>
           <NavBar user={this.user} isAuthAllowed={this.props.enableAuth0} />
           <AppBody>
             <Component {...pageProps} />
           </AppBody>
-          <div id="modal-root"></div>
-        </div>
-      </AppThemeProvider>
+        </AppThemeProvider>
+
+        <div id="modal-root"></div>
+      </div>
     );
   }
 }
