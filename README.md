@@ -53,8 +53,10 @@ The app is in active development and showcases several modern tech features arou
   - This app uses the free tier for simplified authentication, they give a minimal database setup to store the basic info of your users, and then you can store the important stuff in your app's data store
 - [Cypress](https://www.cypress.io)
   - Easily the best e2e JavaScript platform avaialble today. Took a little extra work to get it working with Next (sans Now) but this project can now be built with TypeScript-developed tests including support for Code Coverage (thank you `nyc`!).
-- [Github Actions Beta](https://github.com/features/actions)
+- [Github Actions](https://github.com/features/actions)
   - The new continuous integration platform integrated with Github. Extremely powerful, easy to integrate with.
+- [TailwindCss](https://tailwindcss.com)
+  - Utility-classes for Css - Combined with Emotion and the Twin.Macro utility library (as well as VSCode Extension support), it saves a huge amount of time and effort!
 
 And last but definitely not least, [TypeScript](https://www.typescriptlang.org) all around!
 
