@@ -10,7 +10,7 @@ import ProviderWrapper from '../../components/game/ProviderWrapper';
 
 const style = css`
   ${tw`relative`}
-  .container {
+  .game-container {
     ${tw`absolute top-0 left-0 w-full`}
     &.spinner {
       ${tw`z-scroll-container h-full`}
@@ -55,13 +55,13 @@ const GameView = ({
       </Head>
       <div className={className} css={style}>
         {showSpinner ? (
-          <div className="container spinner">
+          <div className="game-container spinner">
             <Spinner />
           </div>
         ) : null}
         <ProviderWrapper>
           <TournamentCurrentProvider tournamentId={gameId}>
-            <animated.div style={gameViewFloatIn} className="container">
+            <animated.div style={gameViewFloatIn} className="game-container">
               <GameViewControl
                 divSpring={cardFlip}
                 onReady={() => {
