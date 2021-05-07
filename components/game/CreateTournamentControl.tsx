@@ -2,8 +2,10 @@ import Router from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import tw, { css } from 'twin.macro';
+import LinkButton from '../common/button/LinkButton';
 import FormErrors from '../common/forms/FormErrors';
 import { CardContainer } from '../common/styles/basic';
+import { usePlayersState } from '../context/PlayersContext';
 import { useTournamentContext } from '../context/TournamentContext';
 import { useAppTheme } from '../theming/AppThemeProvider';
 import PlayerSelector from './PlayerSelector';
@@ -14,6 +16,8 @@ interface IFormData {
 }
 
 const CreateTournamentControl: React.FC = () => {
+  const players = usePlayersState();
+
   const {
     handleSubmit,
     register,
@@ -103,7 +107,16 @@ const CreateTournamentControl: React.FC = () => {
           </label>
           <label css={styledLabel}>
             Selected Players:
-            <PlayerSelector onChange={onPlayerSelectorChange} />
+            {players.length ? (
+              <PlayerSelector onChange={onPlayerSelectorChange} />
+            ) : (
+              <div tw="flex items-center justify-center">
+                <div tw="flex justify-center">No Players Defined - </div>
+                <LinkButton minimal href={'/PlayerSetup'}>
+                  Setup
+                </LinkButton>
+              </div>
+            )}
           </label>
           <FormErrors css={{ marginTop: 10 }} errors={errors} />
           <div tw="flex mt-1" css={{ justifyContent: 'flex-end' }}>
